@@ -12,7 +12,7 @@
       "price": 1200,
       "category": "Dairy",
       "imageUrl": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
-      "inStock": true
+      "inStock": false
     },
     {
       "id": "prod-002",
@@ -129,7 +129,7 @@
       "price": 500,
       "category": "Produce",
       "imageUrl": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=400",
-      "inStock": true
+      "inStock": false
     },
     {
       "id": "prod-015",
