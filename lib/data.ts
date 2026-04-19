@@ -11,3 +11,7 @@ export function getCategories(): string[] {
   const categories = typedData.products.map(p => p.category);
   return Array.from(new Set(categories));
 }
+
+export function getProductById(id: string): Product | undefined {
+  return typedData.products.find(p => p.id === id);
+}

@@ -4,5 +4,78 @@
     "location": "Kigali, Rwanda",
     "currency": "RWF"
   },
-  "products": []
+  "products": [
+    {
+      "id": "prod-001",
+      "name": "Inyange Fresh Milk 1L",
+      "description": "Locally sourced fresh whole milk from Inyange.",
+      "price": 1200,
+      "category": "Dairy",
+      "imageUrl": "/products/prod-001.jpg",
+      "inStock": true
+    },
+    {
+      "id": "prod-002",
+      "name": "Rwandan Arabica Coffee 500g",
+      "description": "Premium roasted Rwandan Arabica coffee beans.",
+      "price": 8500,
+      "category": "Beverages",
+      "imageUrl": "/products/prod-002.jpg",
+      "inStock": true
+    },
+    {
+      "id": "prod-003",
+      "name": "Avocado (Local kg)",
+      "description": "Fresh, large locally grown avocados.",
+      "price": 1500,
+      "category": "Produce",
+      "imageUrl": "/products/prod-003.jpg",
+      "inStock": true
+    },
+    {
+      "id": "prod-004",
+      "name": "Mutzig Beer 50cl",
+      "description": "Popular local amber lager beer.",
+      "price": 1000,
+      "category": "Beverages",
+      "imageUrl": "/products/prod-004.jpg",
+      "inStock": true
+    },
+    {
+      "id": "prod-005",
+      "name": "Bakhresa Azam Wheat Flour 2kg",
+      "description": "Fine wheat flour perfect for baking.",
+      "price": 2800,
+      "category": "Pantry",
+      "imageUrl": "/products/prod-005.jpg",
+      "inStock": true
+    },
+    {
+      "id": "prod-006",
+      "name": "Gorilla's Coffee Medium Roast",
+      "description": "Rich and bold mountain grown coffee.",
+      "price": 9000,
+      "category": "Beverages",
+      "imageUrl": "/products/prod-006.jpg",
+      "inStock": true
+    },
+    {
+      "id": "prod-007",
+      "name": "Yellow Bananas",
+      "description": "Sweet ripe bananas by the bunch.",
+      "price": 800,
+      "category": "Produce",
+      "imageUrl": "/products/prod-007.jpg",
+      "inStock": true
+    },
+    {
+      "id": "prod-008",
+      "name": "Akarabo Honey 500g",
+      "description": "Pure natural honey from local beekeepers.",
+      "price": 5000,
+      "category": "Pantry",
+      "imageUrl": "/products/prod-008.jpg",
+      "inStock": true
+    }
+  ]
 }

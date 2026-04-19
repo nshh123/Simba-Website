@@ -7,10 +7,14 @@ export interface CartItem extends Product {
 }
 
 interface StoreState {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
   cart: CartItem[];
   theme: 'light' | 'dark';
   language: 'en' | 'fr' | 'rw';
-  addToCart: (product: Product) => void;
+  isCartOpen: boolean;
+  setCartOpen: (isOpen: boolean) => void;
+  addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -21,22 +25,27 @@ interface StoreState {
 export const useStore = create<StoreState>()(
   persist(
     (set) => ({
+      searchQuery: '',
+      setSearchQuery: (searchQuery) => set({ searchQuery }),
       cart: [],
       theme: 'light',
       language: 'en',
-      addToCart: (product) =>
+      isCartOpen: false,
+      setCartOpen: (isOpen) => set({ isCartOpen: isOpen }),
+      addToCart: (product, qty = 1) =>
         set((state) => {
           const existingItem = state.cart.find((item) => item.id === product.id);
           if (existingItem) {
             return {
               cart: state.cart.map((item) =>
                 item.id === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
+                  ? { ...item, quantity: item.quantity + qty }
                   : item
               ),
+              isCartOpen: true,
             };
           }
-          return { cart: [...state.cart, { ...product, quantity: 1 }] };
+          return { cart: [...state.cart, { ...product, quantity: qty }], isCartOpen: true };
         }),
       removeFromCart: (productId) =>
         set((state) => ({
@@ -55,7 +64,7 @@ export const useStore = create<StoreState>()(
     }),
     {
       name: 'simba-store',
-      partialize: (state) => ({ cart: state.cart }),
+      partialize: (state) => ({ cart: state.cart, language: state.language, theme: state.theme }),
     }
   )
 );
