@@ -2,6 +2,7 @@
   "search": "Search products...",
   "categories": "Categories",
   "addToCart": "Add to Cart",
+  "outOfStock": "Out of Stock",
   "checkout": "Checkout",
   "total": "Total",
   "emptyCart": "Empty Cart",

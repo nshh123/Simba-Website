@@ -58,7 +58,7 @@ export function ProductCard({ product, onQuickView }: { product: Product; onQuic
         {/* Out of stock overlay */}
         {!product.inStock && (
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-10">
-            <span className="text-white font-bold text-lg">Out of Stock</span>
+            <span className="text-white font-bold text-lg">{t('outOfStock')}</span>
           </div>
         )}
         {/* Gradient overlay on hover */}
@@ -90,7 +90,7 @@ export function ProductCard({ product, onQuickView }: { product: Product; onQuic
             </>
           ) : (
             <>
-              <span className="font-semibold text-sm">Out of Stock</span>
+              <span className="font-semibold text-sm">{t('outOfStock')}</span>
             </>
           )}
         </Button>

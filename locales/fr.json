@@ -2,6 +2,7 @@
   "search": "Rechercher des produits...",
   "categories": "Catégories",
   "addToCart": "Ajouter au panier",
+  "outOfStock": "Rupture de Stock",
   "checkout": "Paiement",
   "total": "Total",
   "emptyCart": "Panier vide",

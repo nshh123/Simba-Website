@@ -95,11 +95,11 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
               </p>
               {product.inStock ? (
                 <span className="inline-block text-xs font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-full">
-                  ● In Stock
+                  ● {t('inStock', { defaultValue: 'In Stock' })}
                 </span>
               ) : (
                 <span className="inline-block text-xs font-medium text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30 px-2 py-0.5 rounded-full">
-                  ● Out of Stock
+                  ● {t('outOfStock')}
                 </span>
               )}
             </div>
@@ -136,7 +136,7 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
                     {t('addToCart')} — {(product.price * quantity).toLocaleString('en-US')} RWF
                   </>
                 ) : (
-                  <span className="font-semibold text-lg">Out of Stock</span>
+                  <span className="font-semibold text-lg">{t('outOfStock')}</span>
                 )}
               </Button>
             </div>
