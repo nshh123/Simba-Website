@@ -1,3 +1,7 @@
+'use client';
+
+import { useTranslation } from 'react-i18next';
+import { SearchX } from 'lucide-react';
 import { Product } from '@/types';
 import { ProductCard } from './ui/ProductCard';
 
@@ -6,10 +10,18 @@ interface ProductGridProps {
 }
 
 export function ProductGrid({ products }: ProductGridProps) {
+  const { t } = useTranslation();
+
   if (products.length === 0) {
     return (
-      <div className="flex justify-center items-center p-12 text-muted-foreground border rounded-lg bg-muted/50">
-        No products found.
+      <div className="flex flex-col items-center justify-center gap-4 p-16 text-center border rounded-xl bg-muted/30">
+        <SearchX className="h-12 w-12 text-muted-foreground/60" />
+        <div className="space-y-1">
+          <h3 className="font-semibold text-lg text-foreground">{t('noResultsTitle')}</h3>
+          <p className="text-muted-foreground text-sm max-w-md">
+            {t('noResultsMessage')}
+          </p>
+        </div>
       </div>
     );
   }

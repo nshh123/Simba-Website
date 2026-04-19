@@ -19,6 +19,8 @@
   "recommended": "Recommended",
   "priceLowToHigh": "Price: Low to High",
   "priceHighToLow": "Price: High to Low",
+  "noResultsTitle": "Item Not Available",
+  "noResultsMessage": "Sorry, we don't have this item in stock yet. Please try a different search or browse our available categories.",
   "products": {
     "prod-001": { "name": "Inyange Fresh Milk 1L", "description": "Locally sourced fresh whole milk from Inyange." },
     "prod-002": { "name": "Rwandan Arabica Coffee 500g", "description": "Premium roasted Rwandan Arabica coffee beans." },

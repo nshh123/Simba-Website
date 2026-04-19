@@ -4,13 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 interface FilterBarProps {
   categories: string[];
@@ -67,19 +60,18 @@ export function FilterBar({
           ))}
         </div>
 
-        <Select 
-          value={sortOrder} 
-          onValueChange={(val) => setSortOrder(val as 'none' | 'asc' | 'desc')}
-        >
-          <SelectTrigger className="w-[180px] shrink-0">
-            <SelectValue placeholder={t('sort_by')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="none">{t('recommended')}</SelectItem>
-            <SelectItem value="asc">{t('priceLowToHigh')}</SelectItem>
-            <SelectItem value="desc">{t('priceHighToLow')}</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="relative w-[180px] shrink-0">
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value as 'none' | 'asc' | 'desc')}
+            className="w-full h-8 appearance-none rounded-lg border border-input bg-transparent py-1.5 pr-8 pl-3 text-sm outline-none cursor-pointer hover:bg-accent/50 transition-colors"
+          >
+            <option value="none">{t('recommended')}</option>
+            <option value="asc">{t('priceLowToHigh')}</option>
+            <option value="desc">{t('priceHighToLow')}</option>
+          </select>
+          <svg className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
       </div>
     </div>
   );

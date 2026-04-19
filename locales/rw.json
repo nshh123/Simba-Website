@@ -19,6 +19,8 @@
   "recommended": "Ibyiza",
   "priceLowToHigh": "Igiciro: Gito kujya kucyinshi",
   "priceHighToLow": "Igiciro: Icyinshi kujya kugito",
+  "noResultsTitle": "Igicuruzwa ntigiboneke",
+  "noResultsMessage": "Ihangane, iki gicuruzwa ntikiri muri sitoke. Gerageza gushakisha ikindi cyangwa urebe ibyiciro biri hano.",
   "products": {
     "prod-001": { "name": "Amata y'Inyange 1L", "description": "Amata y'Inyange meza azira inenge." },
     "prod-002": { "name": "Ikawa y'Arabica y'u Rwanda 500g", "description": "Ikawa nziza y'u Rwanda yatunganijwe neza." },
