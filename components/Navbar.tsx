@@ -30,13 +30,20 @@ export function Navbar() {
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
+  const language = useStore((state) => state.language);
+
+  const langCode: Record<string, string> = { en: 'EN', fr: 'FR', rw: 'RW' };
+  const current = langCode[language] || 'EN';
+
   const LanguageSelector = () => (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="inline-flex items-center justify-center rounded-lg p-2 text-sm hover:bg-white/20 transition-colors text-white"
+        className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium hover:bg-white/20 transition-colors text-white border border-white/30 bg-white/10"
         aria-label="Select language"
       >
-        <Globe className="h-5 w-5" />
+        <Globe className="h-4 w-4" />
+        <span>{current}</span>
+        <svg className="h-3 w-3 opacity-70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setLanguage('en')}>
@@ -86,7 +93,7 @@ export function Navbar() {
                   <Input
                     type="search"
                     placeholder={t('search')}
-                    className="w-full pl-8 text-foreground bg-background"
+                    className="w-full pl-8 bg-white dark:bg-gray-800 text-foreground dark:text-gray-100 border-white/30 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -116,7 +123,7 @@ export function Navbar() {
             <Input
               type="search"
               placeholder={t('search')}
-              className="w-full pl-8 text-foreground bg-background"
+              className="w-full pl-8 bg-white dark:bg-gray-800 text-foreground dark:text-gray-100 border-white/30 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-400"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

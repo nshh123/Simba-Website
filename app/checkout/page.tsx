@@ -73,9 +73,9 @@ export default function CheckoutPage() {
     return (
       <div className="container mx-auto px-4 py-32 flex flex-col items-center justify-center min-h-[60vh] max-w-md text-center">
         <Loader2 className="h-16 w-16 animate-spin text-primary mb-8" />
-        <h2 className="text-2xl font-bold mb-4">Processing MoMo Payment</h2>
+        <h2 className="text-2xl font-bold mb-4">{t('checkoutProcessing')}</h2>
         <p className="text-muted-foreground text-lg">
-          Initiating MoMo push... Please check your phone to enter your PIN.
+          {t('checkoutProcessingDesc')}
         </p>
       </div>
     );
@@ -88,11 +88,11 @@ export default function CheckoutPage() {
           <Confetti width={windowDimensions.width} height={windowDimensions.height} recycle={false} numberOfPieces={500} />
         )}
         <CheckCircle className="h-24 w-24 text-green-500 mb-8" />
-        <h1 className="text-4xl font-bold mb-4">Order Successful!</h1>
-        <p className="text-xl text-muted-foreground mb-2">Thank you for your purchase.</p>
-        <p className="text-lg font-medium mb-12">Your order number is: <span className="font-bold">{orderId}</span></p>
+        <h1 className="text-4xl font-bold mb-4">{t('checkoutSuccess')}</h1>
+        <p className="text-xl text-muted-foreground mb-2">{t('checkoutThankYou')}</p>
+        <p className="text-lg font-medium mb-12">{t('checkoutOrderNumber')}: <span className="font-bold">{orderId}</span></p>
         <Button render={<Link href="/" />} size="lg">
-          Return to Home
+          {t('checkoutReturnHome')}
         </Button>
       </div>
     );
@@ -105,13 +105,13 @@ export default function CheckoutPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div className="space-y-8">
           <div>
-            <h2 className="text-xl font-semibold mb-4">Delivery Information</h2>
+            <h2 className="text-xl font-semibold mb-4">{t('checkoutDeliveryInfo')}</h2>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Full Name
+                  {t('checkoutFullName')}
                 </label>
-                <Input placeholder="John Doe" {...form.register('fullName')} />
+                <Input {...form.register('fullName')} />
                 {form.formState.errors.fullName && (
                   <p className="text-[0.8rem] text-destructive font-medium">
                     {form.formState.errors.fullName.message}
@@ -121,9 +121,9 @@ export default function CheckoutPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Phone Number
+                  {t('checkoutPhone')}
                 </label>
-                <Input placeholder="0780000000" {...form.register('phone')} />
+                <Input {...form.register('phone')} />
                 {form.formState.errors.phone && (
                   <p className="text-[0.8rem] text-destructive font-medium">
                     {form.formState.errors.phone.message}
@@ -134,9 +134,9 @@ export default function CheckoutPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    District
+                    {t('checkoutDistrict')}
                   </label>
-                  <Input placeholder="Gasabo" {...form.register('district')} />
+                  <Input {...form.register('district')} />
                   {form.formState.errors.district && (
                     <p className="text-[0.8rem] text-destructive font-medium">
                       {form.formState.errors.district.message}
@@ -146,9 +146,9 @@ export default function CheckoutPage() {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    Sector
+                    {t('checkoutSector')}
                   </label>
-                  <Input placeholder="Remera" {...form.register('sector')} />
+                  <Input {...form.register('sector')} />
                   {form.formState.errors.sector && (
                     <p className="text-[0.8rem] text-destructive font-medium">
                       {form.formState.errors.sector.message}
@@ -159,9 +159,9 @@ export default function CheckoutPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Delivery Instructions (Optional)
+                  {t('checkoutInstructions')}
                 </label>
-                <Textarea placeholder="Apartment number, gate code, etc." {...form.register('instructions')} />
+                <Textarea placeholder={t('checkoutInstructionsPlaceholder')} {...form.register('instructions')} />
                 {form.formState.errors.instructions && (
                   <p className="text-[0.8rem] text-destructive font-medium">
                     {form.formState.errors.instructions.message}
@@ -175,7 +175,7 @@ export default function CheckoutPage() {
                 className="w-full mt-6"
                 disabled={!form.formState.isValid || cart.length === 0}
               >
-                Proceed to Payment
+                {t('checkoutProceed')}
               </Button>
             </form>
           </div>
@@ -183,7 +183,7 @@ export default function CheckoutPage() {
 
         <div>
           <div className="bg-muted p-6 rounded-lg sticky top-24">
-            <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+            <h2 className="text-xl font-semibold mb-6">{t('checkoutOrderSummary')}</h2>
             <div className="space-y-4 mb-6">
               {cart.map((item) => (
                 <div key={item.id} className="flex gap-4">
@@ -194,24 +194,24 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-medium text-sm line-clamp-1">{t(`products.${item.id}.name`, { defaultValue: item.name })}</h3>
-                    <p className="text-muted-foreground text-sm">Qty: {item.quantity}</p>
+                    <p className="text-muted-foreground text-sm">{t('checkoutQty')}: {item.quantity}</p>
                     <p className="font-semibold text-sm">{(item.price * item.quantity).toLocaleString('en-US')} RWF</p>
                   </div>
                 </div>
               ))}
               {cart.length === 0 && (
-                <p className="text-muted-foreground text-center py-4">Your cart is empty.</p>
+                <p className="text-muted-foreground text-center py-4">{t('emptyCart')}</p>
               )}
             </div>
             
             <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
+                <span className="text-muted-foreground">{t('checkoutSubtotal')}</span>
                 <span>{total.toLocaleString('en-US')} RWF</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Delivery</span>
-                <span>Calculated next step</span>
+                <span className="text-muted-foreground">{t('checkoutDelivery')}</span>
+                <span>{t('checkoutDeliveryCalc')}</span>
               </div>
               <div className="flex justify-between border-t pt-2 mt-2 font-bold text-lg">
                 <span>{t('total')}</span>
@@ -224,3 +224,4 @@ export default function CheckoutPage() {
     </div>
   );
 }
+

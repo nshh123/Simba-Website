@@ -35,7 +35,7 @@ export function FilterBar({
           placeholder={t('search')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-8"
+          className="pl-8 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:placeholder:text-gray-400"
         />
       </div>
 
@@ -64,7 +64,7 @@ export function FilterBar({
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as 'none' | 'asc' | 'desc')}
-            className="w-full h-8 appearance-none rounded-lg border border-input bg-transparent py-1.5 pr-8 pl-3 text-sm outline-none cursor-pointer hover:bg-accent/50 transition-colors"
+            className="w-full h-8 appearance-none rounded-lg border border-input bg-transparent py-1.5 pr-8 pl-3 text-sm outline-none cursor-pointer hover:bg-accent/50 transition-colors dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600"
           >
             <option value="none">{t('recommended')}</option>
             <option value="asc">{t('priceLowToHigh')}</option>

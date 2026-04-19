@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { ProductGrid } from '@/components/ProductGrid';
 import { FilterBar } from '@/components/FilterBar';
+import { HeroBanner } from '@/components/HeroBanner';
 import { getProducts, getCategories } from '@/lib/data';
 import { useStore } from '@/store/useStore';
 
@@ -39,7 +40,9 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
-      <FilterBar
+      <HeroBanner />
+      <div id="products-section">
+        <FilterBar
         categories={categories}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -49,6 +52,7 @@ export default function Home() {
         setSortOrder={setSortOrder}
       />
       <ProductGrid products={filteredAndSortedProducts} />
+      </div>
     </div>
   );
 }

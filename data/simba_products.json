@@ -76,6 +76,114 @@
       "category": "Pantry",
       "imageUrl": "/products/akarabo_honey.png",
       "inStock": true
+    },
+    {
+      "id": "prod-009",
+      "name": "Inyange Yoghurt Strawberry 500ml",
+      "description": "Creamy strawberry-flavoured yoghurt from Inyange.",
+      "price": 1500,
+      "category": "Dairy",
+      "imageUrl": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-010",
+      "name": "Fresh Tomatoes (kg)",
+      "description": "Vine-ripened local tomatoes, perfect for sauces.",
+      "price": 600,
+      "category": "Produce",
+      "imageUrl": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-011",
+      "name": "Skol Lager 50cl",
+      "description": "Light and refreshing lager brewed locally.",
+      "price": 900,
+      "category": "Beverages",
+      "imageUrl": "https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-012",
+      "name": "Basmati Rice 5kg",
+      "description": "Premium long-grain basmati rice for everyday meals.",
+      "price": 7500,
+      "category": "Pantry",
+      "imageUrl": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-013",
+      "name": "Fresh Eggs (Tray of 30)",
+      "description": "Farm-fresh eggs from local free-range hens.",
+      "price": 4500,
+      "category": "Dairy",
+      "imageUrl": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-014",
+      "name": "Red Onions (kg)",
+      "description": "Crisp and flavourful locally grown red onions.",
+      "price": 500,
+      "category": "Produce",
+      "imageUrl": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-015",
+      "name": "Sunflower Cooking Oil 5L",
+      "description": "Pure sunflower oil ideal for frying and cooking.",
+      "price": 12000,
+      "category": "Pantry",
+      "imageUrl": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-016",
+      "name": "Green Peppers (kg)",
+      "description": "Fresh crunchy green bell peppers.",
+      "price": 1200,
+      "category": "Produce",
+      "imageUrl": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-017",
+      "name": "Inyange Water 1.5L (Pack of 6)",
+      "description": "Natural spring water from the highlands of Rwanda.",
+      "price": 3000,
+      "category": "Beverages",
+      "imageUrl": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-018",
+      "name": "White Sugar 1kg",
+      "description": "Refined white sugar for baking and beverages.",
+      "price": 1800,
+      "category": "Pantry",
+      "imageUrl": "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-019",
+      "name": "Cheddar Cheese Block 250g",
+      "description": "Rich and creamy aged cheddar cheese.",
+      "price": 3500,
+      "category": "Dairy",
+      "imageUrl": "https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-020",
+      "name": "Passion Fruit Juice 1L",
+      "description": "Freshly pressed tropical passion fruit juice.",
+      "price": 2200,
+      "category": "Beverages",
+      "imageUrl": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400",
+      "inStock": true
     }
   ]
 }
