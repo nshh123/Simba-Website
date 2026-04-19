@@ -1,13 +1,32 @@
 {
   "search": "Shakisha ibicuruzwa...",
   "categories": "Ibyiciro",
-  "addToCart": "Shyira mu gitebo",
-  "checkout": "Kwishura",
+  "addToCart": "Ongeramo mu gitebo",
+  "checkout": "Kwishyura",
   "total": "Igiteranyo",
   "emptyCart": "Igitebo kirimo ubusa",
   "lightMode": "Urumuri",
-  "darkMode": "Umwijima",
+  "darkMode": "Uwijima",
   "english": "Icyongereza",
   "french": "Igifaransa",
-  "kinyarwanda": "Ikinyarwanda"
+  "kinyarwanda": "Ikinyarwanda",
+  "all": "Byose",
+  "dairy": "Amata",
+  "beverages": "Ibinyobwa",
+  "produce": "Imbuto",
+  "pantry": "Ibiribwa",
+  "sort_by": "Sarura",
+  "recommended": "Ibyiza",
+  "priceLowToHigh": "Igiciro: Gito kujya kucyinshi",
+  "priceHighToLow": "Igiciro: Icyinshi kujya kugito",
+  "products": {
+    "prod-001": { "name": "Amata y'Inyange 1L", "description": "Amata y'Inyange meza azira inenge." },
+    "prod-002": { "name": "Ikawa y'Arabica y'u Rwanda 500g", "description": "Ikawa nziza y'u Rwanda yatunganijwe neza." },
+    "prod-003": { "name": "Avoka (Ikiro)", "description": "Avoka nini nziza zeze mu Rwanda." },
+    "prod-004": { "name": "Byeri ya Mutzig 50cl", "description": "Byeri ikunzwe kandi iryoshe." },
+    "prod-005": { "name": "Ifu y'ingano ya Bakhresa Azam 2kg", "description": "Ifu inoze neza yo gukora imigati." },
+    "prod-006": { "name": "Ikawa ya Gorilla", "description": "Ikawa ikomeye kandi inoze neza." },
+    "prod-007": { "name": "Ibitoki Byumuhondo", "description": "Ibitoki byumuhondo biryoshye." },
+    "prod-008": { "name": "Ubuki bwa Akarabo 500g", "description": "Ubuki bw'umwimerere buturutse ku bavumvu." }
+  }
 }

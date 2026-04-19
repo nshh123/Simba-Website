@@ -193,7 +193,7 @@ export default function CheckoutPage() {
                     )}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-medium text-sm line-clamp-1">{item.name}</h3>
+                    <h3 className="font-medium text-sm line-clamp-1">{t(`products.${item.id}.name`, { defaultValue: item.name })}</h3>
                     <p className="text-muted-foreground text-sm">Qty: {item.quantity}</p>
                     <p className="font-semibold text-sm">{(item.price * item.quantity).toLocaleString('en-US')} RWF</p>
                   </div>

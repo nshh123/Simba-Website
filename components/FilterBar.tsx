@@ -53,7 +53,7 @@ export function FilterBar({
             onClick={() => setSelectedCategory('All')}
             className="whitespace-nowrap"
           >
-            All
+            {t('all')}
           </Button>
           {categories.map((cat) => (
             <Button
@@ -62,7 +62,7 @@ export function FilterBar({
               onClick={() => setSelectedCategory(cat)}
               className="whitespace-nowrap"
             >
-              {cat}
+              {t(cat.toLowerCase().replace(' ', '_'))}
             </Button>
           ))}
         </div>
@@ -72,12 +72,12 @@ export function FilterBar({
           onValueChange={(val) => setSortOrder(val as 'none' | 'asc' | 'desc')}
         >
           <SelectTrigger className="w-[180px] shrink-0">
-            <SelectValue placeholder="Sort by" />
+            <SelectValue placeholder={t('sort_by')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="none">Recommended</SelectItem>
-            <SelectItem value="asc">Price: Low to High</SelectItem>
-            <SelectItem value="desc">Price: High to Low</SelectItem>
+            <SelectItem value="none">{t('recommended')}</SelectItem>
+            <SelectItem value="asc">{t('priceLowToHigh')}</SelectItem>
+            <SelectItem value="desc">{t('priceHighToLow')}</SelectItem>
           </SelectContent>
         </Select>
       </div>

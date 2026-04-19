@@ -19,9 +19,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
     root.classList.add(theme);
   }, [theme]);
 
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
-  return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>;
+  // Render initially with default language to allow SSR to match, then hydrate
+  return (
+    <I18nextProvider i18n={i18n}>
+      <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
+        {children}
+      </div>
+    </I18nextProvider>
+  );
 }

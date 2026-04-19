@@ -11,7 +11,7 @@
       "description": "Locally sourced fresh whole milk from Inyange.",
       "price": 1200,
       "category": "Dairy",
-      "imageUrl": "/products/prod-001.jpg",
+      "imageUrl": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
       "inStock": true
     },
     {
@@ -20,7 +20,7 @@
       "description": "Premium roasted Rwandan Arabica coffee beans.",
       "price": 8500,
       "category": "Beverages",
-      "imageUrl": "/products/prod-002.jpg",
+      "imageUrl": "https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=400",
       "inStock": true
     },
     {
@@ -29,7 +29,7 @@
       "description": "Fresh, large locally grown avocados.",
       "price": 1500,
       "category": "Produce",
-      "imageUrl": "/products/prod-003.jpg",
+      "imageUrl": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400",
       "inStock": true
     },
     {
@@ -38,7 +38,7 @@
       "description": "Popular local amber lager beer.",
       "price": 1000,
       "category": "Beverages",
-      "imageUrl": "/products/prod-004.jpg",
+      "imageUrl": "/products/mutzig_beer.png",
       "inStock": true
     },
     {
@@ -47,7 +47,7 @@
       "description": "Fine wheat flour perfect for baking.",
       "price": 2800,
       "category": "Pantry",
-      "imageUrl": "/products/prod-005.jpg",
+      "imageUrl": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
       "inStock": true
     },
     {
@@ -56,7 +56,7 @@
       "description": "Rich and bold mountain grown coffee.",
       "price": 9000,
       "category": "Beverages",
-      "imageUrl": "/products/prod-006.jpg",
+      "imageUrl": "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=400",
       "inStock": true
     },
     {
@@ -65,7 +65,7 @@
       "description": "Sweet ripe bananas by the bunch.",
       "price": 800,
       "category": "Produce",
-      "imageUrl": "/products/prod-007.jpg",
+      "imageUrl": "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=400",
       "inStock": true
     },
     {
@@ -74,7 +74,7 @@
       "description": "Pure natural honey from local beekeepers.",
       "price": 5000,
       "category": "Pantry",
-      "imageUrl": "/products/prod-008.jpg",
+      "imageUrl": "/products/akarabo_honey.png",
       "inStock": true
     }
   ]

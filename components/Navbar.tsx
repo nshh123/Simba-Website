@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu, Moon, Search, ShoppingCart, Sun, Globe } from 'lucide-react';
@@ -32,7 +33,7 @@ export function Navbar() {
   const LanguageSelector = () => (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="inline-flex items-center justify-center rounded-lg p-2 text-sm hover:bg-muted transition-colors"
+        className="inline-flex items-center justify-center rounded-lg p-2 text-sm hover:bg-white/20 transition-colors text-white"
         aria-label="Select language"
       >
         <Globe className="h-5 w-5" />
@@ -53,7 +54,7 @@ export function Navbar() {
 
   const ThemeToggle = () => (
     <button
-      className="inline-flex items-center justify-center rounded-lg p-2 text-sm hover:bg-muted transition-colors"
+      className="inline-flex items-center justify-center rounded-lg p-2 text-sm hover:bg-white/20 transition-colors text-white"
       onClick={toggleTheme}
       aria-label="Toggle theme"
     >
@@ -66,11 +67,11 @@ export function Navbar() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-[#E07000] bg-[#FF8800] text-white shadow-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-4">
           <button
-            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 hover:bg-muted transition-colors"
+            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition-colors text-white"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
           >
@@ -85,7 +86,7 @@ export function Navbar() {
                   <Input
                     type="search"
                     placeholder={t('search')}
-                    className="w-full pl-8"
+                    className="w-full pl-8 text-foreground bg-background"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -98,8 +99,14 @@ export function Navbar() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="font-bold text-xl">
-            Simba 2.0
+          <Link href="/" className="flex items-center gap-2">
+            <div className="bg-white rounded-full p-0.5 h-10 w-10 flex items-center justify-center shrink-0">
+              <Image src="/logo.jpg" alt="Simba Logo" width={36} height={36} className="rounded-full object-cover" />
+            </div>
+            <div className="flex flex-col text-white">
+              <span className="font-bold text-lg leading-none tracking-tight">Simba Supermarket</span>
+              <span className="text-xs leading-tight opacity-90 mt-0.5">Online Shopping</span>
+            </div>
           </Link>
         </div>
 
@@ -109,7 +116,7 @@ export function Navbar() {
             <Input
               type="search"
               placeholder={t('search')}
-              className="w-full pl-8"
+              className="w-full pl-8 text-foreground bg-background"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -123,7 +130,7 @@ export function Navbar() {
           </div>
 
           <button
-            className="relative inline-flex items-center justify-center rounded-lg border p-2 hover:bg-muted transition-colors"
+            className="relative inline-flex items-center justify-center rounded-lg border border-white/30 p-2 hover:bg-white/20 transition-colors text-white"
             onClick={() => setCartOpen(true)}
             aria-label="Open cart"
           >

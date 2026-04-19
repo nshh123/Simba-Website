@@ -45,7 +45,7 @@ export function CartDrawer() {
                     </div>
                     <div className="flex-1 flex flex-col justify-between">
                       <div className="flex justify-between">
-                        <span className="font-medium line-clamp-1">{item.name}</span>
+                        <span className="font-medium line-clamp-1">{t(`products.${item.id}.name`, { defaultValue: item.name })}</span>
                         <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0 text-red-500 hover:text-red-600 hover:bg-red-50" onClick={() => removeFromCart(item.id)}>
                           <Trash2 className="h-4 w-4" />
                         </Button>

@@ -9,5 +9,24 @@
   "darkMode": "Dark Mode",
   "english": "English",
   "french": "French",
-  "kinyarwanda": "Kinyarwanda"
+  "kinyarwanda": "Kinyarwanda",
+  "all": "All",
+  "dairy": "Dairy",
+  "beverages": "Beverages",
+  "produce": "Produce",
+  "pantry": "Pantry",
+  "sort_by": "Sort by",
+  "recommended": "Recommended",
+  "priceLowToHigh": "Price: Low to High",
+  "priceHighToLow": "Price: High to Low",
+  "products": {
+    "prod-001": { "name": "Inyange Fresh Milk 1L", "description": "Locally sourced fresh whole milk from Inyange." },
+    "prod-002": { "name": "Rwandan Arabica Coffee 500g", "description": "Premium roasted Rwandan Arabica coffee beans." },
+    "prod-003": { "name": "Avocado (Local kg)", "description": "Fresh, large locally grown avocados." },
+    "prod-004": { "name": "Mutzig Beer 50cl", "description": "Popular local amber lager beer." },
+    "prod-005": { "name": "Bakhresa Azam Wheat Flour 2kg", "description": "Fine wheat flour perfect for baking." },
+    "prod-006": { "name": "Gorilla's Coffee Medium Roast", "description": "Rich and bold mountain grown coffee." },
+    "prod-007": { "name": "Yellow Bananas", "description": "Sweet ripe bananas by the bunch." },
+    "prod-008": { "name": "Akarabo Honey 500g", "description": "Pure natural honey from local beekeepers." }
+  }
 }

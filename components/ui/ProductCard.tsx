@@ -23,16 +23,16 @@ export function ProductCard({ product }: { product: Product }) {
           />
         ) : (
           <div className="absolute inset-0 bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground">{product.name}</span>
+            <span className="text-muted-foreground">{t(`products.${product.id}.name`, { defaultValue: product.name })}</span>
           </div>
         )}
       </div>
       <CardHeader className="p-4 flex-none">
-        <CardTitle className="text-lg line-clamp-1">{product.name}</CardTitle>
+        <CardTitle className="text-lg line-clamp-1">{t(`products.${product.id}.name`, { defaultValue: product.name })}</CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-1 flex flex-col justify-between">
         <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-          {product.description}
+          {t(`products.${product.id}.description`, { defaultValue: product.description })}
         </p>
         <p className="font-bold text-lg">
           {product.price.toLocaleString('en-US')} RWF
@@ -40,7 +40,7 @@ export function ProductCard({ product }: { product: Product }) {
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Button 
-          className="w-full" 
+          className="w-full font-bold text-primary-foreground" 
           onClick={() => addToCart(product)}
           disabled={!product.inStock}
         >

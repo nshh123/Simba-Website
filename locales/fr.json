@@ -9,5 +9,24 @@
   "darkMode": "Mode sombre",
   "english": "Anglais",
   "french": "Français",
-  "kinyarwanda": "Kinyarwanda"
+  "kinyarwanda": "Kinyarwanda",
+  "all": "Tout",
+  "dairy": "Produit laitier",
+  "beverages": "Boissons",
+  "produce": "Produits frais",
+  "pantry": "Garde-manger",
+  "sort_by": "Trier par",
+  "recommended": "Recommandé",
+  "priceLowToHigh": "Prix ​​: croissant",
+  "priceHighToLow": "Prix ​​: décroissant",
+  "products": {
+    "prod-001": { "name": "Lait frais Inyange 1L", "description": "Lait entier frais d'Inyange, d'origine locale." },
+    "prod-002": { "name": "Café Arabica Rwandais 500g", "description": "Grains de café arabica rwandais torréfiés de qualité supérieure." },
+    "prod-003": { "name": "Avocat (Local kg)", "description": "Gros avocats frais cultivés localement." },
+    "prod-004": { "name": "Bière Mutzig 50cl", "description": "Bière blonde ambrée locale populaire." },
+    "prod-005": { "name": "Farine de blé Bakhresa Azam 2kg", "description": "Farine de blé fine idéale pour la pâtisserie." },
+    "prod-006": { "name": "Café Gorilla's Torréfaction Moyenne", "description": "Café de montagne riche et corsé." },
+    "prod-007": { "name": "Bananes jaunes", "description": "Grappe de bananes mûres et douces." },
+    "prod-008": { "name": "Miel Akarabo 500g", "description": "Miel pur et naturel issu d'apiculteurs locaux." }
+  }
 }
