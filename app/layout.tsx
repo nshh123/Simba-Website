@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Providers } from '@/components/Providers';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,10 +23,11 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}>
         <Providers>
           <Navbar />
-          <main className="flex-1 container mx-auto px-4 py-8">
+          <main className="flex-1 container mx-auto px-4 py-8 pb-20 md:pb-8">
             {children}
           </main>
           <Footer />
+          <MobileBottomNav />
         </Providers>
       </body>
     </html>

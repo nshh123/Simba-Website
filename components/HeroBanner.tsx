@@ -63,9 +63,9 @@ export function HeroBanner() {
           </div>
         </div>
 
-        {/* Large Logo */}
-        <div className="hidden md:flex items-center justify-center shrink-0">
-          <div className="bg-white rounded-full p-3 h-44 w-44 flex items-center justify-center shadow-2xl shadow-black/30 ring-4 ring-white/30">
+        {/* Logo — responsive size */}
+        <div className="flex items-center justify-center shrink-0">
+          <div className="bg-white rounded-full p-2 h-24 w-24 md:h-44 md:w-44 md:p-3 flex items-center justify-center shadow-2xl shadow-black/30 ring-4 ring-white/30">
             <Image src="/logo.jpg" alt="Simba Logo" width={160} height={160} className="rounded-full object-cover" />
           </div>
         </div>

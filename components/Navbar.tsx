@@ -77,42 +77,13 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-[#E07000] bg-[#FF8800] text-white shadow-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-4">
-          <button
-            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 hover:bg-white/20 transition-colors text-white"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-
-          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col gap-4 mt-8">
-                <div className="relative">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    placeholder={t('search')}
-                    className="w-full pl-8 bg-white dark:bg-gray-800 text-foreground dark:text-gray-100 border-white/30 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-400"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center gap-2 mt-4">
-                  <LanguageSelector />
-                  {mounted && <ThemeToggle />}
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
-
           <Link href="/" className="flex items-center gap-2">
             <div className="bg-white rounded-full p-0.5 h-10 w-10 flex items-center justify-center shrink-0">
               <Image src="/logo.jpg" alt="Simba Logo" width={36} height={36} className="rounded-full object-cover" />
             </div>
             <div className="flex flex-col text-white">
               <span className="font-bold text-lg leading-none tracking-tight">Simba Supermarket</span>
-              <span className="text-xs leading-tight opacity-90 mt-0.5">Online Shopping</span>
+              <span className="hidden sm:inline-block text-xs leading-tight opacity-90 mt-0.5">Online Shopping</span>
             </div>
           </Link>
         </div>
@@ -131,13 +102,14 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
+          <LanguageSelector />
+          
           <div className="hidden md:flex gap-1">
-            <LanguageSelector />
             {mounted && <ThemeToggle />}
           </div>
 
           <button
-            className="relative inline-flex items-center justify-center rounded-lg border border-white/30 p-2 hover:bg-white/20 transition-colors text-white"
+            className="hidden md:inline-flex relative items-center justify-center rounded-lg border border-white/30 p-2 hover:bg-white/20 transition-colors text-white"
             onClick={() => setCartOpen(true)}
             aria-label="Open cart"
           >
