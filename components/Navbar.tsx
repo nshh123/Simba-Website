@@ -17,12 +17,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { CartDrawer } from './CartDrawer';
+import { useAuth, SignInButton, UserButton } from '@clerk/nextjs';
 
 export function Navbar() {
   const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart, theme, toggleTheme, setLanguage, setCartOpen, searchQuery, setSearchQuery } = useStore();
+  const { isSignedIn } = useAuth();
 
   useEffect(() => {
     setMounted(true);
@@ -115,6 +117,16 @@ export function Navbar() {
           <div className="hidden md:flex gap-1">
             {mounted && <ThemeToggle />}
           </div>
+
+          {isSignedIn ? (
+            <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border-2 border-white/40" } }} />
+          ) : (
+            <SignInButton mode="modal">
+              <button className="hidden md:inline-flex items-center justify-center rounded-full bg-white text-[#FF8800] px-4 py-1.5 text-sm font-bold shadow-md hover:bg-gray-100 transition-colors">
+                Sign In
+              </button>
+            </SignInButton>
+          )}
 
           <button
             className="hidden md:inline-flex relative items-center justify-center rounded-lg border border-white/30 p-2 hover:bg-white/20 transition-colors text-white"

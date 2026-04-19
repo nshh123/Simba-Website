@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Providers } from '@/components/Providers';
 import { MobileBottomNav } from '@/components/MobileBottomNav';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,17 +20,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}>
-        <Providers>
-          <Navbar />
-          <main className="flex-1 container mx-auto px-4 py-8 pb-20 md:pb-8">
-            {children}
-          </main>
-          <Footer />
-          <MobileBottomNav />
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}>
+          <Providers>
+            <Navbar />
+            <main className="flex-1 container mx-auto px-4 py-8 pb-20 md:pb-8">
+              {children}
+            </main>
+            <Footer />
+            <MobileBottomNav />
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

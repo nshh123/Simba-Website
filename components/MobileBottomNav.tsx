@@ -1,14 +1,16 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { Home, Grid3x3, ShoppingCart, Settings, Sun, Moon } from 'lucide-react';
+import { Home, Grid3x3, ShoppingCart, Settings, Sun, Moon, User } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import { useState } from 'react';
+import { useAuth, SignInButton, UserButton } from '@clerk/nextjs';
 
 export function MobileBottomNav() {
   const { t } = useTranslation();
   const { cart, theme, toggleTheme, setCartOpen } = useStore();
   const [activeTab, setActiveTab] = useState('home');
+  const { isSignedIn } = useAuth();
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -76,6 +78,24 @@ export function MobileBottomNav() {
             </div>
             <span className="text-[10px] font-medium">{t('checkout')}</span>
           </button>
+
+          <div className="flex flex-col items-center justify-center gap-0.5 py-1 px-3 text-muted-foreground">
+            {isSignedIn ? (
+              <>
+                <div className="h-5 flex items-center justify-center">
+                  <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "w-5 h-5" } }} />
+                </div>
+                <span className="text-[10px] font-medium">Profile</span>
+              </>
+            ) : (
+              <SignInButton mode="modal">
+                <button className="flex flex-col items-center gap-0.5">
+                  <User className="h-5 w-5" />
+                  <span className="text-[10px] font-medium">Sign in</span>
+                </button>
+              </SignInButton>
+            )}
+          </div>
 
           <button 
             onClick={toggleTheme}
