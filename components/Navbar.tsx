@@ -119,7 +119,7 @@ export function Navbar() {
           </div>
 
           {isSignedIn ? (
-            <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border-2 border-white/40" } }} />
+            <UserButton appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border-2 border-white/40" } }} />
           ) : (
             <SignInButton mode="modal">
               <button className="hidden md:inline-flex items-center justify-center rounded-full bg-white text-[#FF8800] px-4 py-1.5 text-sm font-bold shadow-md hover:bg-gray-100 transition-colors">

@@ -83,7 +83,7 @@ export function MobileBottomNav() {
             {isSignedIn ? (
               <>
                 <div className="h-5 flex items-center justify-center">
-                  <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "w-5 h-5" } }} />
+                  <UserButton appearance={{ elements: { userButtonAvatarBox: "w-5 h-5" } }} />
                 </div>
                 <span className="text-[10px] font-medium">Profile</span>
               </>
