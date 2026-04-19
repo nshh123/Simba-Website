@@ -126,7 +126,7 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
               </div>
 
               <Button
-                className="w-full font-bold text-primary-foreground gap-2 text-base py-5 disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
+                className="w-full font-bold text-primary-foreground gap-1.5 sm:gap-2 text-sm sm:text-base py-3 sm:py-5 h-auto flex flex-wrap justify-center whitespace-normal disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100 leading-tight"
                 onClick={handleAdd}
                 disabled={!product.inStock}
               >

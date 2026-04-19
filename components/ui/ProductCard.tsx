@@ -79,7 +79,7 @@ export function ProductCard({ product, onQuickView }: { product: Product; onQuic
       </CardContent>
       <div className="px-4 pb-4 pt-0">
         <Button 
-          className="w-full font-bold text-primary-foreground gap-2 transition-all duration-200 group-hover:shadow-md disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100" 
+          className="w-full font-bold text-primary-foreground gap-1.5 transition-all duration-200 group-hover:shadow-md disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100 h-auto py-2 text-xs sm:text-sm flex flex-wrap justify-center whitespace-normal leading-tight" 
           onClick={handleAddToCart}
           disabled={!product.inStock}
         >

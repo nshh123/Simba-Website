@@ -1,9 +1,9 @@
 {
   "search": "Rechercher des produits...",
   "categories": "Catégories",
-  "addToCart": "Ajouter au panier",
+  "addToCart": "Ajouter",
   "outOfStock": "Rupture de Stock",
-  "checkout": "Paiement",
+  "checkout": "Payer",
   "total": "Total",
   "emptyCart": "Panier vide",
   "lightMode": "Mode clair",
