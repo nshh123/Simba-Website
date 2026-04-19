@@ -10,8 +10,7 @@ export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) {
     auth().protect();
   }
-});
-// hihi
+})
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
