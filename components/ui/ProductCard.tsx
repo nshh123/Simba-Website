@@ -79,12 +79,20 @@ export function ProductCard({ product, onQuickView }: { product: Product; onQuic
       </CardContent>
       <div className="px-4 pb-4 pt-0">
         <Button 
-          className="w-full font-bold text-primary-foreground gap-2 transition-all duration-200 group-hover:shadow-md" 
+          className="w-full font-bold text-primary-foreground gap-2 transition-all duration-200 group-hover:shadow-md disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100" 
           onClick={handleAddToCart}
           disabled={!product.inStock}
         >
-          <ShoppingCart className="h-4 w-4" />
-          {t('addToCart')}
+          {product.inStock ? (
+            <>
+              <ShoppingCart className="h-4 w-4" />
+              {t('addToCart')}
+            </>
+          ) : (
+            <>
+              <span className="font-semibold text-sm">Out of Stock</span>
+            </>
+          )}
         </Button>
       </div>
     </Card>

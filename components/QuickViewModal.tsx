@@ -126,12 +126,18 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
               </div>
 
               <Button
-                className="w-full font-bold text-primary-foreground gap-2 text-base py-5"
+                className="w-full font-bold text-primary-foreground gap-2 text-base py-5 disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
                 onClick={handleAdd}
                 disabled={!product.inStock}
               >
-                <ShoppingCart className="h-5 w-5" />
-                {t('addToCart')} — {(product.price * quantity).toLocaleString('en-US')} RWF
+                {product.inStock ? (
+                  <>
+                    <ShoppingCart className="h-5 w-5" />
+                    {t('addToCart')} — {(product.price * quantity).toLocaleString('en-US')} RWF
+                  </>
+                ) : (
+                  <span className="font-semibold text-lg">Out of Stock</span>
+                )}
               </Button>
             </div>
           </div>

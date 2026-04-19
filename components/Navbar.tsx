@@ -89,15 +89,23 @@ export function Navbar() {
         </div>
 
         <div className="hidden md:flex flex-1 items-center justify-center max-w-sm mx-4">
-          <div className="relative w-full">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <div className="relative w-full flex items-center text-foreground dark:text-gray-100">
+            <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
               placeholder={t('search')}
-              className="w-full pl-8 bg-white dark:bg-gray-800 text-foreground dark:text-gray-100 border-white/30 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+              className="w-full pl-9 pr-9 bg-white dark:bg-gray-800 text-foreground dark:text-gray-100 border-white/30 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-400"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2 p-1 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted/50 transition-colors"
+              >
+                <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+            )}
           </div>
         </div>
 

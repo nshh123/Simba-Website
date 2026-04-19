@@ -3,7 +3,7 @@
 import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 
 interface FilterBarProps {
   categories: string[];
@@ -28,15 +28,23 @@ export function FilterBar({
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between py-4">
-      <div className="relative w-full md:max-w-xs">
-        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+      <div className="relative w-full md:max-w-xs flex items-center">
+        <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
           placeholder={t('search')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-8 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:placeholder:text-gray-400"
+          className="pl-8 pr-8 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 dark:placeholder:text-gray-400"
         />
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery('')}
+            className="absolute right-2 p-1 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted/50 transition-colors"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        )}
       </div>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center overflow-hidden">

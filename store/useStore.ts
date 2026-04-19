@@ -19,6 +19,7 @@ interface StoreState {
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   toggleTheme: () => void;
+  setTheme: (theme: 'light' | 'dark') => void;
   setLanguage: (language: 'en' | 'fr' | 'rw') => void;
 }
 
@@ -59,7 +60,14 @@ export const useStore = create<StoreState>()(
         })),
       clearCart: () => set({ cart: [] }),
       toggleTheme: () =>
-        set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
+        set((state) => {
+          if (typeof window !== 'undefined') localStorage.setItem('theme-user-choice', 'true');
+          return { theme: state.theme === 'light' ? 'dark' : 'light' };
+        }),
+      setTheme: (theme) => {
+        if (typeof window !== 'undefined') localStorage.setItem('theme-user-choice', 'true');
+        set({ theme });
+      },
       setLanguage: (language) => set({ language }),
     }),
     {
