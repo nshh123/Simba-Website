@@ -47,6 +47,7 @@
   "checkoutInstructions": "Delivery Instructions (Optional)",
   "checkoutInstructionsPlaceholder": "Apartment number, gate code, etc.",
   "checkoutLiveLocation": "Use Live Location",
+  "checkoutPrintReceipt": "Print Receipt",
   "checkoutProceed": "Proceed to Payment",
   "checkoutOrderSummary": "Order Summary",
   "checkoutQty": "Qty",

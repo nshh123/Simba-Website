@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 import { useState, useEffect } from 'react';
-import { Loader2, CheckCircle, MapPin } from 'lucide-react';
+import { Loader2, CheckCircle, MapPin, Printer } from 'lucide-react';
 import Confetti from 'react-confetti';
 
 const checkoutSchema = z.object({
@@ -34,8 +34,13 @@ export default function CheckoutPage() {
   const [orderId, setOrderId] = useState('');
   const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
   const [isLocating, setIsLocating] = useState(false);
+  const [receiptCart, setReceiptCart] = useState(cart);
+  const [receiptTotal, setReceiptTotal] = useState(0);
+
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleGetLocation = () => {
+    // ... logic remains
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser");
       return;
@@ -78,8 +83,6 @@ export default function CheckoutPage() {
     }
   }, [checkoutState, clearCart]);
 
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
     mode: 'onChange',
@@ -92,8 +95,10 @@ export default function CheckoutPage() {
     },
   });
 
-  const onSubmit = (_data: CheckoutFormValues) => {
+  const onSubmit = (data: CheckoutFormValues) => {
     setCheckoutState('processing');
+    setReceiptCart([...cart]);
+    setReceiptTotal(total);
     setTimeout(() => {
       setOrderId('ORD-' + Math.random().toString(36).substring(2, 10).toUpperCase());
       setCheckoutState('success');
@@ -115,16 +120,78 @@ export default function CheckoutPage() {
   if (checkoutState === 'success') {
     return (
       <div className="container mx-auto px-4 py-32 flex flex-col items-center justify-center min-h-[60vh] text-center">
-        {windowDimensions.width > 0 && (
-          <Confetti width={windowDimensions.width} height={windowDimensions.height} recycle={false} numberOfPieces={500} />
-        )}
-        <CheckCircle className="h-24 w-24 text-green-500 mb-8" />
-        <h1 className="text-4xl font-bold mb-4">{t('checkoutSuccess')}</h1>
-        <p className="text-xl text-muted-foreground mb-2">{t('checkoutThankYou')}</p>
-        <p className="text-lg font-medium mb-12">{t('checkoutOrderNumber')}: <span className="font-bold">{orderId}</span></p>
-        <Button render={<Link href="/" />} size="lg">
-          {t('checkoutReturnHome')}
-        </Button>
+        {/* On-screen Success View */}
+        <div className="print:hidden flex flex-col items-center justify-center w-full">
+          {windowDimensions.width > 0 && (
+            <Confetti width={windowDimensions.width} height={windowDimensions.height} recycle={false} numberOfPieces={500} />
+          )}
+          <CheckCircle className="h-24 w-24 text-green-500 mb-8" />
+          <h1 className="text-4xl font-bold mb-4">{t('checkoutSuccess')}</h1>
+          <p className="text-xl text-muted-foreground mb-2">{t('checkoutThankYou')}</p>
+          <p className="text-lg font-medium mb-12">{t('checkoutOrderNumber')}: <span className="font-bold">{orderId}</span></p>
+          <div className="flex flex-wrap gap-4 items-center justify-center">
+            <Button render={<Link href="/" />} size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              {t('checkoutReturnHome', { defaultValue: 'Return Home' })}
+            </Button>
+            <Button size="lg" onClick={() => window.print()} className="font-bold gap-2">
+              <Printer className="h-5 w-5" /> 
+              {t('checkoutPrintReceipt', { defaultValue: 'Print Receipt' })}
+            </Button>
+          </div>
+        </div>
+
+        {/* Hidden Printable Receipt */}
+        <div className="hidden print:block w-full text-left max-w-2xl mx-auto p-8 border-2 border-primary/20 rounded-xl mt-[-5rem]">
+          <div className="flex items-center justify-between border-b pb-6 mb-6 gap-8">
+            <div className="flex items-center gap-3">
+              <div className="bg-[#FF8800] rounded-full p-2 h-14 w-14 flex items-center justify-center shrink-0">
+                <Image src="/logo.jpg" alt="Simba Logo" width={40} height={40} className="rounded-full object-cover" />
+              </div>
+              <div>
+                <h2 className="text-3xl font-extrabold m-0">SIMBA</h2>
+                <p className="text-sm font-semibold tracking-widest text-[#FF8800]">SUPERMARKET</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <h1 className="text-2xl font-bold text-gray-800">RECEIPT</h1>
+              <p className="text-sm text-gray-500 font-medium">Order #: {orderId}</p>
+              <p className="text-sm text-gray-500">Date: {new Date().toLocaleDateString()}</p>
+            </div>
+          </div>
+          <div className="mb-6">
+            <h3 className="font-semibold text-lg border-b pb-2 mb-3">Order Details</h3>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-gray-500">
+                  <th className="pb-2 font-medium">Item</th>
+                  <th className="pb-2 font-medium text-center">Qty</th>
+                  <th className="pb-2 font-medium text-right">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {receiptCart.map((item) => (
+                  <tr key={item.id} className="border-b border-gray-100">
+                    <td className="py-3 pr-2">{t(`products.${item.id}.name`, { defaultValue: item.name })}</td>
+                    <td className="py-3 text-center">{item.quantity}</td>
+                    <td className="py-3 text-right font-medium">{(item.price * item.quantity).toLocaleString('en-US')} RWF</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex justify-end pt-2">
+            <div className="w-64 space-y-2">
+              <div className="flex justify-between font-bold text-xl pt-2 border-t-2 border-gray-800">
+                <span>Total</span>
+                <span>{receiptTotal.toLocaleString('en-US')} RWF</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-12 text-center text-sm text-gray-500 font-medium border-t pt-6">
+            <p className="text-lg text-gray-800 font-bold mb-1">Thank you for shopping with us!</p>
+            <p>KG 7 Ave, Kigali, Rwanda  |  +250 795 306 295</p>
+          </div>
+        </div>
       </div>
     );
   }

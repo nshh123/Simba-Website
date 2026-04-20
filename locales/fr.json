@@ -47,6 +47,7 @@
   "checkoutInstructions": "Instructions de livraison (Facultatif)",
   "checkoutInstructionsPlaceholder": "Numéro d'appartement, code du portail, etc.",
   "checkoutLiveLocation": "Utiliser ma position locale",
+  "checkoutPrintReceipt": "Imprimer le reçu",
   "checkoutProceed": "Procéder au paiement",
   "checkoutOrderSummary": "Résumé de la commande",
   "checkoutQty": "Qté",
