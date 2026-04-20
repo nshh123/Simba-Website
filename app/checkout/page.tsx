@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 import { useState, useEffect } from 'react';
-import { Loader2, CheckCircle } from 'lucide-react';
+import { Loader2, CheckCircle, MapPin } from 'lucide-react';
 import Confetti from 'react-confetti';
 
 const checkoutSchema = z.object({
@@ -33,6 +33,37 @@ export default function CheckoutPage() {
   const [checkoutState, setCheckoutState] = useState<CheckoutState>('form');
   const [orderId, setOrderId] = useState('');
   const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
+  const [isLocating, setIsLocating] = useState(false);
+
+  const handleGetLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
+      return;
+    }
+    setIsLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        const currentInstructions = form.getValues('instructions') || '';
+        form.setValue(
+          'instructions', 
+          currentInstructions ? `${currentInstructions}\n\n${t('checkoutLiveLocation')}: ${mapsLink}` : `${t('checkoutLiveLocation')}: ${mapsLink}`,
+          { shouldValidate: true }
+        );
+        
+        if (!form.getValues('district')) form.setValue('district', t('checkoutLiveLocation'), { shouldValidate: true });
+        if (!form.getValues('sector')) form.setValue('sector', t('checkoutLiveLocation'), { shouldValidate: true });
+        
+        setIsLocating(false);
+      },
+      (error) => {
+        console.error(error);
+        alert("Unable to retrieve your location. Please check your browser permissions.");
+        setIsLocating(false);
+      }
+    );
+  };
 
   useEffect(() => {
     setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -158,10 +189,23 @@ export default function CheckoutPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  {t('checkoutInstructions')}
-                </label>
-                <Textarea placeholder={t('checkoutInstructionsPlaceholder')} {...form.register('instructions')} />
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    {t('checkoutInstructions')}
+                  </label>
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleGetLocation} 
+                    disabled={isLocating}
+                    className="h-8 gap-1.5 text-[#FF8800] border-[#FF8800] hover:bg-[#FF8800]/10"
+                  >
+                    {isLocating ? <Loader2 className="h-3 w-3 animate-spin" /> : <MapPin className="h-3 w-3" />}
+                    {t('checkoutLiveLocation')}
+                  </Button>
+                </div>
+                <Textarea placeholder={t('checkoutInstructionsPlaceholder')} {...form.register('instructions')} rows={4} />
                 {form.formState.errors.instructions && (
                   <p className="text-[0.8rem] text-destructive font-medium">
                     {form.formState.errors.instructions.message}

@@ -36,8 +36,7 @@ export function Footer() {
               {t('footerHours')}
             </h3>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <p>{t('footerWeekdays')}</p>
-              <p>{t('footerSunday')}</p>
+              <p>{t('footerAlwaysOpen')}</p>
             </div>
           </div>
 
@@ -54,7 +53,7 @@ export function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0" />
-                +250 788 000 000
+                +250 795 306 295
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0" />
