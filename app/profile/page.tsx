@@ -12,25 +12,12 @@ export default function ProfilePage() {
   const orders = useStore((state) => state.orders) || [];
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 py-8 max-w-[1600px]">
       <h1 className="text-3xl font-bold mb-8">My Account</h1>
       
-      <div className="flex flex-col gap-12">
-        {/* Clerk Profile Components */}
-        <div className="w-full flex justify-center overflow-hidden rounded-xl">
-          <UserProfile 
-            routing="hash"
-            appearance={{
-              elements: {
-                rootBox: "w-full max-w-full",
-                cardBox: "w-full shadow-sm border",
-              }
-            }}
-          />
-        </div>
-
+      <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* Orders Section */}
-        <div className="w-full">
+        <div className="w-full lg:flex-1 order-2 lg:order-1 min-w-0">
           <div className="bg-card border rounded-xl overflow-hidden shadow-sm">
             <div className="p-6 border-b bg-muted/30 flex items-center gap-2">
               <Package className="h-5 w-5 text-primary" />
@@ -94,6 +81,23 @@ export default function ProfilePage() {
                 ))}
               </div>
             )}
+          </div>
+        </div>
+
+        {/* Clerk Profile Components */}
+        <div className="w-full lg:w-[450px] shrink-0 lg:sticky lg:top-24 order-1 lg:order-2">
+          <div className="overflow-hidden rounded-xl border shadow-sm bg-card">
+            <UserProfile 
+              routing="hash"
+              appearance={{
+                elements: {
+                  rootBox: "w-full",
+                  cardBox: "w-full shadow-none border-none",
+                  navbar: "hidden md:flex",
+                  scrollBox: "rounded-none",
+                }
+              }}
+            />
           </div>
         </div>
       </div>

@@ -138,14 +138,13 @@ export function Navbar() {
             onClick={() => setCartOpen(true)}
             aria-label="Open cart"
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-5 w-5 text-white" />
             {mounted && totalItems > 0 && (
-              <Badge
-                variant="destructive"
-                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs"
+              <span
+                className="absolute -right-2.5 -top-2.5 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-white text-[#FF8800] ring-2 ring-[#FF8800] text-xs font-black shadow-md shadow-black/20"
               >
                 {totalItems}
-              </Badge>
+              </span>
             )}
           </button>
         </div>
