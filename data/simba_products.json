@@ -191,7 +191,7 @@
       "description": "Crisp and refreshing Rwandan lager beer.",
       "price": 900,
       "category": "Beverages",
-      "imageUrl": "https://images.unsplash.com/photo-1621287958641-ed59a4c0eb66?w=400",
+      "imageUrl": "/products/skol_lager.png",
       "inStock": true
     },
     {
@@ -200,7 +200,7 @@
       "description": "Famous spicy Rwandan chili oil condiment.",
       "price": 500,
       "category": "Pantry",
-      "imageUrl": "https://images.unsplash.com/photo-1596647900742-d6fc9cfc6ce8?w=400",
+      "imageUrl": "/products/akabanga_oil.png",
       "inStock": true
     },
     {
@@ -209,7 +209,7 @@
       "description": "Richly flavored black tea leaves from Sortheca.",
       "price": 3200,
       "category": "Beverages",
-      "imageUrl": "https://images.unsplash.com/photo-1576092762791-dd9e2220c951?w=400",
+      "imageUrl": "/products/rwandan_black_tea.png",
       "inStock": true
     },
     {
@@ -218,7 +218,7 @@
       "description": "Pure organic natural honey from Rwandan beekeepers.",
       "price": 4500,
       "category": "Pantry",
-      "imageUrl": "https://images.unsplash.com/photo-1587049352847-4d4b1ed7d884?w=400",
+      "imageUrl": "/products/akarabo_honey.png",
       "inStock": true
     },
     {
@@ -227,7 +227,7 @@
       "description": "Traditional blend of spices to make classic Rwandan stews.",
       "price": 800,
       "category": "Pantry",
-      "imageUrl": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400",
+      "imageUrl": "/products/igisafuriya_spice.png",
       "inStock": true
     }
   ]
