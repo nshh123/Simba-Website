@@ -51,10 +51,14 @@ export default function Home() {
     }
 
     if (debouncedSearchQuery) {
-      const lowerQuery = debouncedSearchQuery.toLowerCase();
-      result = result.filter(
-        (p) => p.name.toLowerCase().includes(lowerQuery) || p.description.toLowerCase().includes(lowerQuery)
-      );
+      if (debouncedSearchQuery === '@wishlist') {
+        result = result.filter((p) => wishlist.includes(p.id));
+      } else {
+        const lowerQuery = debouncedSearchQuery.toLowerCase();
+        result = result.filter(
+          (p) => p.name.toLowerCase().includes(lowerQuery) || p.description.toLowerCase().includes(lowerQuery)
+        );
+      }
     }
 
     if (selectedCategory !== 'All') {
