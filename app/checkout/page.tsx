@@ -10,6 +10,14 @@ import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select';
+import { Controller } from 'react-hook-form';
 
 import { useState, useEffect } from 'react';
 import { Loader2, CheckCircle, MapPin, Printer } from 'lucide-react';
@@ -36,8 +44,23 @@ export default function CheckoutPage() {
   const [isLocating, setIsLocating] = useState(false);
   const [receiptCart, setReceiptCart] = useState(cart);
   const [receiptTotal, setReceiptTotal] = useState(0);
+  const [receiptDeliveryFee, setReceiptDeliveryFee] = useState(0);
 
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  
+  const districtFees: Record<string, number> = {
+    'Gasabo': 1000,
+    'Kicukiro': 1000,
+    'Nyarugenge': 1000,
+    'Bugesera': 2500,
+    'Kamonyi': 2500,
+    'Rwamagana': 2500,
+    'Other': 4000
+  };
+
+  const selectedDistrict = form.watch('district');
+  const deliveryFee = districtFees[selectedDistrict] || 0;
+  const total = subtotal + deliveryFee;
 
   const handleGetLocation = () => {
     // ... logic remains
@@ -99,6 +122,7 @@ export default function CheckoutPage() {
     setCheckoutState('processing');
     setReceiptCart([...cart]);
     setReceiptTotal(total);
+    setReceiptDeliveryFee(deliveryFee);
     setTimeout(() => {
       const generatedId = 'ORD-' + Math.random().toString(36).substring(2, 10).toUpperCase();
       setOrderId(generatedId);
@@ -191,6 +215,14 @@ export default function CheckoutPage() {
           </div>
           <div className="flex justify-end pt-2">
             <div className="w-64 space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Subtotal</span>
+                <span>{(receiptTotal - receiptDeliveryFee).toLocaleString('en-US')} RWF</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Delivery Fee</span>
+                <span>{receiptDeliveryFee.toLocaleString('en-US')} RWF</span>
+              </div>
               <div className="flex justify-between font-bold text-xl pt-2 border-t-2 border-gray-800">
                 <span>Total</span>
                 <span>{receiptTotal.toLocaleString('en-US')} RWF</span>
@@ -244,7 +276,30 @@ export default function CheckoutPage() {
                   <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                     {t('checkoutDistrict')}
                   </label>
-                  <Input {...form.register('district')} />
+                  <Controller
+                    control={form.control}
+                    name="district"
+                    render={({ field }) => (
+                      <Select 
+                        onValueChange={field.onChange} 
+                        defaultValue={field.value}
+                        value={field.value}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select District" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Gasabo">Gasabo</SelectItem>
+                          <SelectItem value="Kicukiro">Kicukiro</SelectItem>
+                          <SelectItem value="Nyarugenge">Nyarugenge</SelectItem>
+                          <SelectItem value="Bugesera">Bugesera</SelectItem>
+                          <SelectItem value="Kamonyi">Kamonyi</SelectItem>
+                          <SelectItem value="Rwamagana">Rwamagana</SelectItem>
+                          <SelectItem value="Other">Other (Regional)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                   {form.formState.errors.district && (
                     <p className="text-[0.8rem] text-destructive font-medium">
                       {form.formState.errors.district.message}
@@ -328,11 +383,13 @@ export default function CheckoutPage() {
             <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">{t('checkoutSubtotal')}</span>
-                <span>{total.toLocaleString('en-US')} RWF</span>
+                <span>{subtotal.toLocaleString('en-US')} RWF</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">{t('checkoutDelivery')}</span>
-                <span>{t('checkoutDeliveryCalc')}</span>
+                <span className={deliveryFee > 0 ? "font-medium text-foreground" : "text-muted-foreground italic"}>
+                  {deliveryFee > 0 ? `${deliveryFee.toLocaleString('en-US')} RWF` : t('checkoutDeliveryCalc')}
+                </span>
               </div>
               <div className="flex justify-between border-t pt-2 mt-2 font-bold text-lg">
                 <span>{t('total')}</span>
