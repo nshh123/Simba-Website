@@ -38,6 +38,15 @@ export default function Home() {
           document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
         }, 500);
       }
+
+      const handleReset = () => {
+        setSelectedCategory('All');
+        setSortOrder('none');
+        setMinPrice('');
+        setMaxPrice('');
+      };
+      window.addEventListener('resetFilters', handleReset);
+      return () => window.removeEventListener('resetFilters', handleReset);
     }
   }, []);
 

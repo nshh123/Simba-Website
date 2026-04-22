@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 
 export function MobileBottomNav() {
   const { t } = useTranslation();
-  const { cart, theme, toggleTheme, setCartOpen } = useStore();
+  const { cart, theme, toggleTheme, setCartOpen, setSearchQuery } = useStore();
   const [activeTab, setActiveTab] = useState('home');
   const { isSignedIn } = useAuth();
 
@@ -22,6 +22,10 @@ export function MobileBottomNav() {
 
   const handleHomeClick = () => {
     setActiveTab('home');
+    setSearchQuery('');
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('resetFilters'));
+    }
     if (pathname !== '/') {
       router.push('/');
     } else {

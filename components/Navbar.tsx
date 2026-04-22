@@ -61,6 +61,11 @@ export function Navbar() {
     </DropdownMenu>
   );
 
+  const handleResetHome = () => {
+    setSearchQuery('');
+    window.dispatchEvent(new Event('resetFilters'));
+  };
+
   const ThemeToggle = () => (
     <button
       className="inline-flex items-center justify-center rounded-lg p-2 text-sm hover:bg-white/20 transition-colors text-white"
@@ -79,7 +84,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-[#E07000] bg-[#FF8800] text-white shadow-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" onClick={handleResetHome} className="flex items-center gap-2">
             <div className="bg-white rounded-full p-0.5 h-10 w-10 flex items-center justify-center shrink-0">
               <Image src="/logo.jpg" alt="Simba Logo" width={36} height={36} className="rounded-full object-cover" />
             </div>
@@ -113,7 +118,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2 md:gap-4">
           <div className="hidden lg:flex items-center gap-6 mr-4">
-            <Link href="/" className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('home')}</Link>
+            <Link href="/" onClick={handleResetHome} className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('home')}</Link>
             <Link href="/" onClick={() => setSearchQuery('@wishlist')} className="text-sm font-bold text-white hover:text-white/80 transition-colors cursor-pointer">{t('wishlist')}</Link>
             <Link href="/checkout" className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('checkout')}</Link>
           </div>
