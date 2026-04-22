@@ -114,7 +114,6 @@ export function Navbar() {
         <div className="flex items-center gap-2 md:gap-4">
           <div className="hidden lg:flex items-center gap-6 mr-4">
             <Link href="/" className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('home')}</Link>
-            <Link href="/?sort=wishlist" className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('wishlist')}</Link>
             <Link href="/checkout" className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('checkout')}</Link>
           </div>
           
