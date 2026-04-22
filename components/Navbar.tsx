@@ -121,7 +121,7 @@ export function Navbar() {
           {isSignedIn ? (
             <div className="flex items-center gap-4">
               <Link href="/profile" className="hidden md:inline-flex text-sm font-bold text-white hover:text-white/80 transition-colors">
-                My Profile
+                {t('myProfile')}
               </Link>
               <UserButton appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border-2 border-white/40" } }} />
             </div>

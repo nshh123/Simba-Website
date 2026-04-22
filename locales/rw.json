@@ -60,6 +60,10 @@
   "checkoutThankYou": "Urakoze kugura.",
   "checkoutOrderNumber": "Nimero y'itumba ryawe ni",
   "checkoutReturnHome": "Subira ku rupapuro rw'ibanze",
+  "myProfile": "Umwirondoro wanjye",
+  "loadMore": "Andi bicuruzwa",
+  "paymentMethods": "Uburyo bwo kwishyura",
+  "yourCart": "Igitebo cyawe",
   "products": {
     "prod-001": { "name": "Amata y'Inyange 1L", "description": "Amata y'Inyange meza azira inenge." },
     "prod-002": { "name": "Ikawa y'Arabica y'u Rwanda 500g", "description": "Ikawa nziza y'u Rwanda yatunganijwe neza." },

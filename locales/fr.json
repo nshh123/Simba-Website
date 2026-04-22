@@ -60,6 +60,10 @@
   "checkoutThankYou": "Merci pour votre achat.",
   "checkoutOrderNumber": "Votre numéro de commande est",
   "checkoutReturnHome": "Retour à l'accueil",
+  "myProfile": "Mon Profil",
+  "loadMore": "Charger plus de produits",
+  "paymentMethods": "Moyens de paiement",
+  "yourCart": "Votre Panier",
   "products": {
     "prod-001": { "name": "Lait frais Inyange 1L", "description": "Lait entier frais d'Inyange, d'origine locale." },
     "prod-002": { "name": "Café Arabica Rwandais 500g", "description": "Grains de café arabica rwandais torréfiés de qualité supérieure." },

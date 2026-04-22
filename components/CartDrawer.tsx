@@ -24,7 +24,7 @@ export function CartDrawer() {
     <Sheet open={isCartOpen} onOpenChange={setCartOpen}>
       <SheetContent className="flex flex-col w-full sm:max-w-lg">
         <SheetHeader>
-          <SheetTitle>Your Cart</SheetTitle>
+          <SheetTitle>{t('yourCart')}</SheetTitle>
         </SheetHeader>
         
         {cart.length === 0 ? (

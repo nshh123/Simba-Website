@@ -85,7 +85,7 @@ export function MobileBottomNav() {
             {isSignedIn ? (
               <Button render={<Link href="/profile" />} variant="ghost" className="h-auto p-0 flex flex-col gap-0.5 hover:bg-transparent">
                 <User className={`h-5 w-5 ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`} />
-                <span className={`text-[10px] font-medium ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`}>Profile</span>
+                <span className={`text-[10px] font-medium ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`}>{t('myProfile')}</span>
               </Button>
             ) : (
               <SignInButton mode="modal">

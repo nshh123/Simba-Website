@@ -60,6 +60,10 @@
   "checkoutThankYou": "Thank you for your purchase.",
   "checkoutOrderNumber": "Your order number is",
   "checkoutReturnHome": "Return to Home",
+  "myProfile": "My Profile",
+  "loadMore": "Load more products",
+  "paymentMethods": "Payment Methods",
+  "yourCart": "Your Cart",
   "products": {
     "prod-001": { "name": "Inyange Fresh Milk 1L", "description": "Locally sourced fresh whole milk from Inyange." },
     "prod-002": { "name": "Rwandan Arabica Coffee 500g", "description": "Premium roasted Rwandan Arabica coffee beans." },

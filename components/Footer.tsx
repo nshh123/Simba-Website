@@ -64,7 +64,7 @@ export function Footer() {
 
           {/* Social / Payment */}
           <div className="space-y-4">
-            <h3 className="font-semibold">Payment Methods</h3>
+            <h3 className="font-semibold">{t('paymentMethods')}</h3>
             <div className="flex flex-wrap gap-2">
               <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium">MTN MoMo</span>
               <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium">Airtel Money</span>

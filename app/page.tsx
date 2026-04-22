@@ -8,10 +8,12 @@ import { HeroBanner } from '@/components/HeroBanner';
 import { getProducts, getCategories } from '@/lib/data';
 import { useStore } from '@/store/useStore';
 import { ProductCardSkeleton } from '@/components/ui/ProductCardSkeleton';
+import { useTranslation } from 'react-i18next';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { Button } from '@/components/ui/button';
 
 export default function Home() {
+  const { t } = useTranslation();
   const { searchQuery, setSearchQuery } = useStore();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOrder, setSortOrder] = useState<'none' | 'asc' | 'desc'>('none');
@@ -118,7 +120,7 @@ export default function Home() {
                     className="w-full max-w-sm rounded-full py-6 font-semibold"
                     onClick={() => setVisibleCount((prev) => prev + 12)}
                   >
-                    Load More Products
+                    {t('loadMore')}
                   </Button>
                 </div>
               )}
