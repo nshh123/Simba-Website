@@ -21,6 +21,8 @@ interface StoreState {
   toggleTheme: () => void;
   setTheme: (theme: 'light' | 'dark') => void;
   setLanguage: (language: 'en' | 'fr' | 'rw') => void;
+  wishlist: string[];
+  toggleWishlist: (productId: string) => void;
 }
 
 export const useStore = create<StoreState>()(
@@ -43,10 +45,9 @@ export const useStore = create<StoreState>()(
                   ? { ...item, quantity: item.quantity + qty }
                   : item
               ),
-              isCartOpen: true,
             };
           }
-          return { cart: [...state.cart, { ...product, quantity: qty }], isCartOpen: true };
+          return { cart: [...state.cart, { ...product, quantity: qty }] };
         }),
       removeFromCart: (productId) =>
         set((state) => ({
@@ -69,10 +70,17 @@ export const useStore = create<StoreState>()(
         set({ theme });
       },
       setLanguage: (language) => set({ language }),
+      wishlist: [],
+      toggleWishlist: (productId) =>
+        set((state) => ({
+          wishlist: state.wishlist.includes(productId)
+            ? state.wishlist.filter((id) => id !== productId)
+            : [...state.wishlist, productId],
+        })),
     }),
     {
       name: 'simba-store',
-      partialize: (state) => ({ cart: state.cart, language: state.language, theme: state.theme }),
+      partialize: (state) => ({ cart: state.cart, language: state.language, theme: state.theme, wishlist: state.wishlist }),
     }
   )
 );

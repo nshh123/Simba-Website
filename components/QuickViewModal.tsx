@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import { X, ShoppingCart, Minus, Plus } from 'lucide-react';
+import { X, ShoppingCart, Minus, Plus, Heart } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useStore } from '@/store/useStore';
@@ -17,6 +17,8 @@ interface QuickViewProps {
 export function QuickViewModal({ product, onClose }: QuickViewProps) {
   const { t } = useTranslation();
   const addToCart = useStore((state) => state.addToCart);
+  const toggleWishlist = useStore((state) => state.toggleWishlist);
+  const wishlist = useStore((state) => state.wishlist) || [];
   const { showToast } = useToast();
   const [quantity, setQuantity] = useState(1);
 
@@ -35,6 +37,14 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
   }, [onClose]);
 
   if (!product) return null;
+
+  const isFavorited = wishlist.includes(product.id);
+
+  const handleToggleWishlist = () => {
+    toggleWishlist(product.id);
+    const name = t(`products.${product.id}.name`, { defaultValue: product.name });
+    showToast(isFavorited ? `${name} removed from wishlist` : `♥ ${name} added to wishlist`);
+  };
 
   const handleAdd = () => {
     for (let i = 0; i < quantity; i++) {
@@ -61,6 +71,13 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
           className="absolute top-4 right-4 z-20 p-1.5 rounded-full bg-background/80 backdrop-blur hover:bg-muted transition-colors"
         >
           <X className="h-5 w-5" />
+        </button>
+        {/* Wishlist button */}
+        <button
+          onClick={handleToggleWishlist}
+          className="absolute top-4 right-14 z-20 p-1.5 rounded-full bg-background/80 backdrop-blur hover:bg-muted transition-colors hidden md:block"
+        >
+          <Heart className={`h-5 w-5 transition-colors duration-200 ${isFavorited ? 'fill-red-500 text-red-500' : 'text-foreground'}`} />
         </button>
 
         <div className="flex flex-col md:flex-row">

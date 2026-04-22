@@ -184,6 +184,51 @@
       "category": "Beverages",
       "imageUrl": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400",
       "inStock": true
+    },
+    {
+      "id": "prod-021",
+      "name": "Skol Lager 50cl",
+      "description": "Crisp and refreshing Rwandan lager beer.",
+      "price": 900,
+      "category": "Beverages",
+      "imageUrl": "https://images.unsplash.com/photo-1621287958641-ed59a4c0eb66?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-022",
+      "name": "Akabanga Chili Oil 20ml",
+      "description": "Famous spicy Rwandan chili oil condiment.",
+      "price": 500,
+      "category": "Pantry",
+      "imageUrl": "https://images.unsplash.com/photo-1596647900742-d6fc9cfc6ce8?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-023",
+      "name": "Rwandan Black Tea 500g",
+      "description": "Richly flavored black tea leaves from Sortheca.",
+      "price": 3200,
+      "category": "Beverages",
+      "imageUrl": "https://images.unsplash.com/photo-1576092762791-dd9e2220c951?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-024",
+      "name": "Akarabo Honey 500g",
+      "description": "Pure organic natural honey from Rwandan beekeepers.",
+      "price": 4500,
+      "category": "Pantry",
+      "imageUrl": "https://images.unsplash.com/photo-1587049352847-4d4b1ed7d884?w=400",
+      "inStock": true
+    },
+    {
+      "id": "prod-025",
+      "name": "Igisafuriya Spice Mix 100g",
+      "description": "Traditional blend of spices to make classic Rwandan stews.",
+      "price": 800,
+      "category": "Pantry",
+      "imageUrl": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400",
+      "inStock": true
     }
   ]
 }
