@@ -5,6 +5,8 @@ import { Home, Grid3x3, ShoppingCart, Settings, Sun, Moon, User } from 'lucide-r
 import { useStore } from '@/store/useStore';
 import { useState } from 'react';
 import { useAuth, SignInButton, UserButton } from '@clerk/nextjs';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export function MobileBottomNav() {
   const { t } = useTranslation();
@@ -81,12 +83,10 @@ export function MobileBottomNav() {
 
           <div className="flex flex-col items-center justify-center gap-0.5 py-1 px-3 text-muted-foreground">
             {isSignedIn ? (
-              <>
-                <div className="h-5 flex items-center justify-center">
-                  <UserButton appearance={{ elements: { userButtonAvatarBox: "w-5 h-5" } }} />
-                </div>
-                <span className="text-[10px] font-medium">Profile</span>
-              </>
+              <Button render={<Link href="/profile" />} variant="ghost" className="h-auto p-0 flex flex-col gap-0.5 hover:bg-transparent">
+                <User className={`h-5 w-5 ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`} />
+                <span className={`text-[10px] font-medium ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`}>Profile</span>
+              </Button>
             ) : (
               <SignInButton mode="modal">
                 <button className="flex flex-col items-center gap-0.5">

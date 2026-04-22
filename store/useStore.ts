@@ -6,6 +6,14 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
+export interface Order {
+  id: string;
+  date: string;
+  total: number;
+  items: CartItem[];
+  status: 'Processing' | 'Completed' | 'Delivered';
+}
+
 interface StoreState {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
@@ -23,6 +31,8 @@ interface StoreState {
   setLanguage: (language: 'en' | 'fr' | 'rw') => void;
   wishlist: string[];
   toggleWishlist: (productId: string) => void;
+  orders: Order[];
+  addOrder: (order: Order) => void;
 }
 
 export const useStore = create<StoreState>()(
@@ -77,10 +87,12 @@ export const useStore = create<StoreState>()(
             ? state.wishlist.filter((id) => id !== productId)
             : [...state.wishlist, productId],
         })),
+      orders: [],
+      addOrder: (order) => set((state) => ({ orders: [order, ...state.orders] })),
     }),
     {
       name: 'simba-store',
-      partialize: (state) => ({ cart: state.cart, language: state.language, theme: state.theme, wishlist: state.wishlist }),
+      partialize: (state) => ({ cart: state.cart, language: state.language, theme: state.theme, wishlist: state.wishlist, orders: state.orders }),
     }
   )
 );

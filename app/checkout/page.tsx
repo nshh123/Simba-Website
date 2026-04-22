@@ -29,7 +29,7 @@ type CheckoutState = 'form' | 'processing' | 'success';
 
 export default function CheckoutPage() {
   const { t } = useTranslation();
-  const { cart, clearCart } = useStore();
+  const { cart, clearCart, addOrder } = useStore();
   const [checkoutState, setCheckoutState] = useState<CheckoutState>('form');
   const [orderId, setOrderId] = useState('');
   const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
@@ -100,7 +100,17 @@ export default function CheckoutPage() {
     setReceiptCart([...cart]);
     setReceiptTotal(total);
     setTimeout(() => {
-      setOrderId('ORD-' + Math.random().toString(36).substring(2, 10).toUpperCase());
+      const generatedId = 'ORD-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+      setOrderId(generatedId);
+      
+      addOrder({
+        id: generatedId,
+        date: new Date().toISOString(),
+        total: total,
+        items: [...cart],
+        status: 'Processing'
+      });
+
       setCheckoutState('success');
     }, 4000);
   };
