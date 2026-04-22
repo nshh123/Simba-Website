@@ -83,7 +83,7 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
-      <HeroBanner />
+      <HeroBanner forceHide={sortOrder === 'wishlist'} />
       <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block w-72 shrink-0 sticky top-24 h-max">

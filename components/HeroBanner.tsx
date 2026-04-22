@@ -7,7 +7,7 @@ import { ShoppingBag, Truck, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useStore } from '@/store/useStore';
 
-export function HeroBanner() {
+export function HeroBanner({ forceHide = false }: { forceHide?: boolean }) {
   const { t } = useTranslation();
   const searchQuery = useStore((state) => state.searchQuery);
   const [displayedText, setDisplayedText] = useState('');
@@ -25,8 +25,8 @@ export function HeroBanner() {
     return () => clearInterval(timer);
   }, [fullText]);
 
-  // Hide hero when user is actively searching
-  if (searchQuery.trim()) return null;
+  // Hide hero when user is actively searching or when forcibly hidden
+  if (searchQuery.trim() || forceHide) return null;
 
   const scrollToProducts = () => {
     document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
