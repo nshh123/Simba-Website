@@ -91,8 +91,8 @@ export default function ProfilePage() {
               routing="hash"
               appearance={{
                 elements: {
-                  rootBox: "w-full",
-                  cardBox: "w-full shadow-none border-none",
+                  rootBox: "w-full max-w-none",
+                  cardBox: "w-full max-w-none shadow-none border-none",
                 }
               }}
             />
