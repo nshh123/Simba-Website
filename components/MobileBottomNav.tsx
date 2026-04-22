@@ -36,7 +36,7 @@ export function MobileBottomNav() {
       {totalItems > 0 && (
         <button
           onClick={openCart}
-          className="md:hidden fixed bottom-20 right-4 z-[80] flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2.5 rounded-full shadow-xl shadow-primary/30 animate-in slide-in-from-bottom-3 fade-in duration-300"
+          className="md:hidden fixed bottom-20 right-4 z-40 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2.5 rounded-full shadow-xl shadow-primary/30 animate-in slide-in-from-bottom-3 fade-in duration-300"
         >
           <ShoppingCart className="h-5 w-5" />
           <span className="font-bold text-sm">{totalItems}</span>
@@ -46,7 +46,7 @@ export function MobileBottomNav() {
       )}
 
       {/* Bottom navigation bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[70] bg-card/95 backdrop-blur-lg border-t safe-area-bottom">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-lg border-t safe-area-bottom">
         <div className="flex items-center justify-around py-2 px-2">
           <button 
             onClick={scrollToTop}

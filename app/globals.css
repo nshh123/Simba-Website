@@ -150,3 +150,26 @@
     -webkit-appearance: none;
   }
 }
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Hide all generic app navigation UI entirely during print jobs */
+  header, footer, nav, aside {
+    display: none !important;
+  }
+
+  /* Force strong contrast on all table elements during print to solve faint rendering */
+  .print\:text-black {
+    color: #000000 !important;
+  }
+  th, td, p, span, h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+  }
+  .border-b {
+    border-color: #000000 !important;
+  }
+}
