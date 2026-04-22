@@ -58,6 +58,18 @@ export default function CheckoutPage() {
     'Other': 4000
   };
 
+  const form = useForm<CheckoutFormValues>({
+    resolver: zodResolver(checkoutSchema),
+    mode: 'onChange',
+    defaultValues: {
+      fullName: '',
+      phone: '',
+      district: '',
+      sector: '',
+      instructions: '',
+    },
+  });
+
   const selectedDistrict = form.watch('district');
   const deliveryFee = districtFees[selectedDistrict] || 0;
   const total = subtotal + deliveryFee;
@@ -105,18 +117,6 @@ export default function CheckoutPage() {
       clearCart();
     }
   }, [checkoutState, clearCart]);
-
-  const form = useForm<CheckoutFormValues>({
-    resolver: zodResolver(checkoutSchema),
-    mode: 'onChange',
-    defaultValues: {
-      fullName: '',
-      phone: '',
-      district: '',
-      sector: '',
-      instructions: '',
-    },
-  });
 
   const onSubmit = (data: CheckoutFormValues) => {
     setCheckoutState('processing');
