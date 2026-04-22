@@ -12,12 +12,25 @@ export default function ProfilePage() {
   const orders = useStore((state) => state.orders) || [];
 
   return (
-    <div className="container mx-auto py-8 max-w-[1400px]">
-      <h1 className="text-3xl font-bold mb-8 pl-4">My Account</h1>
+    <div className="container mx-auto px-4 py-8 max-w-5xl">
+      <h1 className="text-3xl font-bold mb-8">My Account</h1>
       
-      <div className="flex flex-col xl:flex-row gap-8 items-start">
+      <div className="flex flex-col gap-12">
+        {/* Clerk Profile Components */}
+        <div className="w-full flex justify-center overflow-hidden rounded-xl">
+          <UserProfile 
+            routing="hash"
+            appearance={{
+              elements: {
+                rootBox: "w-full max-w-full",
+                cardBox: "w-full shadow-sm border",
+              }
+            }}
+          />
+        </div>
+
         {/* Orders Section */}
-        <div className="flex-1 w-full order-2 xl:order-1">
+        <div className="w-full">
           <div className="bg-card border rounded-xl overflow-hidden shadow-sm">
             <div className="p-6 border-b bg-muted/30 flex items-center gap-2">
               <Package className="h-5 w-5 text-primary" />
@@ -82,19 +95,6 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Clerk Profile Components */}
-        <div className="w-full xl:w-auto shrink-0 order-1 xl:order-2 flex justify-center">
-          <UserProfile 
-            routing="hash"
-            appearance={{
-              elements: {
-                rootBox: "w-full max-w-full",
-                cardBox: "w-full shadow-sm border",
-              }
-            }}
-          />
         </div>
       </div>
     </div>
