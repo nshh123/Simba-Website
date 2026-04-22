@@ -12,8 +12,8 @@ interface SidebarFilterProps {
   setSearchQuery: (val: string) => void;
   selectedCategory: string;
   setSelectedCategory: (val: string) => void;
-  sortOrder: 'none' | 'asc' | 'desc';
-  setSortOrder: (val: 'none' | 'asc' | 'desc') => void;
+  sortOrder: 'none' | 'asc' | 'desc' | 'wishlist';
+  setSortOrder: (val: 'none' | 'asc' | 'desc' | 'wishlist') => void;
   minPrice: string;
   setMinPrice: (val: string) => void;
   maxPrice: string;
@@ -65,10 +65,11 @@ export function SidebarFilter({
         <h3 className="font-semibold mb-3">{t('recommended')} (Sort)</h3>
         <select
           value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value as 'none' | 'asc' | 'desc')}
+          onChange={(e) => setSortOrder(e.target.value as 'none' | 'asc' | 'desc' | 'wishlist')}
           className="w-full h-10 appearance-none rounded-md border border-input bg-background px-3 py-2 text-sm outline-none cursor-pointer hover:bg-accent/50 transition-colors"
         >
           <option value="none">{t('recommended')}</option>
+          <option value="wishlist">Wishlist</option>
           <option value="asc">{t('priceLowToHigh')}</option>
           <option value="desc">{t('priceHighToLow')}</option>
         </select>

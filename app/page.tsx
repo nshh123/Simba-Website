@@ -14,9 +14,9 @@ import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const { t } = useTranslation();
-  const { searchQuery, setSearchQuery } = useStore();
+  const { searchQuery, setSearchQuery, wishlist } = useStore();
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortOrder, setSortOrder] = useState<'none' | 'asc' | 'desc'>('none');
+  const [sortOrder, setSortOrder] = useState<'none' | 'asc' | 'desc' | 'wishlist'>('none');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [visibleCount, setVisibleCount] = useState(12);
@@ -29,6 +29,16 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('sort') === 'wishlist') {
+        setSortOrder('wishlist');
+        // Scroll down to products optionally
+        setTimeout(() => {
+          document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+      }
+    }
   }, []);
 
   const products = useMemo(() => getProducts(), []);
@@ -36,6 +46,9 @@ export default function Home() {
 
   const filteredAndSortedProducts = useMemo(() => {
     let result = products;
+    if (sortOrder === 'wishlist') {
+      result = result.filter((p) => wishlist.includes(p.id));
+    }
 
     if (debouncedSearchQuery) {
       const lowerQuery = debouncedSearchQuery.toLowerCase();
@@ -63,7 +76,7 @@ export default function Home() {
     }
 
     return result;
-  }, [products, debouncedSearchQuery, selectedCategory, sortOrder, debouncedMinPrice, debouncedMaxPrice]);
+  }, [products, debouncedSearchQuery, selectedCategory, sortOrder, debouncedMinPrice, debouncedMaxPrice, wishlist]);
 
   const paginatedProducts = filteredAndSortedProducts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredAndSortedProducts.length;

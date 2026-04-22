@@ -6,6 +6,7 @@ import { useStore } from '@/store/useStore';
 import { useState } from 'react';
 import { useAuth, SignInButton, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 export function MobileBottomNav() {
@@ -16,15 +17,25 @@ export function MobileBottomNav() {
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleHomeClick = () => {
     setActiveTab('home');
+    if (pathname !== '/') {
+      router.push('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
-  const scrollToProducts = () => {
-    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+  const handleCategoriesClick = () => {
     setActiveTab('browse');
+    if (pathname !== '/') {
+      router.push('/#products-section');
+    } else {
+      document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const openCart = () => {
@@ -51,15 +62,15 @@ export function MobileBottomNav() {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-lg border-t safe-area-bottom">
         <div className="flex items-center justify-around py-2 px-2">
           <button 
-            onClick={scrollToTop}
+            onClick={handleHomeClick}
             className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg transition-colors ${activeTab === 'home' ? 'text-primary' : 'text-muted-foreground'}`}
           >
             <Home className="h-5 w-5" />
-            <span className="text-[10px] font-medium">Home</span>
+            <span className="text-[10px] font-medium">{t('home')}</span>
           </button>
 
           <button 
-            onClick={scrollToProducts}
+            onClick={handleCategoriesClick}
             className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg transition-colors ${activeTab === 'browse' ? 'text-primary' : 'text-muted-foreground'}`}
           >
             <Grid3x3 className="h-5 w-5" />

@@ -11,8 +11,8 @@ interface FilterBarProps {
   setSearchQuery: (val: string) => void;
   selectedCategory: string;
   setSelectedCategory: (val: string) => void;
-  sortOrder: 'none' | 'asc' | 'desc';
-  setSortOrder: (val: 'none' | 'asc' | 'desc') => void;
+  sortOrder: 'none' | 'asc' | 'desc' | 'wishlist';
+  setSortOrder: (val: 'none' | 'asc' | 'desc' | 'wishlist') => void;
 }
 
 export function FilterBar({
@@ -71,10 +71,11 @@ export function FilterBar({
         <div className="relative w-[180px] shrink-0">
           <select
             value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value as 'none' | 'asc' | 'desc')}
+            onChange={(e) => setSortOrder(e.target.value as 'none' | 'asc' | 'desc' | 'wishlist')}
             className="w-full h-8 appearance-none rounded-lg border border-input bg-transparent py-1.5 pr-8 pl-3 text-sm outline-none cursor-pointer hover:bg-accent/50 transition-colors dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600"
           >
             <option value="none">{t('recommended')}</option>
+            <option value="wishlist">{t('wishlist') || 'Wishlist'}</option>
             <option value="asc">{t('priceLowToHigh')}</option>
             <option value="desc">{t('priceHighToLow')}</option>
           </select>
