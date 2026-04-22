@@ -41,7 +41,7 @@ export function ProductCard({ product, onQuickView }: { product: Product; onQuic
     e.stopPropagation();
     toggleWishlist(product.id);
     const name = t(`products.${product.id}.name`, { defaultValue: product.name });
-    showToast(isFavorited ? `${name} removed from wishlist` : `♥ ${name} added to wishlist`);
+    showToast(isFavorited ? `${name} ${t('removedFromWishlist')}` : `♥ ${name} ${t('addedToWishlist')}`);
   };
 
   return (

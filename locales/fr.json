@@ -68,6 +68,8 @@
   "loadMore": "Charger plus de produits",
   "paymentMethods": "Moyens de paiement",
   "yourCart": "Votre Panier",
+  "addedToWishlist": "ajouté à la liste d'envies",
+  "removedFromWishlist": "retiré de la liste d'envies",
   "products": {
     "prod-001": { "name": "Lait frais Inyange 1L", "description": "Lait entier frais d'Inyange, d'origine locale." },
     "prod-002": { "name": "Café Arabica Rwandais 500g", "description": "Grains de café arabica rwandais torréfiés de qualité supérieure." },

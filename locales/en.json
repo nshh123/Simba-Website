@@ -68,6 +68,8 @@
   "loadMore": "Load more products",
   "paymentMethods": "Payment Methods",
   "yourCart": "Your Cart",
+  "addedToWishlist": "added to wishlist",
+  "removedFromWishlist": "removed from wishlist",
   "products": {
     "prod-001": { "name": "Inyange Fresh Milk 1L", "description": "Locally sourced fresh whole milk from Inyange." },
     "prod-002": { "name": "Rwandan Arabica Coffee 500g", "description": "Premium roasted Rwandan Arabica coffee beans." },

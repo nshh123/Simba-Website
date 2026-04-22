@@ -43,7 +43,7 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
   const handleToggleWishlist = () => {
     toggleWishlist(product.id);
     const name = t(`products.${product.id}.name`, { defaultValue: product.name });
-    showToast(isFavorited ? `${name} removed from wishlist` : `♥ ${name} added to wishlist`);
+    showToast(isFavorited ? `${name} ${t('removedFromWishlist')}` : `♥ ${name} ${t('addedToWishlist')}`);
   };
 
   const handleAdd = () => {

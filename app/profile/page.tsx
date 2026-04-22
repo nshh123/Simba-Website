@@ -3,21 +3,50 @@
 import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/useStore';
 import { UserProfile } from '@clerk/nextjs';
-import { Package, Clock, CheckCircle } from 'lucide-react';
+import { Package, Clock, CheckCircle, User } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 import Image from 'next/image';
 
 export default function ProfilePage() {
   const { t } = useTranslation();
   const orders = useStore((state) => state.orders) || [];
+  const [activeTab, setActiveTab] = useState<'account' | 'orders'>('account');
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">{t('myAccount')}</h1>
-      
-      <div className="flex flex-col gap-12">
-        {/* Orders Section */}
-        <div className="w-full">
+    <div className="container mx-auto px-4 py-8 lg:max-w-6xl">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Sidebar */}
+        <aside className="w-full lg:w-64 shrink-0">
+          <div className="sticky top-24 space-y-1">
+            <button
+              onClick={() => setActiveTab('account')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors font-medium border ${
+                activeTab === 'account' 
+                  ? 'bg-primary/10 text-primary border-primary/20' 
+                  : 'bg-card border-transparent hover:bg-muted text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <User className="w-5 h-5" />
+              {t('myAccount')}
+            </button>
+            <button
+              onClick={() => setActiveTab('orders')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors font-medium border ${
+                activeTab === 'orders' 
+                  ? 'bg-primary/10 text-primary border-primary/20' 
+                  : 'bg-card border-transparent hover:bg-muted text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Package className="w-5 h-5" />
+              {t('orderHistory')}
+            </button>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <div className="flex-1 min-w-0">
+          {activeTab === 'orders' ? (
           <div className="bg-card border rounded-xl overflow-hidden shadow-sm">
             <div className="p-6 border-b bg-muted/30 flex items-center gap-2">
               <Package className="h-5 w-5 text-primary" />
@@ -82,21 +111,19 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Clerk Profile Components */}
-        <div className="w-full">
-          <div className="overflow-hidden rounded-xl border shadow-sm bg-card">
-            <UserProfile 
-              routing="hash"
-              appearance={{
-                elements: {
-                  rootBox: "w-full max-w-none",
-                  cardBox: "w-full max-w-none shadow-none border-none",
-                }
-              }}
-            />
-          </div>
+          ) : (
+            <div className="overflow-hidden rounded-xl border shadow-sm bg-card flex justify-center w-full">
+              <UserProfile 
+                routing="hash"
+                appearance={{
+                  elements: {
+                    rootBox: "w-full max-w-none flex justify-center",
+                    cardBox: "w-full max-w-none shadow-none border-none",
+                  }
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
