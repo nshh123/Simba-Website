@@ -12,8 +12,8 @@ export default function ProfilePage() {
   const orders = useStore((state) => state.orders) || [];
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <h1 className="text-3xl font-bold mb-8">My Account</h1>
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 className="text-3xl font-bold mb-8">{t('myAccount')}</h1>
       
       <div className="flex flex-col gap-12">
         {/* Orders Section */}
@@ -21,15 +21,15 @@ export default function ProfilePage() {
           <div className="bg-card border rounded-xl overflow-hidden shadow-sm">
             <div className="p-6 border-b bg-muted/30 flex items-center gap-2">
               <Package className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-bold">Order History</h2>
+              <h2 className="text-xl font-bold">{t('orderHistory')}</h2>
             </div>
             
             {orders.length === 0 ? (
               <div className="p-12 text-center text-muted-foreground flex flex-col items-center">
                 <Package className="h-12 w-12 opacity-20 mb-4" />
-                <p>You have not placed any orders yet.</p>
+                <p>{t('noOrders')}</p>
                 <Link href="/#products-section" className="text-primary font-medium mt-2 hover:underline">
-                  Start Shopping
+                  {t('startShopping')}
                 </Link>
               </div>
             ) : (
@@ -71,8 +71,8 @@ export default function ProfilePage() {
                              )}
                           </div>
                           <div className="pr-4">
-                            <p className="text-sm font-semibold line-clamp-1" title={item.name}>{item.name}</p>
-                            <p className="text-xs text-muted-foreground font-medium mt-0.5">Qty: {item.quantity} × {item.price.toLocaleString()} RWF</p>
+                            <p className="text-sm font-semibold line-clamp-1" title={item.name}>{t(`products.${item.id}.name`, { defaultValue: item.name })}</p>
+                            <p className="text-xs text-muted-foreground font-medium mt-0.5">{t('checkoutQty')}: {item.quantity} × {item.price.toLocaleString()} RWF</p>
                           </div>
                         </div>
                       ))}
