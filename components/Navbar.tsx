@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { CartDrawer } from './CartDrawer';
-import { useAuth, SignInButton, UserButton } from '@clerk/nextjs';
+import { useAuth, useUser, SignInButton, UserButton } from '@clerk/nextjs';
 
 export function Navbar() {
   const { t } = useTranslation();
@@ -25,6 +25,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart, theme, toggleTheme, setLanguage, setCartOpen, searchQuery, setSearchQuery } = useStore();
   const { isSignedIn } = useAuth();
+  const { user } = useUser();
 
   useEffect(() => {
     setMounted(true);
@@ -61,7 +62,6 @@ export function Navbar() {
     </DropdownMenu>
   );
 
-  const { user } = useAuth() as any; 
   const isManager = user?.publicMetadata?.role === 'manager';
 
   const handleResetHome = () => {
