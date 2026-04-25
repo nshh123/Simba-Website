@@ -12,10 +12,10 @@ export function Footer() {
 
   return (
     <footer className="border-t bg-muted/30 print:hidden">
-      <div className="container mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <Link href="/" className="flex items-center gap-2">
               <div className="bg-[#FF8800] rounded-full p-0.5 h-10 w-10 flex items-center justify-center shrink-0">
                 <Image src="/logo.jpg" alt="Simba Logo" width={36} height={36} className="rounded-full object-cover" />
@@ -31,19 +31,19 @@ export function Footer() {
           </div>
 
           {/* Store Hours */}
-          <div className="space-y-4">
-            <h3 className="font-semibold flex items-center gap-2">
+          <div className="space-y-3">
+            <h3 className="font-semibold flex items-center gap-2 mb-1">
               <Clock className="h-4 w-4 text-primary" />
               {t('footerHours')}
             </h3>
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="space-y-1 text-sm text-muted-foreground">
               <p>{t('footerAlwaysOpen')}</p>
             </div>
           </div>
 
           {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="font-semibold flex items-center gap-2">
+          <div className="space-y-3">
+            <h3 className="font-semibold flex items-center gap-2 mb-1">
               <Phone className="h-4 w-4 text-primary" />
               {t('footerContact')}
             </h3>
@@ -64,12 +64,12 @@ export function Footer() {
           </div>
 
           {/* Our Branches */}
-          <div className="space-y-4">
-            <h3 className="font-semibold flex items-center gap-2">
+          <div className="space-y-3">
+            <h3 className="font-semibold flex items-center gap-2 mb-1">
               <MapPin className="h-4 w-4 text-primary" />
               {t('ourBranches', { defaultValue: 'Our Branches' })}
             </h3>
-            <div className="grid grid-cols-1 gap-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40 transition-colors">
+            <div className="grid grid-cols-1 gap-3 max-h-[200px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40 transition-colors">
               {BRANCHES.map((branch) => (
                 <div key={branch.id} className="group">
                   <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{branch.name}</p>
