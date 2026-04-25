@@ -53,7 +53,7 @@ export function MobileBottomNav() {
       {totalItems > 0 && (
         <button
           onClick={openCart}
-          className="fixed bottom-20 right-4 md:bottom-8 md:right-8 z-40 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2.5 rounded-full shadow-lg shadow-primary/30 animate-in slide-in-from-bottom-3 fade-in duration-300 hover:scale-105 hover:shadow-xl transition-all print:hidden"
+          className="fixed bottom-20 right-4 md:bottom-8 md:right-24 z-40 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2.5 rounded-full shadow-lg shadow-primary/30 animate-in slide-in-from-bottom-3 fade-in duration-300 hover:scale-105 hover:shadow-xl transition-all print:hidden"
         >
           <ShoppingCart className="h-5 w-5" />
           <span className="font-bold text-sm">{totalItems}</span>
