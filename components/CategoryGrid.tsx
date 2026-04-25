@@ -59,7 +59,7 @@ export function CategoryGrid() {
   };
 
   return (
-    <section className="py-8 pb-48 px-4 max-w-7xl mx-auto">
+    <section className="py-2 pb-4 px-4 max-w-7xl mx-auto">
       <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-100">{t('categories')}</h2>
       
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-4">

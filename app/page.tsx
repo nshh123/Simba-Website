@@ -96,10 +96,12 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
-      <HeroBanner />
-      <CategoryGrid />
+      <div className="min-h-[calc(100vh-120px)] flex flex-col justify-center gap-6">
+        <HeroBanner />
+        <CategoryGrid />
+      </div>
       
-      <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative pt-32">
+      <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative pt-4">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block w-72 shrink-0 sticky top-24 h-max">
           <SidebarFilter
