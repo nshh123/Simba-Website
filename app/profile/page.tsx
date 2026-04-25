@@ -48,9 +48,16 @@ export default function ProfilePage() {
         <div className="flex-1 min-w-0">
           {activeTab === 'orders' ? (
           <div className="bg-card border rounded-xl overflow-hidden shadow-sm">
-            <div className="p-6 border-b bg-muted/30 flex items-center gap-2">
-              <Package className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-bold">{t('orderHistory')}</h2>
+            <div className="p-6 border-b bg-muted/30 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Package className="h-5 w-5 text-primary" />
+                <h2 className="text-xl font-bold">{t('orderHistory')}</h2>
+              </div>
+              {orders.length > 0 && (
+                <span className="text-sm font-medium text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full border">
+                  {orders.length} {orders.length === 1 ? 'Order' : 'Orders'}
+                </span>
+              )}
             </div>
             
             {orders.length === 0 ? (
@@ -62,7 +69,7 @@ export default function ProfilePage() {
                 </Link>
               </div>
             ) : (
-              <div className="divide-y overflow-auto max-h-[800px] hide-scrollbar pb-6">
+              <div className="divide-y pb-6">
                 {orders.map((order) => (
                   <div key={order.id} className="p-6 hover:bg-muted/10 transition-colors">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
