@@ -65,19 +65,19 @@ export function AIChat() {
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-36 right-4 md:bottom-6 md:right-6 z-[60] h-14 w-14 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 ${
-          isOpen 
-            ? 'bg-red-500 text-white rotate-90' 
-            : 'bg-[#FF8800] text-white hover:bg-[#FF7700] animate-bounce-subtle'
-        }`}
-      >
-        {isOpen ? <X className="h-6 w-6" /> : <Sparkles className="h-7 w-7" />}
-      </button>
+      {/* Floating Toggle Button - Hidden when chat is open */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-36 right-4 md:bottom-6 md:right-6 z-[60] h-14 w-14 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 bg-[#FF8800] text-white hover:bg-[#FF7700] animate-bounce-subtle"
+        >
+          <Sparkles className="h-7 w-7" />
+        </button>
+      )}
 
+      {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-4 md:right-6 z-50 w-[calc(100vw-2rem)] md:w-[calc(100vw-3rem)] max-w-[450px] h-[75vh] max-h-[650px] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300 rounded-3xl border border-white/20 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl">
+        <div className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-50 w-[calc(100vw-2rem)] md:w-[calc(100vw-3rem)] max-w-[450px] h-[75vh] max-h-[650px] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300 rounded-3xl border border-white/20 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl">
           <div className="p-5 bg-gradient-to-r from-[#FF8800] to-[#E07000] text-white flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center border border-white/30 backdrop-blur-md">
@@ -90,7 +90,8 @@ export function AIChat() {
             </div>
             <button 
               onClick={() => setIsOpen(false)}
-              className="md:hidden p-2 hover:bg-white/20 rounded-full transition-colors"
+              className="p-2 hover:bg-white/20 rounded-full transition-colors"
+              aria-label="Close chat"
             >
               <X className="h-6 w-6" />
             </button>
