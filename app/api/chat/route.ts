@@ -2,28 +2,26 @@ import { NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
 import productsData from '@/data/simba_products.json';
 
-const apiKey = process.env.GROQ_API_KEY;
-
-// Fallback for demo purposes if key is missing, 
-// though in production this should be a required env var.
-const groq = apiKey ? new Groq({ apiKey }) : null;
-
 export async function POST(req: Request) {
   try {
     const { message } = await req.json();
+
+    const currentApiKey = process.env.GROQ_API_KEY;
 
     if (!message) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    if (!groq) {
+    if (!currentApiKey) {
       // Mock response if API key is missing
       console.warn('GROQ_API_KEY is missing. Returning mock response.');
       return NextResponse.json({
-        response: "I'm sorry, I'm currently in demo mode and cannot connect to Groq. Please configure the GROQ_API_KEY.",
+        response: "I'm sorry, I'm currently in demo mode and cannot connect to Groq. Please configure the GROQ_API_KEY in your .env.local and restart your server.",
         matchedProductIds: []
       });
     }
+
+    const groq = new Groq({ apiKey: currentApiKey });
 
     const systemPrompt = `
       You are a helpful assistant for Simba Supermarket.
