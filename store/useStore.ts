@@ -25,6 +25,8 @@ export interface Order {
 interface StoreState {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
   cart: CartItem[];
   theme: 'light' | 'dark';
   language: 'en' | 'fr' | 'rw';
@@ -54,6 +56,8 @@ export const useStore = create<StoreState>()(
     (set) => ({
       searchQuery: '',
       setSearchQuery: (searchQuery) => set({ searchQuery }),
+      selectedCategory: 'All',
+      setSelectedCategory: (selectedCategory) => set({ selectedCategory }),
       cart: [],
       theme: 'light',
       language: 'en',

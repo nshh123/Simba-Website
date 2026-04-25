@@ -11,11 +11,11 @@ import { ProductCardSkeleton } from '@/components/ui/ProductCardSkeleton';
 import { useTranslation } from 'react-i18next';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { Button } from '@/components/ui/button';
+import { CategoryGrid } from '@/components/CategoryGrid';
 
 export default function Home() {
   const { t } = useTranslation();
-  const { searchQuery, setSearchQuery, wishlist } = useStore();
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const { searchQuery, setSearchQuery, wishlist, selectedCategory, setSelectedCategory } = useStore();
   const [sortOrder, setSortOrder] = useState<'none' | 'asc' | 'desc' | 'wishlist'>('none');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
@@ -97,6 +97,7 @@ export default function Home() {
   return (
     <div className="space-y-6">
       <HeroBanner />
+      <CategoryGrid />
       <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block w-72 shrink-0 sticky top-24 h-max">
