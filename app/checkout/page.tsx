@@ -266,14 +266,16 @@ export default function CheckoutPage() {
   if (step === 'success') {
     return (
       <div className="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-[70vh] text-center">
-        {windowDimensions.width > 0 && (
-          <Confetti
-            width={windowDimensions.width}
-            height={windowDimensions.height}
-            recycle={false}
-            numberOfPieces={450}
-          />
-        )}
+        <div className="print:hidden">
+          {windowDimensions.width > 0 && (
+            <Confetti
+              width={windowDimensions.width}
+              height={windowDimensions.height}
+              recycle={false}
+              numberOfPieces={450}
+            />
+          )}
+        </div>
         <CheckCircle className="h-24 w-24 text-green-500 mb-6 animate-in zoom-in duration-500" />
         <h1 className="text-4xl font-bold mb-2">{t('checkoutSuccess')}</h1>
         <p className="text-muted-foreground text-lg mb-1">{t('checkoutThankYou')}</p>
@@ -317,7 +319,7 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 items-center justify-center">
+        <div className="flex flex-wrap gap-4 items-center justify-center print:hidden">
           <Button
             render={<Link href="/" />}
             size="lg"
