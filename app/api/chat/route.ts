@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const groq = new Groq({ apiKey: currentApiKey });
+    const groq = new Groq({ apiKey: currentApiKey.trim() });
 
     const systemPrompt = `
       You are a helpful assistant for Simba Supermarket.
