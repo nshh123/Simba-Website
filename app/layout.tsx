@@ -10,8 +10,11 @@ import { ClerkProvider } from '@clerk/nextjs';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Simba 2.0',
+  title: 'Simba Supermarket 2.0',
   description: 'A modern e-commerce rebuild of a Rwandan supermarket',
+  icons: {
+    icon: '/favicon.jpg',
+  },
 };
 
 export default function RootLayout({
