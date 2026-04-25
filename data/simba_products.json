@@ -209,7 +209,7 @@
       "description": "Richly flavored black tea leaves from Sortheca.",
       "price": 3200,
       "category": "Beverages",
-      "imageUrl": "https://images.unsplash.com/photo-1544787210-22dbdc176246?w=400",
+      "imageUrl": "/products/rwandan_black_tea.png",
       "inStock": true
     },
     {
@@ -236,7 +236,7 @@
       "description": "Crunchy local cassava chips with a hint of sea salt.",
       "price": 1200,
       "category": "Snacks",
-      "imageUrl": "https://images.unsplash.com/photo-1621447509373-3f1965e64802?w=400",
+      "imageUrl": "/products/cassava_crisps.png",
       "inStock": true
     },
     {
@@ -254,7 +254,7 @@
       "description": "Soft and absorbent premium diapers for your little ones.",
       "price": 15000,
       "category": "Baby",
-      "imageUrl": "https://images.unsplash.com/photo-1614030424754-24d62967afbe?w=400",
+      "imageUrl": "/products/baby_diapers.png",
       "inStock": true
     },
     {
@@ -263,7 +263,7 @@
       "description": "Tough on grease and stains, perfect for a sparkling home.",
       "price": 3800,
       "category": "Home",
-      "imageUrl": "https://images.unsplash.com/photo-1584622781564-1d9876a13d1a?w=400",
+      "imageUrl": "/products/kitchen_cleaner.png",
       "inStock": true
     }
   ]
