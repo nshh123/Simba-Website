@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Providers } from '@/components/Providers';
 import { MobileBottomNav } from '@/components/MobileBottomNav';
+import { AIChat } from '@/components/AIChat';
 import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -33,6 +34,7 @@ export default function RootLayout({
             </main>
             <Footer />
             <MobileBottomNav />
+            <AIChat />
           </Providers>
         </body>
       </html>
