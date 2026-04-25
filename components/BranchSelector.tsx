@@ -13,21 +13,23 @@ export interface Branch {
 }
 
 export const BRANCHES: Branch[] = [
-  { id: 'remera',      name: 'Simba Supermarket Remera',      area: 'Remera',      address: 'KG 11 Ave, Remera, Kigali',        hours: '7AM–10PM' },
-  { id: 'kimironko',  name: 'Simba Supermarket Kimironko',  area: 'Kimironko',  address: 'KG 563 St, Kimironko, Kigali',     hours: '7AM–10PM' },
-  { id: 'kacyiru',    name: 'Simba Supermarket Kacyiru',    area: 'Kacyiru',    address: 'KG 7 Ave, Kacyiru, Kigali',        hours: '7AM–10PM' },
-  { id: 'nyamirambo', name: 'Simba Supermarket Nyamirambo', area: 'Nyamirambo', address: 'KN 4 Ave, Nyamirambo, Kigali',     hours: '7AM–10PM' },
-  { id: 'gikondo',    name: 'Simba Supermarket Gikondo',    area: 'Gikondo',    address: 'KK 15 Rd, Gikondo, Kigali',        hours: '7AM–10PM' },
-  { id: 'kanombe',    name: 'Simba Supermarket Kanombe',    area: 'Kanombe',    address: 'KK 200 St, Kanombe, Kigali',       hours: '7AM–9PM'  },
-  { id: 'kinyinya',   name: 'Simba Supermarket Kinyinya',   area: 'Kinyinya',   address: 'KG 770 St, Kinyinya, Kigali',     hours: '7AM–9PM'  },
-  { id: 'kibagabaga', name: 'Simba Supermarket Kibagabaga', area: 'Kibagabaga', address: 'KG 236 St, Kibagabaga, Kigali',   hours: '7AM–9PM'  },
-  { id: 'nyanza',     name: 'Simba Supermarket Nyanza',     area: 'Nyanza',     address: 'NZ Rd, Nyanza, Southern Province', hours: '8AM–8PM'  },
+  { id: 'remera',      name: 'Simba Supermarket Remera',      area: 'Remera',      address: 'KG 11 Ave, Remera, Kigali',        hours: '07:00–22:00' },
+  { id: 'kimironko',  name: 'Simba Supermarket Kimironko',  area: 'Kimironko',  address: 'KG 563 St, Kimironko, Kigali',     hours: '07:00–22:00' },
+  { id: 'kacyiru',    name: 'Simba Supermarket Kacyiru',    area: 'Kacyiru',    address: 'KG 7 Ave, Kacyiru, Kigali',        hours: '07:00–22:00' },
+  { id: 'nyamirambo', name: 'Simba Supermarket Nyamirambo', area: 'Nyamirambo', address: 'KN 4 Ave, Nyamirambo, Kigali',     hours: '07:00–22:00' },
+  { id: 'gikondo',    name: 'Simba Supermarket Gikondo',    area: 'Gikondo',    address: 'KK 15 Rd, Gikondo, Kigali',        hours: '07:00–22:00' },
+  { id: 'kanombe',    name: 'Simba Supermarket Kanombe',    area: 'Kanombe',    address: 'KK 200 St, Kanombe, Kigali',       hours: '07:00–21:00'  },
+  { id: 'kinyinya',   name: 'Simba Supermarket Kinyinya',   area: 'Kinyinya',   address: 'KG 770 St, Kinyinya, Kigali',     hours: '07:00–21:00'  },
+  { id: 'kibagabaga', name: 'Simba Supermarket Kibagabaga', area: 'Kibagabaga', address: 'KG 236 St, Kibagabaga, Kigali',   hours: '07:00–21:00'  },
+  { id: 'nyanza',     name: 'Simba Supermarket Nyanza',     area: 'Nyanza',     address: 'NZ Rd, Nyanza, Southern Province', hours: '08:00–20:00'  },
 ];
 
 // Generate pick-up time slots: every 30 mins for the next 4 hours
 export function generateTimeSlots(t: any): string[] {
   const slots: string[] = [];
   const now = new Date();
+  const i18n = t('currentLanguage', { defaultValue: 'en' }); // We can use t to get hint or just use browser locale
+  
   // Round up to the next 30-min block + 45 min lead time
   now.setMinutes(now.getMinutes() + 45);
   const startMin = Math.ceil(now.getMinutes() / 30) * 30;
@@ -36,15 +38,22 @@ export function generateTimeSlots(t: any): string[] {
   let currentSlot = new Date(now.getTime());
   const todayDate = new Date().getDate();
 
+  // For localization, we'll use t to get the current language code if possible, or fallback to 'en-US'
+  const lang = t('langCode', { defaultValue: 'en-US' });
+
   while (slots.length < 18) {
     const h = currentSlot.getHours();
     if (h >= 8 && h <= 20) {
       const isTomorrow = currentSlot.getDate() !== todayDate;
       const prefix = isTomorrow ? t('tomorrow', { defaultValue: 'Tomorrow' }) + ' ' : '';
-      const m = currentSlot.getMinutes().toString().padStart(2, '0');
-      const ampm = h >= 12 ? 'PM' : 'AM';
-      const h12 = h % 12 === 0 ? 12 : h % 12;
-      slots.push(`${prefix}${h12}:${m} ${ampm}`);
+      
+      const timeStr = currentSlot.toLocaleTimeString(lang, {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: lang === 'en-US',
+      });
+      
+      slots.push(`${prefix}${timeStr}`);
     }
     currentSlot = new Date(currentSlot.getTime() + 30 * 60 * 1000);
     if (currentSlot.getTime() - now.getTime() > 3 * 24 * 60 * 60 * 1000) break;
@@ -129,7 +138,7 @@ export function BranchSelector({
                         <span className="text-muted-foreground font-normal">({rating.count})</span>
                       </span>
                     ) : (
-                      <span className="text-[10px] text-muted-foreground">New</span>
+                      <span className="text-[10px] text-muted-foreground">{t('branchNew', { defaultValue: 'New' })}</span>
                     )}
                   </div>
                 </div>
