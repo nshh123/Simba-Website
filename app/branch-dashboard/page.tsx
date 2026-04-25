@@ -66,10 +66,8 @@ export default function BranchDashboard() {
     }
   }, [isEvaluationMode, orders.length, addOrder]);
   
-  const branches = ['All', ...BRANCHES.map(b => b.name)];
-  
   const filteredOrders = orders.filter(
-    (o) => selectedBranch === 'All' || o.branch === selectedBranch
+    (o) => selectedBranch === 'All' || o.branchId === selectedBranch
   );
 
   return (
@@ -93,17 +91,27 @@ export default function BranchDashboard() {
               {t('filterByBranch', { defaultValue: 'Filter by Branch' })}
             </h3>
             <div className="space-y-1">
-              {branches.map((branch) => (
+              <button
+                onClick={() => setSelectedBranch('All')}
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  selectedBranch === 'All'
+                    ? 'bg-primary/10 text-primary font-medium'
+                    : 'hover:bg-muted text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {t('all')}
+              </button>
+              {BRANCHES.map((branch) => (
                 <button
-                  key={branch}
-                  onClick={() => setSelectedBranch(branch)}
+                  key={branch.id}
+                  onClick={() => setSelectedBranch(branch.id)}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                    selectedBranch === branch
+                    selectedBranch === branch.id
                       ? 'bg-primary/10 text-primary font-medium'
                       : 'hover:bg-muted text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  {branch === 'All' ? t('all') : branch}
+                  {branch.name}
                 </button>
               ))}
             </div>
@@ -239,7 +247,9 @@ export default function BranchDashboard() {
                   {t('inventoryStatus', { defaultValue: 'Live Inventory Status' })}
                 </h2>
                 <span className="text-sm font-medium text-muted-foreground italic">
-                  {selectedBranch === 'All' ? t('selectBranchToSeeStock', { defaultValue: 'Select a single branch to view stock' }) : selectedBranch}
+                  {selectedBranch === 'All' 
+                    ? t('selectBranchToSeeStock', { defaultValue: 'Select a single branch to view stock' }) 
+                    : BRANCHES.find(b => b.id === selectedBranch)?.name}
                 </span>
               </div>
 
@@ -261,8 +271,7 @@ export default function BranchDashboard() {
                       </thead>
                       <tbody className="divide-y text-center">
                         {Object.keys(t('products', { returnObjects: true })).map((prodId) => {
-                          const branchId = selectedBranch === 'All' ? '' : 
-                                         BRANCHES.find(b => b.name === selectedBranch)?.id || '';
+                          const branchId = selectedBranch === 'All' ? '' : selectedBranch;
                           const stock = branchInventory[branchId]?.[prodId] ?? 50; // Mock default 50 if no movement
                           
                           return (
