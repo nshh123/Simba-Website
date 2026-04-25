@@ -62,7 +62,7 @@ export default function ProfilePage() {
                 </Link>
               </div>
             ) : (
-              <div className="divide-y overflow-auto max-h-[800px] hide-scrollbar">
+              <div className="divide-y overflow-auto max-h-[800px] hide-scrollbar pb-6">
                 {orders.map((order) => (
                   <div key={order.id} className="p-6 hover:bg-muted/10 transition-colors">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
@@ -107,51 +107,52 @@ export default function ProfilePage() {
                       ))}
                     </div>
 
-                    {/* Brand New Pronounced Rating Widget */}
+                    {/* Rating Widget */}
                     {!order.review ? (
-                      <div className="mt-2 pt-4 pb-4 px-5 border rounded-xl bg-amber-50/50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm relative overflow-hidden">
+                      <div className="mt-4 pt-4 pb-4 px-5 border rounded-xl bg-amber-50/50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800 flex flex-col sm:flex-row sm:items-center justify-between gap-5 shadow-sm relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-1 h-full bg-amber-500" />
-                        <div>
+                        <div className="flex-1">
                           <p className="text-sm font-bold text-amber-900 dark:text-amber-400 flex items-center gap-2">
                             <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
                             {t('rateBranchTitle', { defaultValue: 'Rate Your Experience!' })}
                           </p>
-                          <p className="text-xs text-amber-700/80 dark:text-amber-400/80 mt-0.5">
-                            {t('rateBranchDesc', { defaultValue: `How was your pickup at ${order.branch}?` })}
+                          <p className="text-xs text-amber-700/80 dark:text-amber-400/80 mt-1 max-w-md">
+                            {t('rateBranchDesc', { 
+                              defaultValue: order.branch 
+                                ? `How was your pickup at ${order.branch}?` 
+                                : 'How was your shopping experience today?'
+                            })}
                           </p>
                         </div>
-                        <div className="flex items-center gap-1.5 bg-background/50 p-2 rounded-lg border border-amber-200/50 dark:border-amber-800/50">
+                        <div className="flex items-center gap-1.5 bg-background/80 p-2 rounded-lg border border-amber-200 dark:border-amber-700/50 shadow-sm shrink-0">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <button
                               key={star}
                               type="button"
                               onClick={() => addReview(order.id, star)}
-                              className="focus:outline-none transition-transform hover:scale-125"
+                              className="focus:outline-none transition-all hover:scale-110 active:scale-95"
                             >
-                              <Star className="h-6 w-6 text-amber-200 dark:text-amber-700/50 hover:fill-amber-500 hover:text-amber-500" />
+                              <Star className="h-7 w-7 text-amber-200 dark:text-amber-700/30 hover:fill-amber-500 hover:text-amber-500 transition-colors" />
                             </button>
                           ))}
                         </div>
                       </div>
                     ) : (
-                      <div className="pt-4 border-t flex items-center justify-between">
-                        <p className="text-sm font-medium">{t('rateBranch', { defaultValue: 'You rated ' })}{order.branch}</p>
+                      <div className="mt-4 pt-4 border-t flex items-center justify-between">
+                        <p className="text-sm font-medium flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          {t('rateBranch', { defaultValue: 'You rated your experience' })}
+                        </p>
                         <div className="flex items-center gap-1">
                           {[1, 2, 3, 4, 5].map((star) => (
-                            <button
+                            <Star
                               key={star}
-                              type="button"
-                              onClick={() => addReview(order.id, star)}
-                              className="focus:outline-none transition-transform hover:scale-110"
-                            >
-                              <Star
-                                className={`h-5 w-5 ${
-                                  (order.review || 0) >= star
-                                    ? 'fill-amber-500 text-amber-500'
-                                    : 'text-muted-foreground hover:text-amber-500'
-                                }`}
-                              />
-                            </button>
+                              className={`h-4 w-4 ${
+                                (order.review || 0) >= star
+                                  ? 'fill-amber-500 text-amber-500'
+                                  : 'text-muted-foreground'
+                              }`}
+                            />
                           ))}
                         </div>
                       </div>
