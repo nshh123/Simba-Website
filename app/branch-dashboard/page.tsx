@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/useStore';
 import { Package, Clock, CheckCircle, Store, UserCheck, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { BRANCHES } from '@/components/BranchSelector';
 import { Input } from '@/components/ui/input';
 
 const STAFF_MEMBERS = ['Alice M.', 'Bob K.', 'Claude R.', 'David N.'];
@@ -15,7 +16,7 @@ export default function BranchDashboard() {
   const [selectedBranch, setSelectedBranch] = useState<string>('All');
   const [view, setView] = useState<'orders' | 'inventory'>('orders');
   
-  const branches = ['All', ...Array.from(new Set(orders.map((o) => o.branch)))];
+  const branches = ['All', ...BRANCHES.map(b => b.name)];
   
   const filteredOrders = orders.filter(
     (o) => selectedBranch === 'All' || o.branch === selectedBranch
@@ -209,49 +210,37 @@ export default function BranchDashboard() {
                         </tr>
                       </thead>
                       <tbody className="divide-y text-center">
-                        {Object.entries(branchInventory[selectedBranch === 'NYANZA' ? 'nyanza' : 
-                                        selectedBranch === 'REMERA' ? 'remera' :
-                                        selectedBranch === 'KIMIRONKO' ? 'kimironko' :
-                                        selectedBranch === 'KACYIRU' ? 'kacyiru' :
-                                        selectedBranch === 'NYAMIRAMBO' ? 'nyamirambo' :
-                                        selectedBranch === 'GIKONDO' ? 'gikondo' :
-                                        selectedBranch === 'KANOMBE' ? 'kanombe' :
-                                        selectedBranch === 'KINYINYA' ? 'kinyinya' :
-                                        selectedBranch === 'KIBAGABAGA' ? 'kibagabaga' :
-                                        selectedBranch.toLowerCase().split(' ').pop() || ''] || {}).map(([prodId, stock]) => (
-                          <tr key={prodId} className="hover:bg-muted/30 transition-colors">
-                            <td className="px-6 py-4 text-left font-medium">
-                              {t(`products.${prodId}.name`, { defaultValue: prodId })}
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className={`px-3 py-1 rounded-full font-black ${stock < 10 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
-                                {stock}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 uppercase text-[10px] font-bold">
-                              {stock === 0 ? (
-                                <span className="text-red-600">{t('outOfStock')}</span>
-                              ) : stock < 10 ? (
-                                <span className="text-amber-500 animate-pulse">{t('lowStock', { defaultValue: 'LOW STOCK' })}</span>
-                              ) : (
-                                <span className="text-green-600">{t('inStock', { defaultValue: 'IN STOCK' })}</span>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
-                        {Object.keys(branchInventory[selectedBranch === 'NYANZA' ? 'nyanza' : 
-                                        selectedBranch === 'REMERA' ? 'remera' :
-                                        selectedBranch === 'KIMIRONKO' ? 'kimironko' :
-                                        selectedBranch === 'KACYIRU' ? 'kacyiru' :
-                                        selectedBranch === 'NYAMIRAMBO' ? 'nyamirambo' :
-                                        selectedBranch === 'GIKONDO' ? 'gikondo' :
-                                        selectedBranch === 'KANOMBE' ? 'kanombe' :
-                                        selectedBranch === 'KINYINYA' ? 'kinyinya' :
-                                        selectedBranch === 'KIBAGABAGA' ? 'kibagabaga' :
-                                        selectedBranch.toLowerCase().split(' ').pop() || ''] || {}).length === 0 && (
+                        {Object.keys(t('products', { returnObjects: true })).map((prodId) => {
+                          const branchId = selectedBranch === 'All' ? '' : 
+                                         BRANCHES.find(b => b.name === selectedBranch)?.id || '';
+                          const stock = branchInventory[branchId]?.[prodId] ?? 50; // Mock default 50 if no movement
+                          
+                          return (
+                            <tr key={prodId} className="hover:bg-muted/30 transition-colors">
+                              <td className="px-6 py-4 text-left font-medium">
+                                {t(`products.${prodId}.name`, { defaultValue: prodId })}
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className={`px-3 py-1 rounded-full font-black ${stock < 10 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
+                                  {stock}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 uppercase text-[10px] font-bold">
+                                {stock === 0 ? (
+                                  <span className="text-red-600">{t('outOfStock')}</span>
+                                ) : stock < 10 ? (
+                                  <span className="text-amber-500 animate-pulse">{t('lowStock', { defaultValue: 'LOW STOCK' })}</span>
+                                ) : (
+                                  <span className="text-green-600">{t('inStock', { defaultValue: 'IN STOCK' })}</span>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                        {Object.keys(t('products', { returnObjects: true })).length === 0 && (
                           <tr>
                             <td colSpan={3} className="px-6 py-12 text-muted-foreground italic bg-muted/10">
-                              {t('noInventoryData', { defaultValue: 'No inventory data recorded for this branch yet.' })}
+                              {t('noProductsFound', { defaultValue: 'No products found in the catalog.' })}
                             </td>
                           </tr>
                         )}
