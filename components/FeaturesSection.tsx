@@ -9,26 +9,26 @@ export function FeaturesSection() {
   const features = [
     {
       icon: Truck,
-      title: 'Free Delivery',
-      desc: 'On all orders above 10,000 RWF',
+      title: t('feature_delivery_title'),
+      desc: t('feature_delivery_desc'),
       color: 'bg-orange-500'
     },
     {
       icon: Clock,
-      title: 'Open 24/7',
-      desc: 'Shop anytime, we never close',
+      title: t('feature_hours_title'),
+      desc: t('feature_hours_desc'),
       color: 'bg-blue-500'
     },
     {
       icon: ShieldCheck,
-      title: 'Secure Payment',
-      desc: 'MTN MoMo & Card supported',
+      title: t('feature_secure_title'),
+      desc: t('feature_secure_desc'),
       color: 'bg-green-500'
     },
     {
       icon: Zap,
-      title: 'Quick Pickup',
-      desc: 'Ready in 30 mins at any branch',
+      title: t('feature_pickup_title'),
+      desc: t('feature_pickup_desc'),
       color: 'bg-purple-500'
     }
   ];

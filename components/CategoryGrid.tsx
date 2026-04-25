@@ -43,7 +43,19 @@ export function CategoryGrid() {
   const handleCategoryClick = (id: string) => {
     setSelectedCategory(id);
     setSearchQuery('');
-    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+    
+    // Smooth scroll to product section with offset for header
+    const element = document.getElementById('products-section');
+    if (element) {
+      const headerOffset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
