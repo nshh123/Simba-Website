@@ -25,7 +25,7 @@
   "noResultsTitle": "Article non disponible",
   "noResultsMessage": "Désolé, cet article n'est pas encore en stock. Veuillez essayer une autre recherche ou parcourir nos catégories disponibles.",
   "addedToCart": "ajouté au panier !",
-  "heroBadge": "Bienvenue chez Simba Supermarket",
+  "heroBadge": "Bienvenue au Supermarché Simba",
   "heroWelcome": "Bienvenue chez Simba Online Shopping",
   "heroTitle": "Des produits frais livrés chez vous",
   "heroSubtitle": "Découvrez les meilleurs produits du Rwanda — des produits frais aux marques locales de haute qualité, tout en un seul endroit.",
@@ -153,6 +153,7 @@
   "badgeNew": "Nouveau",
   "badgeBestValue": "Meilleur Prix",
   "badgeSale": "Solde",
+  "brandName": "Supermarché Simba",
   "products": {
     "prod-001": { "name": "Lait frais Inyange 1L", "description": "Lait entier frais d'Inyange, d'origine locale." },
     "prod-002": { "name": "Café Arabica Rwandais 500g", "description": "Grains de café arabica rwandais torréfiés de qualité supérieure." },

@@ -27,7 +27,7 @@ export default function BranchDashboard() {
           deposit: 500,
           items: [{ id: 'prod-001', name: 'Inyange Milk', price: 1200, quantity: 2, category: 'Dairy', description: '', imageUrl: '', inStock: true }],
           status: 'Processing',
-          branch: 'Simba Supermarket Remera',
+          branch: 'Remera',
           branchId: 'remera',
           pickupTime: '18:30',
           customerName: 'Jean Luc',
@@ -40,7 +40,7 @@ export default function BranchDashboard() {
           deposit: 500,
           items: [{ id: 'prod-002', name: 'Coffee', price: 8500, quantity: 1, category: 'Beverages', description: '', imageUrl: '', inStock: true }],
           status: 'Assigned',
-          branch: 'Simba Supermarket Kimironko',
+          branch: 'Kimironko',
           branchId: 'kimironko',
           pickupTime: '19:00',
           customerName: 'Marie Claire',
@@ -54,7 +54,7 @@ export default function BranchDashboard() {
           deposit: 500,
           items: [{ id: 'prod-005', name: 'Flour', price: 4200, quantity: 1, category: 'Pantry', description: '', imageUrl: '', inStock: true }],
           status: 'Ready for Pick-Up',
-          branch: 'Simba Supermarket Remera',
+          branch: 'Remera',
           branchId: 'remera',
           pickupTime: '17:45',
           customerName: 'Thierry H.',
@@ -172,7 +172,7 @@ export default function BranchDashboard() {
                             </span>
                           </div>
                           <p className="text-sm text-muted-foreground">
-                            {new Date(order.date).toLocaleString(i18n.language === 'en' ? 'en-US' : i18n.language === 'fr' ? 'fr-FR' : 'rw-RW')} • {order.branch}
+                            {new Date(order.date).toLocaleString(i18n.language === 'en' ? 'en-US' : i18n.language === 'fr' ? 'fr-FR' : 'rw-RW')} • {t('brandName')} {order.branch}
                           </p>
                           <p className="text-sm font-medium mt-2">
                             {t('customer', { defaultValue: 'Customer' })}: <span className="text-muted-foreground">{order.customerName} ({order.customerPhone})</span>

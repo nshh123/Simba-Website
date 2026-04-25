@@ -21,7 +21,7 @@ export function Footer() {
                 <Image src="/logo.jpg" alt="Simba Logo" width={36} height={36} className="rounded-full object-cover" />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-lg leading-none">Simba Supermarket</span>
+                <span className="font-bold text-lg leading-none">{t('brandName', { defaultValue: 'Simba Supermarket' })}</span>
                 <span className="text-xs text-muted-foreground mt-0.5">{t('tagline')}</span>
               </div>
             </Link>
@@ -84,7 +84,7 @@ export function Footer() {
       {/* Bottom bar */}
       <div className="border-t">
         <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-          <p>© {year} Simba Supermarket. {t('footerRights')}</p>
+          <p>© {year} {t('brandName', { defaultValue: 'Simba Supermarket' })}. {t('footerRights')}</p>
           <p>
             {t('createdBy')}{' '}
             <a href="https://github.com/nshh123" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">

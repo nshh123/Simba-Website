@@ -13,15 +13,15 @@ export interface Branch {
 }
 
 export const BRANCHES: Branch[] = [
-  { id: 'remera',      name: 'Simba Supermarket Remera',      area: 'Remera',      address: 'KG 11 Ave, Remera, Kigali',        hours: '07:00–22:00' },
-  { id: 'kimironko',  name: 'Simba Supermarket Kimironko',  area: 'Kimironko',  address: 'KG 563 St, Kimironko, Kigali',     hours: '07:00–22:00' },
-  { id: 'kacyiru',    name: 'Simba Supermarket Kacyiru',    area: 'Kacyiru',    address: 'KG 7 Ave, Kacyiru, Kigali',        hours: '07:00–22:00' },
-  { id: 'nyamirambo', name: 'Simba Supermarket Nyamirambo', area: 'Nyamirambo', address: 'KN 4 Ave, Nyamirambo, Kigali',     hours: '07:00–22:00' },
-  { id: 'gikondo',    name: 'Simba Supermarket Gikondo',    area: 'Gikondo',    address: 'KK 15 Rd, Gikondo, Kigali',        hours: '07:00–22:00' },
-  { id: 'kanombe',    name: 'Simba Supermarket Kanombe',    area: 'Kanombe',    address: 'KK 200 St, Kanombe, Kigali',       hours: '07:00–21:00'  },
-  { id: 'kinyinya',   name: 'Simba Supermarket Kinyinya',   area: 'Kinyinya',   address: 'KG 770 St, Kinyinya, Kigali',     hours: '07:00–21:00'  },
-  { id: 'kibagabaga', name: 'Simba Supermarket Kibagabaga', area: 'Kibagabaga', address: 'KG 236 St, Kibagabaga, Kigali',   hours: '07:00–21:00'  },
-  { id: 'nyanza',     name: 'Simba Supermarket Nyanza',     area: 'Nyanza',     address: 'NZ Rd, Nyanza, Southern Province', hours: '08:00–20:00'  },
+  { id: 'remera',      name: 'Remera',      area: 'Remera',      address: 'KG 11 Ave, Remera, Kigali',        hours: '07:00–22:00' },
+  { id: 'kimironko',  name: 'Kimironko',  area: 'Kimironko',  address: 'KG 563 St, Kimironko, Kigali',     hours: '07:00–22:00' },
+  { id: 'kacyiru',    name: 'Kacyiru',    area: 'Kacyiru',    address: 'KG 7 Ave, Kacyiru, Kigali',        hours: '07:00–22:00' },
+  { id: 'nyamirambo', name: 'Nyamirambo', area: 'Nyamirambo', address: 'KN 4 Ave, Nyamirambo, Kigali',     hours: '07:00–22:00' },
+  { id: 'gikondo',    name: 'Gikondo',    area: 'Gikondo',    address: 'KK 15 Rd, Gikondo, Kigali',        hours: '07:00–22:00' },
+  { id: 'kanombe',    name: 'Kanombe',    area: 'Kanombe',    address: 'KK 200 St, Kanombe, Kigali',       hours: '07:00–21:00'  },
+  { id: 'kinyinya',   name: 'Kinyinya',   area: 'Kinyinya',   address: 'KG 770 St, Kinyinya, Kigali',     hours: '07:00–21:00'  },
+  { id: 'kibagabaga', name: 'Kibagabaga', area: 'Kibagabaga', address: 'KG 236 St, Kibagabaga, Kigali',   hours: '07:00–21:00'  },
+  { id: 'nyanza',     name: 'Nyanza',     area: 'Nyanza',     address: 'NZ Rd, Nyanza, Southern Province', hours: '08:00–20:00'  },
 ];
 
 // Generate pick-up time slots: every 30 mins for the next 4 hours
@@ -116,7 +116,7 @@ export function BranchSelector({
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className={`font-semibold text-sm leading-tight ${isSelected ? 'text-primary' : ''}`}>
-                      {branch.name}
+                      {t('brandName')} {branch.name}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1 truncate">{branch.address}</p>
                     <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">

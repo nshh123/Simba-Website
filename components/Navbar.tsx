@@ -94,7 +94,7 @@ export function Navbar() {
               <Image src="/logo.jpg" alt="Simba Logo" width={36} height={36} className="rounded-full object-cover" />
             </div>
             <div className="flex flex-col text-white">
-              <span className="font-bold text-lg leading-none tracking-tight">Simba Supermarket</span>
+              <span className="font-bold text-lg leading-none tracking-tight">{t('brandName', { defaultValue: 'Simba Supermarket' })}</span>
               <span className="hidden sm:inline-block text-xs leading-tight opacity-90 mt-0.5">{t('tagline')}</span>
             </div>
           </Link>

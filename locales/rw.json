@@ -25,7 +25,7 @@
   "noResultsTitle": "Igicuruzwa ntigiboneke",
   "noResultsMessage": "Ihangane, iki gicuruzwa ntikiri muri sitoke. Gerageza gushakisha ikindi cyangwa urebe ibyiciro biri hano.",
   "addedToCart": "byongeyeho mu gitebo!",
-  "heroBadge": "Murakaza neza kuri Simba Supermarket",
+  "heroBadge": "Murakaza neza ku Isoko rinini rya Simba",
   "heroWelcome": "Murakaza neza kuri Simba Online Shopping",
   "heroTitle": "Ibiribwa bishya bigezwa ku rugi",
   "heroSubtitle": "Gura ibicuruzwa byiza by'u Rwanda — kuva ku mbuto nziza kugeza ku bicuruzwa by'imbere mu gihugu.",
@@ -153,6 +153,7 @@
   "badgeNew": "Gishya",
   "badgeBestValue": "Igiciro Cyiza",
   "badgeSale": "Kugabanya",
+  "brandName": "Isoko rinini rya Simba",
   "products": {
     "prod-001": { "name": "Amata y'Inyange 1L", "description": "Amata y'Inyange meza azira inenge." },
     "prod-002": { "name": "Ikawa y'Arabica y'u Rwanda 500g", "description": "Ikawa nziza y'u Rwanda yatunganijwe neza." },

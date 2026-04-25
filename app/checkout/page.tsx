@@ -291,7 +291,7 @@ export default function CheckoutPage() {
           <div className="flex items-start gap-3 text-sm">
             <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
             <div>
-              <p className="font-medium">{selectedBranch?.name}</p>
+              <p className="font-medium">{t('brandName')} {selectedBranch?.name}</p>
               <p className="text-muted-foreground">{selectedBranch?.address}</p>
             </div>
           </div>
@@ -514,7 +514,7 @@ export default function CheckoutPage() {
                 </p>
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-amber-600" />
-                  <span className="font-medium">{selectedBranch?.name}</span>
+                  <span className="font-medium">{t('brandName')} {selectedBranch?.name}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Clock className="h-4 w-4 text-amber-600" />
