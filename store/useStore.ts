@@ -45,6 +45,8 @@ interface StoreState {
   addReview: (orderId: string, rating: number) => void;
   branchInventory: Record<string, Record<string, number>>;
   decreaseInventory: (branchId: string, items: CartItem[]) => void;
+  isEvaluationMode: boolean;
+  setEvaluationMode: (val: boolean) => void;
 }
 
 export const useStore = create<StoreState>()(
@@ -57,6 +59,8 @@ export const useStore = create<StoreState>()(
       language: 'en',
       isCartOpen: false,
       setCartOpen: (isOpen) => set({ isCartOpen: isOpen }),
+      isEvaluationMode: false,
+      setEvaluationMode: (isEvaluationMode) => set({ isEvaluationMode }),
       addToCart: (product, qty = 1) =>
         set((state) => {
           const existingItem = state.cart.find((item) => item.id === product.id);

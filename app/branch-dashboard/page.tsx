@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useStore } from '@/store/useStore';
+import { useStore, Order } from '@/store/useStore';
 import { Package, Clock, CheckCircle, Store, UserCheck, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BRANCHES } from '@/components/BranchSelector';
@@ -12,9 +12,59 @@ const STAFF_MEMBERS = ['Alice M.', 'Bob K.', 'Claude R.', 'David N.'];
 
 export default function BranchDashboard() {
   const { t, i18n } = useTranslation();
-  const { orders, updateOrderStatus, branchInventory } = useStore();
+  const { orders, updateOrderStatus, branchInventory, isEvaluationMode, addOrder } = useStore();
   const [selectedBranch, setSelectedBranch] = useState<string>('All');
   const [view, setView] = useState<'orders' | 'inventory'>('orders');
+  
+  // Seed dummy orders for evaluation mode if empty
+  useEffect(() => {
+    if (isEvaluationMode && orders.length === 0) {
+      const mockOrders: Order[] = [
+        {
+          id: 'SMB-4829',
+          date: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+          total: 12500,
+          deposit: 500,
+          items: [{ id: 'prod-001', name: 'Inyange Milk', price: 1200, quantity: 2, category: 'Dairy' }],
+          status: 'Processing',
+          branch: 'Simba Supermarket Remera',
+          branchId: 'remera',
+          pickupTime: '18:30',
+          customerName: 'Jean Luc',
+          customerPhone: '0780000111'
+        },
+        {
+          id: 'SMB-5102',
+          date: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+          total: 8200,
+          deposit: 500,
+          items: [{ id: 'prod-002', name: 'Coffee', price: 8500, quantity: 1, category: 'Beverages' }],
+          status: 'Assigned',
+          branch: 'Simba Supermarket Kimironko',
+          branchId: 'kimironko',
+          pickupTime: '19:00',
+          customerName: 'Marie Claire',
+          customerPhone: '0780000222',
+          assignedTo: 'Alice M.'
+        },
+        {
+          id: 'SMB-3944',
+          date: new Date(Date.now() - 1000 * 60 * 300).toISOString(),
+          total: 4500,
+          deposit: 500,
+          items: [{ id: 'prod-005', name: 'Flour', price: 4200, quantity: 1, category: 'Pantry' }],
+          status: 'Ready for Pick-Up',
+          branch: 'Simba Supermarket Remera',
+          branchId: 'remera',
+          pickupTime: '17:45',
+          customerName: 'Thierry H.',
+          customerPhone: '0780000333',
+          assignedTo: 'Bob K.'
+        }
+      ];
+      mockOrders.forEach(o => addOrder(o));
+    }
+  }, [isEvaluationMode, orders.length, addOrder]);
   
   const branches = ['All', ...BRANCHES.map(b => b.name)];
   

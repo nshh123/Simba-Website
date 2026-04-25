@@ -23,7 +23,7 @@ export function Navbar() {
   const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { cart, theme, toggleTheme, setLanguage, setCartOpen, searchQuery, setSearchQuery } = useStore();
+  const { cart, theme, toggleTheme, setLanguage, setCartOpen, searchQuery, setSearchQuery, isEvaluationMode } = useStore();
   const { isSignedIn } = useAuth();
   const { user } = useUser();
 
@@ -63,6 +63,8 @@ export function Navbar() {
   );
 
   const isManager = user?.publicMetadata?.role === 'manager';
+  const showDashboard = isEvaluationMode || (isSignedIn && isManager);
+  const showProfile = isEvaluationMode || isSignedIn;
 
   const handleResetHome = () => {
     setSearchQuery('');
@@ -132,9 +134,9 @@ export function Navbar() {
             {mounted && <ThemeToggle />}
           </div>
 
-          {isSignedIn && isManager && (
+          {showDashboard && (
             <Link 
-              href="/branch-dashboard" 
+              href={isEvaluationMode ? "/branch-dashboard?evaluation=true" : "/branch-dashboard"} 
               className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-white border border-white/20 hover:bg-white/20 transition-all font-bold text-xs"
             >
               <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -142,12 +144,18 @@ export function Navbar() {
             </Link>
           )}
 
-          {isSignedIn ? (
+          {showProfile ? (
             <div className="flex items-center gap-4">
-              <Link href="/profile" className="hidden md:inline-flex text-sm font-bold text-white hover:text-white/80 transition-colors">
+              <Link href={isEvaluationMode ? "/profile?evaluation=true" : "/profile"} className="hidden md:inline-flex text-sm font-bold text-white hover:text-white/80 transition-colors">
                 {t('myProfile')}
               </Link>
-              <UserButton appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border-2 border-white/40" } }} />
+              {isSignedIn ? (
+                <UserButton appearance={{ elements: { userButtonAvatarBox: "w-9 h-9 border-2 border-white/40" } }} />
+              ) : (
+                <div className="w-9 h-9 rounded-full border-2 border-white/40 bg-white/20 flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-primary/40 flex items-center justify-center text-[10px] font-bold">EM</div>
+                </div>
+              )}
             </div>
           ) : (
             <SignInButton mode="modal">

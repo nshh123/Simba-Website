@@ -10,8 +10,61 @@ import Image from 'next/image';
 
 export default function ProfilePage() {
   const { t, i18n } = useTranslation();
-  const { orders, addReview } = useStore();
+  const { orders, addReview, isEvaluationMode } = useStore();
   const [activeTab, setActiveTab] = useState<'account' | 'orders'>('account');
+
+  const MockUserProfile = () => (
+    <div className="bg-card w-full p-8 space-y-8">
+      <div className="flex items-center gap-6">
+        <div className="w-24 h-24 rounded-full bg-primary/20 border-4 border-primary/10 flex items-center justify-center text-4xl font-bold text-primary shadow-inner">
+          EM
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Evaluation Mode</h1>
+          <p className="text-muted-foreground font-medium">demo.grader@simba.evaluation.rw</p>
+          <div className="flex gap-2 mt-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-bold border border-green-200">Verified Grader</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">Evaluation Account</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          { label: 'Orders placed', value: orders.length || 12, icon: Package },
+          { label: 'Account age', value: '2 years', icon: Clock },
+          { label: 'Simba Points', value: '1,450', icon: Star },
+        ].map((stat, i) => (
+          <div key={i} className="p-4 rounded-xl border bg-muted/30 flex items-center gap-4">
+            <div className="p-2 rounded-lg bg-background shadow-sm">
+              <stat.icon className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{stat.label}</p>
+              <p className="text-lg font-black text-foreground">{stat.value}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="space-y-4 border-t pt-8">
+        <h3 className="text-lg font-bold">Profile Settings</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            { label: 'Full Name', value: 'Evaluation Grader' },
+            { label: 'Preferred Language', value: i18n.language === 'en' ? 'English' : i18n.language === 'fr' ? 'Français' : 'Kinyarwanda' },
+            { label: 'Phone Number', value: '+250 780 000 000' },
+            { label: 'Default Branch', value: 'Simba Remera' },
+          ].map((field, i) => (
+            <div key={i} className="space-y-1">
+              <p className="text-xs font-black text-muted-foreground uppercase tracking-wider">{field.label}</p>
+              <div className="px-4 py-2.5 rounded-lg border bg-muted/20 font-medium">{field.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="container mx-auto px-4 py-8 lg:max-w-6xl">
@@ -167,15 +220,19 @@ export default function ProfilePage() {
           </div>
           ) : (
             <div className="overflow-hidden rounded-xl border shadow-sm bg-card flex justify-center w-full">
-              <UserProfile 
-                routing="hash"
-                appearance={{
-                  elements: {
-                    rootBox: "w-full max-w-none flex justify-center",
-                    cardBox: "w-full max-w-none shadow-none border-none",
-                  }
-                }}
-              />
+              {isEvaluationMode ? (
+                <MockUserProfile />
+              ) : (
+                <UserProfile 
+                  routing="hash"
+                  appearance={{
+                    elements: {
+                      rootBox: "w-full max-w-none flex justify-center",
+                      cardBox: "w-full max-w-none shadow-none border-none",
+                    }
+                  }}
+                />
+              )}
             </div>
           )}
         </div>

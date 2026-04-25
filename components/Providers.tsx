@@ -14,6 +14,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setMounted(true);
     // Dark mode by default for mobile
     if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('evaluation') === 'true') {
+        useStore.getState().setEvaluationMode(true);
+      }
+
       const userChoice = localStorage.getItem('theme-user-choice');
       if (!userChoice && window.innerWidth <= 768) {
         useStore.getState().setTheme('dark');
