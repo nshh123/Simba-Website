@@ -63,7 +63,7 @@ export function ProductCard({ product, onQuickView }: { product: Product; onQuic
         {/* Badge */}
         {badge && (
           <span className={`absolute top-2 left-2 z-10 px-2.5 py-1 text-xs font-bold text-white rounded-full shadow-md ${badge.color}`}>
-            {badge.label}
+            {t(`badge${badge.label.replace(/ /g, '')}`, { defaultValue: badge.label })}
           </span>
         )}
         {/* Wishlist Button */}

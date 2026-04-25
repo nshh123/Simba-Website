@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { BRANCHES } from './BranchSelector';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-lg leading-none">Simba Supermarket</span>
-                <span className="text-xs text-muted-foreground mt-0.5">Online Shopping</span>
+                <span className="text-xs text-muted-foreground mt-0.5">{t('tagline')}</span>
               </div>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -62,15 +63,19 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Social / Payment */}
+          {/* Our Branches */}
           <div className="space-y-4">
-            <h3 className="font-semibold">{t('paymentMethods')}</h3>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium">MTN MoMo</span>
-              <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium">Airtel Money</span>
-              <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium">Visa</span>
-              <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium">Mastercard</span>
-              <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium">Cash</span>
+            <h3 className="font-semibold flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              {t('ourBranches', { defaultValue: 'Our Branches' })}
+            </h3>
+            <div className="grid grid-cols-1 gap-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40 transition-colors">
+              {BRANCHES.map((branch) => (
+                <div key={branch.id} className="group">
+                  <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{branch.name}</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5 leading-tight">{branch.address}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -81,7 +86,7 @@ export function Footer() {
         <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
           <p>© {year} Simba Supermarket. {t('footerRights')}</p>
           <p>
-            Created by{' '}
+            {t('createdBy')}{' '}
             <a href="https://github.com/nshh123" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">
               @nshh123
             </a>

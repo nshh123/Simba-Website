@@ -62,14 +62,14 @@ export function SidebarFilter({
 
       {/* Sorting */}
       <div>
-        <h3 className="font-semibold mb-3">{t('recommended')} (Sort)</h3>
+        <h3 className="font-semibold mb-3">{t('recommended')}</h3>
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as 'none' | 'asc' | 'desc' | 'wishlist')}
           className="w-full h-10 appearance-none rounded-md border border-input bg-background px-3 py-2 text-sm outline-none cursor-pointer hover:bg-accent/50 transition-colors"
         >
           <option value="none">{t('recommended')}</option>
-          <option value="wishlist">Wishlist</option>
+          <option value="wishlist">{t('wishlist')}</option>
           <option value="asc">{t('priceLowToHigh')}</option>
           <option value="desc">{t('priceHighToLow')}</option>
         </select>
@@ -77,7 +77,7 @@ export function SidebarFilter({
 
       {/* Categories */}
       <div>
-        <h3 className="font-semibold mb-3">Categories</h3>
+        <h3 className="font-semibold mb-3">{t('categories')}</h3>
         <div className="flex flex-col gap-2">
           <button
             onClick={() => setSelectedCategory('All')}
@@ -99,11 +99,11 @@ export function SidebarFilter({
 
       {/* Price Range */}
       <div>
-        <h3 className="font-semibold mb-3">Price Range (RWF)</h3>
+        <h3 className="font-semibold mb-3">{t('priceRange')} (RWF)</h3>
         <div className="flex items-center gap-2">
           <Input 
             type="number" 
-            placeholder="Min" 
+            placeholder={t('min')} 
             value={minPrice} 
             onChange={(e) => setMinPrice(e.target.value)}
             className="w-full"
@@ -111,7 +111,7 @@ export function SidebarFilter({
           <span className="text-muted-foreground">-</span>
           <Input 
             type="number" 
-            placeholder="Max" 
+            placeholder={t('max')} 
             value={maxPrice} 
             onChange={(e) => setMaxPrice(e.target.value)}
             className="w-full"
