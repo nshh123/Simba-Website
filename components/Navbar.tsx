@@ -61,6 +61,9 @@ export function Navbar() {
     </DropdownMenu>
   );
 
+  const { user } = useAuth() as any; 
+  const isManager = user?.publicMetadata?.role === 'manager';
+
   const handleResetHome = () => {
     setSearchQuery('');
     window.dispatchEvent(new Event('resetFilters'));
@@ -128,6 +131,16 @@ export function Navbar() {
           <div className="hidden md:flex gap-1">
             {mounted && <ThemeToggle />}
           </div>
+
+          {isSignedIn && isManager && (
+            <Link 
+              href="/branch-dashboard" 
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-white border border-white/20 hover:bg-white/20 transition-all font-bold text-xs"
+            >
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              {t('dashboard')}
+            </Link>
+          )}
 
           {isSignedIn ? (
             <div className="flex items-center gap-4">

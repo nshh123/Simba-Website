@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 export default function ProfilePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { orders, addReview } = useStore();
   const [activeTab, setActiveTab] = useState<'account' | 'orders'>('account');
 
@@ -55,7 +55,7 @@ export default function ProfilePage() {
               </div>
               {orders.length > 0 && (
                 <span className="text-sm font-medium text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full border">
-                  {orders.length} {orders.length === 1 ? 'Order' : 'Orders'}
+                  {t('orderCount', { count: orders.length })}
                 </span>
               )}
             </div>
@@ -76,7 +76,7 @@ export default function ProfilePage() {
                       <div>
                         <p className="font-bold text-lg">{order.id}</p>
                         <p className="text-sm text-muted-foreground">
-                          {new Date(order.date).toLocaleDateString(undefined, {
+                          {new Date(order.date).toLocaleDateString(i18n.language === 'en' ? 'en-US' : i18n.language === 'fr' ? 'fr-FR' : 'rw-RW', {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric',
@@ -90,7 +90,7 @@ export default function ProfilePage() {
                           order.status === 'Completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-primary/10 text-primary dark:bg-primary/20'
                         }`}>
                           {order.status === 'Completed' ? <CheckCircle className="h-3.5 w-3.5" /> : <Clock className="h-3.5 w-3.5" />}
-                          {order.status}
+                          {t(`status${order.status.replace(/ /g, '')}`, { defaultValue: order.status })}
                         </span>
                         <p className="font-bold text-lg whitespace-nowrap">{order.total.toLocaleString('en-US')} RWF</p>
                       </div>
@@ -121,14 +121,10 @@ export default function ProfilePage() {
                         <div className="flex-1">
                           <p className="text-sm font-bold text-amber-900 dark:text-amber-400 flex items-center gap-2">
                             <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                            {t('rateBranchTitle', { defaultValue: 'Rate Your Experience!' })}
+                            {t('rateBranchTitle')}
                           </p>
                           <p className="text-xs text-amber-700/80 dark:text-amber-400/80 mt-1 max-w-md">
-                            {t('rateBranchDesc', { 
-                              defaultValue: order.branch 
-                                ? `How was your pickup at ${order.branch}?` 
-                                : 'How was your shopping experience today?'
-                            })}
+                            {t('rateBranchDesc', { branch: order.branch })}
                           </p>
                         </div>
                         <div className="flex items-center gap-1.5 bg-background/80 p-2 rounded-lg border border-amber-200 dark:border-amber-700/50 shadow-sm shrink-0">
@@ -146,9 +142,9 @@ export default function ProfilePage() {
                       </div>
                     ) : (
                       <div className="mt-4 pt-4 border-t flex items-center justify-between">
-                        <p className="text-sm font-medium flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-green-500" />
-                          {t('rateBranch', { defaultValue: 'You rated your experience' })}
+                        <p className="text-sm font-bold text-green-600 dark:text-green-500 flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4" />
+                          {t('rateBranch')}
                         </p>
                         <div className="flex items-center gap-1">
                           {[1, 2, 3, 4, 5].map((star) => (
