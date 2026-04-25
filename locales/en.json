@@ -154,6 +154,12 @@
   "badgeBestValue": "Best Value",
   "badgeSale": "Sale",
   "brandName": "Simba Supermarket",
+  "aiChat_title": "Simba AI Assistant",
+  "aiChat_welcome": "How can I help you today?",
+  "aiChat_tryMessage": "Try: \"Do you have fresh milk?\" or \"I need items for breakfast.\"",
+  "aiChat_placeholder": "Ask Simba AI...",
+  "aiChat_poweredBy": "Powered by Groq",
+  "aiChat_error": "I'm having trouble thinking right now",
   "products": {
     "prod-001": { "name": "Inyange Fresh Milk 1L", "description": "Locally sourced fresh whole milk from Inyange." },
     "prod-002": { "name": "Rwandan Arabica Coffee 500g", "description": "Premium roasted Rwandan Arabica coffee beans." },

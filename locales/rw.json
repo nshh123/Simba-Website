@@ -154,6 +154,12 @@
   "badgeBestValue": "Igiciro Cyiza",
   "badgeSale": "Kugabanya",
   "brandName": "Isoko rinini rya Simba",
+  "aiChat_title": "Simba AI Assistant",
+  "aiChat_welcome": "Nigute nshobora kugufasha uyu munsi?",
+  "aiChat_tryMessage": "Gerageza: \"Mufite amata mashya?\" cyangwa \"Nkeneye ibintu rya mugitondo.\"",
+  "aiChat_placeholder": "Baza Simba AI...",
+  "aiChat_poweredBy": "Ikorana na Groq",
+  "aiChat_error": "Mfite ikibazo cyo gutekereza ubu",
   "products": {
     "prod-001": { "name": "Amata y'Inyange 1L", "description": "Amata y'Inyange meza azira inenge." },
     "prod-002": { "name": "Ikawa y'Arabica y'u Rwanda 500g", "description": "Ikawa nziza y'u Rwanda yatunganijwe neza." },

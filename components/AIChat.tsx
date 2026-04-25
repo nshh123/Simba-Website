@@ -56,7 +56,7 @@ export function AIChat() {
       console.error(error);
       setChatHistory(prev => [...prev, { 
         role: 'assistant', 
-        content: "I'm sorry, I'm having trouble connecting to my brain right now. Please try again later!" 
+        content: t('aiChat_error', { defaultValue: "I'm sorry, I'm having trouble connecting to my brain right now. Please try again later!" })
       }]);
     } finally {
       setLoading(false);
@@ -84,8 +84,8 @@ export function AIChat() {
                 <Bot className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="font-bold text-lg leading-tight">Simba AI Assistant</h3>
-                <p className="text-[10px] uppercase tracking-widest opacity-80 font-bold">Powered by Groq</p>
+                <h3 className="font-bold text-lg leading-tight">{t('aiChat_title', { defaultValue: 'Simba AI Assistant' })}</h3>
+                <p className="text-[10px] uppercase tracking-widest opacity-80 font-bold">{t('aiChat_poweredBy', { defaultValue: 'Powered by Groq' })}</p>
               </div>
             </div>
             <button 
@@ -107,9 +107,9 @@ export function AIChat() {
                   <Sparkles className="h-8 w-8 text-[#FF8800]" />
                 </div>
                 <div>
-                  <p className="font-bold text-gray-800 dark:text-gray-100">How can I help you today?</p>
+                  <p className="font-bold text-gray-800 dark:text-gray-100">{t('aiChat_welcome', { defaultValue: 'How can I help you today?' })}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400 max-w-[250px] mx-auto mt-1">
-                    Try: "Do you have fresh milk?" or "I need items for breakfast."
+                    {t('aiChat_tryMessage', { defaultValue: 'Try: "Do you have fresh milk?" or "I need items for breakfast."' })}
                   </p>
                 </div>
               </div>
@@ -174,7 +174,7 @@ export function AIChat() {
               <Input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Ask Simba AI..."
+                placeholder={t('aiChat_placeholder', { defaultValue: 'Ask Simba AI...' })}
                 className="flex-1 bg-gray-100/80 dark:bg-gray-800/80 border-none rounded-full h-11 px-5 focus-visible:ring-2 focus-visible:ring-orange-500 transition-all"
               />
               <Button 

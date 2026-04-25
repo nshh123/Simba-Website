@@ -154,6 +154,12 @@
   "badgeBestValue": "Meilleur Prix",
   "badgeSale": "Solde",
   "brandName": "Supermarché Simba",
+  "aiChat_title": "Assistant IA Simba",
+  "aiChat_welcome": "Comment puis-je vous aider aujourd'hui ?",
+  "aiChat_tryMessage": "Essayez : « Avez-vous du lait frais ? » ou « J'ai besoin d'articles pour le petit-déjeuner. »",
+  "aiChat_placeholder": "Demandez à Simba IA...",
+  "aiChat_poweredBy": "Propulsé par Groq",
+  "aiChat_error": "J'ai du mal à réfléchir en ce moment",
   "products": {
     "prod-001": { "name": "Lait frais Inyange 1L", "description": "Lait entier frais d'Inyange, d'origine locale." },
     "prod-002": { "name": "Café Arabica Rwandais 500g", "description": "Grains de café arabica rwandais torréfiés de qualité supérieure." },
