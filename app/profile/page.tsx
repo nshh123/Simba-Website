@@ -3,14 +3,14 @@
 import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/useStore';
 import { UserProfile } from '@clerk/nextjs';
-import { Package, Clock, CheckCircle, User } from 'lucide-react';
+import { Package, Clock, CheckCircle, User, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import Image from 'next/image';
 
 export default function ProfilePage() {
   const { t } = useTranslation();
-  const orders = useStore((state) => state.orders) || [];
+  const { orders, addReview } = useStore();
   const [activeTab, setActiveTab] = useState<'account' | 'orders'>('account');
 
   return (
@@ -89,7 +89,7 @@ export default function ProfilePage() {
                       </div>
                     </div>
                     
-                    <div className="flex gap-4 overflow-x-auto pb-2 hide-scrollbar snap-x">
+                    <div className="flex gap-4 overflow-x-auto pb-2 hide-scrollbar snap-x mb-4">
                       {order.items.map((item, i) => (
                         <div key={`${item.id}-${i}`} className="snap-start shrink-0 flex items-center gap-3 bg-card p-2 rounded-lg border min-w-[240px] shadow-sm">
                           <div className="h-14 w-14 bg-muted rounded-md shrink-0 relative overflow-hidden">
@@ -106,6 +106,30 @@ export default function ProfilePage() {
                         </div>
                       ))}
                     </div>
+
+                    {order.status === 'Completed' && (
+                      <div className="pt-4 border-t flex items-center justify-between">
+                        <p className="text-sm font-medium">{t('rateBranch', { defaultValue: 'Rate your experience at ' })}{order.branch}</p>
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => addReview(order.id, star)}
+                              className="focus:outline-none transition-transform hover:scale-110"
+                            >
+                              <Star
+                                className={`h-5 w-5 ${
+                                  (order.review || 0) >= star
+                                    ? 'fill-amber-500 text-amber-500'
+                                    : 'text-muted-foreground hover:text-amber-500'
+                                }`}
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

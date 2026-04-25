@@ -2,404 +2,604 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useTranslation } from 'react-i18next';
-import { useStore } from '@/store/useStore';
+import { useStore, CartItem } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select';
-import { Controller } from 'react-hook-form';
-
-import { useState, useEffect } from 'react';
-import { Loader2, CheckCircle, MapPin, Printer } from 'lucide-react';
+import { BranchSelector, BRANCHES, Branch } from '@/components/BranchSelector';
+import {
+  Loader2,
+  CheckCircle,
+  Printer,
+  User,
+  Phone,
+  MapPin,
+  Clock,
+  Smartphone,
+  ShoppingCart,
+  ChevronRight,
+  ChevronLeft,
+} from 'lucide-react';
 import Confetti from 'react-confetti';
 
-const checkoutSchema = z.object({
-  fullName: z.string().min(2, { message: 'Full Name must be at least 2 characters' }),
-  phone: z.string().regex(/^(\+250|0)?[7][2389]\d{7}$/, { message: 'Invalid Rwandan phone number' }),
-  district: z.string().min(1, { message: 'District is required' }),
-  sector: z.string().min(1, { message: 'Sector is required' }),
-  instructions: z.string().optional(),
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+const personalSchema = z.object({
+  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
+  phone: z
+    .string()
+    .regex(/^(\+250|0)?[7][2389]\d{7}$/, 'Invalid Rwandan phone number (e.g. 07X XXX XXXX)'),
 });
 
-type CheckoutFormValues = z.infer<typeof checkoutSchema>;
+type PersonalValues = z.infer<typeof personalSchema>;
+type CheckoutStep = 'info' | 'branch' | 'deposit' | 'success';
 
-type CheckoutState = 'form' | 'processing' | 'success';
+const DEPOSIT_AMOUNT = 500; // RWF
 
-export default function CheckoutPage() {
-  const { t } = useTranslation();
-  const { cart, clearCart, addOrder } = useStore();
-  const [checkoutState, setCheckoutState] = useState<CheckoutState>('form');
-  const [orderId, setOrderId] = useState('');
-  const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
-  const [isLocating, setIsLocating] = useState(false);
-  const [receiptCart, setReceiptCart] = useState(cart);
-  const [receiptTotal, setReceiptTotal] = useState(0);
-  const [receiptDeliveryFee, setReceiptDeliveryFee] = useState(0);
+// ─── Step Indicator ───────────────────────────────────────────────────────────
 
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  
-  const districtFees: Record<string, number> = {
-    'Gasabo': 1000,
-    'Kicukiro': 1000,
-    'Nyarugenge': 1000,
-    'Bugesera': 2500,
-    'Kamonyi': 2500,
-    'Rwamagana': 2500,
-    'Other': 4000
-  };
-
-  const form = useForm<CheckoutFormValues>({
-    resolver: zodResolver(checkoutSchema),
-    mode: 'onChange',
-    defaultValues: {
-      fullName: '',
-      phone: '',
-      district: '',
-      sector: '',
-      instructions: '',
-    },
-  });
-
-  const selectedDistrict = form.watch('district');
-  const deliveryFee = districtFees[selectedDistrict] || 0;
-  const total = subtotal + deliveryFee;
-
-  const handleGetLocation = () => {
-    // ... logic remains
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser");
-      return;
-    }
-    setIsLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
-        const currentInstructions = form.getValues('instructions') || '';
-        form.setValue(
-          'instructions', 
-          currentInstructions ? `${currentInstructions}\n\n${t('checkoutLiveLocation')}: ${mapsLink}` : `${t('checkoutLiveLocation')}: ${mapsLink}`,
-          { shouldValidate: true }
-        );
-        
-        if (!form.getValues('district')) form.setValue('district', t('checkoutLiveLocation'), { shouldValidate: true });
-        if (!form.getValues('sector')) form.setValue('sector', t('checkoutLiveLocation'), { shouldValidate: true });
-        
-        setIsLocating(false);
-      },
-      (error) => {
-        console.error(error);
-        alert("Unable to retrieve your location. Please check your browser permissions.");
-        setIsLocating(false);
-      }
-    );
-  };
-
-  useEffect(() => {
-    setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
-    const handleResize = () => setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (checkoutState === 'success') {
-      clearCart();
-    }
-  }, [checkoutState, clearCart]);
-
-  const onSubmit = (data: CheckoutFormValues) => {
-    setCheckoutState('processing');
-    setReceiptCart([...cart]);
-    setReceiptTotal(total);
-    setReceiptDeliveryFee(deliveryFee);
-    setTimeout(() => {
-      const generatedId = 'ORD-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-      setOrderId(generatedId);
-      
-      addOrder({
-        id: generatedId,
-        date: new Date().toISOString(),
-        total: total,
-        items: [...cart],
-        status: 'Processing'
-      });
-
-      setCheckoutState('success');
-    }, 4000);
-  };
-
-  if (checkoutState === 'processing') {
-    return (
-      <div className="container mx-auto px-4 py-32 flex flex-col items-center justify-center min-h-[60vh] max-w-md text-center">
-        <Loader2 className="h-16 w-16 animate-spin text-primary mb-8" />
-        <h2 className="text-2xl font-bold mb-4">{t('checkoutProcessing')}</h2>
-        <p className="text-muted-foreground text-lg">
-          {t('checkoutProcessingDesc')}
-        </p>
-      </div>
-    );
-  }
-
-  if (checkoutState === 'success') {
-    return (
-      <div className="container mx-auto px-4 py-32 flex flex-col items-center justify-center min-h-[60vh] text-center">
-        {/* On-screen Success View */}
-        <div className="print:hidden flex flex-col items-center justify-center w-full">
-          {windowDimensions.width > 0 && (
-            <Confetti width={windowDimensions.width} height={windowDimensions.height} recycle={false} numberOfPieces={500} />
-          )}
-          <CheckCircle className="h-24 w-24 text-green-500 mb-8" />
-          <h1 className="text-4xl font-bold mb-4">{t('checkoutSuccess')}</h1>
-          <p className="text-xl text-muted-foreground mb-2">{t('checkoutThankYou')}</p>
-          <p className="text-lg font-medium mb-12">{t('checkoutOrderNumber')}: <span className="font-bold">{orderId}</span></p>
-          <div className="flex flex-wrap gap-4 items-center justify-center">
-            <Button render={<Link href="/" />} size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              {t('checkoutReturnHome', { defaultValue: 'Return Home' })}
-            </Button>
-            <Button size="lg" onClick={() => window.print()} className="font-bold gap-2">
-              <Printer className="h-5 w-5" /> 
-              {t('checkoutPrintReceipt', { defaultValue: 'Print Receipt' })}
-            </Button>
-          </div>
-        </div>
-
-        {/* Hidden Printable Receipt */}
-        <div className="hidden print:block w-full text-left max-w-2xl mx-auto p-8 border-2 border-primary/20 rounded-xl mt-[-5rem]">
-          <div className="flex items-center justify-between border-b pb-6 mb-6 gap-8">
-            <div className="flex items-center gap-3">
-              <div className="bg-[#FF8800] rounded-full p-2 h-14 w-14 flex items-center justify-center shrink-0">
-                <Image src="/logo.jpg" alt="Simba Logo" width={40} height={40} className="rounded-full object-cover" />
-              </div>
-              <div>
-                <h2 className="text-3xl font-extrabold m-0">SIMBA</h2>
-                <p className="text-sm font-semibold tracking-widest text-[#FF8800]">SUPERMARKET</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <h1 className="text-2xl font-bold text-gray-800">RECEIPT</h1>
-              <p className="text-sm text-gray-500 font-medium">Order #: {orderId}</p>
-              <p className="text-sm text-gray-500">Date: {new Date().toLocaleDateString()}</p>
-            </div>
-          </div>
-          <div className="mb-6">
-            <h3 className="font-semibold text-lg border-b pb-2 mb-3">Order Details</h3>
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b text-left text-gray-500">
-                  <th className="pb-2 font-medium">Item</th>
-                  <th className="pb-2 font-medium text-center">Qty</th>
-                  <th className="pb-2 font-medium text-right">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {receiptCart.map((item) => (
-                  <tr key={item.id} className="border-b border-gray-100">
-                    <td className="py-3 pr-2">{t(`products.${item.id}.name`, { defaultValue: item.name })}</td>
-                    <td className="py-3 text-center">{item.quantity}</td>
-                    <td className="py-3 text-right font-medium">{(item.price * item.quantity).toLocaleString('en-US')} RWF</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="flex justify-end pt-2">
-            <div className="w-64 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Subtotal</span>
-                <span>{(receiptTotal - receiptDeliveryFee).toLocaleString('en-US')} RWF</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Delivery Fee</span>
-                <span>{receiptDeliveryFee.toLocaleString('en-US')} RWF</span>
-              </div>
-              <div className="flex justify-between font-bold text-xl pt-2 border-t-2 border-gray-800">
-                <span>Total</span>
-                <span>{receiptTotal.toLocaleString('en-US')} RWF</span>
-              </div>
-            </div>
-          </div>
-          <div className="mt-12 text-center text-sm text-gray-500 font-medium border-t pt-6">
-            <p className="text-lg text-gray-800 font-bold mb-1">Thank you for shopping with us!</p>
-            <p>KG 7 Ave, Kigali, Rwanda  |  +250 795 306 295</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+function StepIndicator({ step }: { step: CheckoutStep }) {
+  const steps = [
+    { key: 'info',    label: 'Your Info',  icon: User },
+    { key: 'branch',  label: 'Branch',     icon: MapPin },
+    { key: 'deposit', label: 'Deposit',    icon: Smartphone },
+  ];
+  const activeIdx = steps.findIndex((s) => s.key === step);
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <h1 className="text-3xl font-bold mb-8">{t('checkout')}</h1>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-xl font-semibold mb-4">{t('checkoutDeliveryInfo')}</h2>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  {t('checkoutFullName')}
-                </label>
-                <Input {...form.register('fullName')} />
-                {form.formState.errors.fullName && (
-                  <p className="text-[0.8rem] text-destructive font-medium">
-                    {form.formState.errors.fullName.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  {t('checkoutPhone')}
-                </label>
-                <Input {...form.register('phone')} />
-                {form.formState.errors.phone && (
-                  <p className="text-[0.8rem] text-destructive font-medium">
-                    {form.formState.errors.phone.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    {t('checkoutDistrict')}
-                  </label>
-                  <Controller
-                    control={form.control}
-                    name="district"
-                    render={({ field }) => (
-                      <Select 
-                        onValueChange={field.onChange} 
-                        defaultValue={field.value}
-                        value={field.value}
-                      >
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select District" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Gasabo">Gasabo</SelectItem>
-                          <SelectItem value="Kicukiro">Kicukiro</SelectItem>
-                          <SelectItem value="Nyarugenge">Nyarugenge</SelectItem>
-                          <SelectItem value="Bugesera">Bugesera</SelectItem>
-                          <SelectItem value="Kamonyi">Kamonyi</SelectItem>
-                          <SelectItem value="Rwamagana">Rwamagana</SelectItem>
-                          <SelectItem value="Other">Other (Regional)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  />
-                  {form.formState.errors.district && (
-                    <p className="text-[0.8rem] text-destructive font-medium">
-                      {form.formState.errors.district.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    {t('checkoutSector')}
-                  </label>
-                  <Input {...form.register('sector')} />
-                  {form.formState.errors.sector && (
-                    <p className="text-[0.8rem] text-destructive font-medium">
-                      {form.formState.errors.sector.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    {t('checkoutInstructions')}
-                  </label>
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={handleGetLocation} 
-                    disabled={isLocating}
-                    className="h-8 gap-1.5 text-[#FF8800] border-[#FF8800] hover:bg-[#FF8800]/10"
-                  >
-                    {isLocating ? <Loader2 className="h-3 w-3 animate-spin" /> : <MapPin className="h-3 w-3" />}
-                    {t('checkoutLiveLocation')}
-                  </Button>
-                </div>
-                <Textarea placeholder={t('checkoutInstructionsPlaceholder')} {...form.register('instructions')} rows={4} />
-                {form.formState.errors.instructions && (
-                  <p className="text-[0.8rem] text-destructive font-medium">
-                    {form.formState.errors.instructions.message}
-                  </p>
-                )}
-              </div>
-
-              <Button 
-                type="submit" 
-                size="lg" 
-                className="w-full mt-6"
-                disabled={!form.formState.isValid || cart.length === 0}
+    <div className="flex items-center justify-center gap-0 mb-10">
+      {steps.map((s, i) => {
+        const Icon = s.icon;
+        const done = i < activeIdx || step === 'success';
+        const active = i === activeIdx;
+        return (
+          <div key={s.key} className="flex items-center">
+            <div className="flex flex-col items-center gap-1">
+              <div
+                className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all ${
+                  done
+                    ? 'bg-primary border-primary text-primary-foreground'
+                    : active
+                    ? 'border-primary text-primary bg-primary/10'
+                    : 'border-muted text-muted-foreground bg-background'
+                }`}
               >
-                {t('checkoutProceed')}
-              </Button>
-            </form>
+                {done ? (
+                  <CheckCircle className="w-4 h-4" />
+                ) : (
+                  <Icon className="w-4 h-4" />
+                )}
+              </div>
+              <span
+                className={`text-[10px] font-medium hidden sm:block ${
+                  active ? 'text-primary' : done ? 'text-primary/70' : 'text-muted-foreground'
+                }`}
+              >
+                {s.label}
+              </span>
+            </div>
+            {i < steps.length - 1 && (
+              <div
+                className={`h-0.5 w-16 sm:w-28 mx-1 mb-5 transition-all ${
+                  i < activeIdx ? 'bg-primary' : 'bg-muted'
+                }`}
+              />
+            )}
           </div>
-        </div>
+        );
+      })}
+    </div>
+  );
+}
 
-        <div>
-          <div className="bg-muted p-6 rounded-lg sticky top-24">
-            <h2 className="text-xl font-semibold mb-6">{t('checkoutOrderSummary')}</h2>
-            <div className="space-y-4 mb-6">
-              {cart.map((item) => (
-                <div key={item.id} className="flex gap-4">
-                  <div className="relative h-16 w-16 rounded overflow-hidden shrink-0 bg-background">
-                    {item.imageUrl && (
-                      <Image src={item.imageUrl} alt={item.name} fill className="object-cover" />
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium text-sm line-clamp-1">{t(`products.${item.id}.name`, { defaultValue: item.name })}</h3>
-                    <p className="text-muted-foreground text-sm">{t('checkoutQty')}: {item.quantity}</p>
-                    <p className="font-semibold text-sm">{(item.price * item.quantity).toLocaleString('en-US')} RWF</p>
-                  </div>
-                </div>
-              ))}
-              {cart.length === 0 && (
-                <p className="text-muted-foreground text-center py-4">{t('emptyCart')}</p>
+// ─── Order Summary Sidebar ────────────────────────────────────────────────────
+
+function OrderSummary({
+  cart,
+  deposit,
+  showDeposit,
+}: {
+  cart: CartItem[];
+  deposit: number;
+  showDeposit: boolean;
+}) {
+  const { t } = useTranslation();
+  const subtotal = cart.reduce((a, i) => a + i.price * i.quantity, 0);
+
+  return (
+    <div className="bg-muted/40 border rounded-2xl p-6 sticky top-24">
+      <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+        <ShoppingCart className="h-5 w-5 text-primary" />
+        {t('checkoutOrderSummary')}
+      </h2>
+
+      <div className="space-y-3 mb-4 max-h-64 overflow-y-auto pr-1">
+        {cart.map((item) => (
+          <div key={item.id} className="flex gap-3 items-center">
+            <div className="relative h-12 w-12 rounded-lg overflow-hidden shrink-0 bg-background border">
+              {item.imageUrl && (
+                <Image src={item.imageUrl} alt={item.name} fill className="object-cover" />
               )}
             </div>
-            
-            <div className="border-t pt-4 space-y-2">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">{t('checkoutSubtotal')}</span>
-                <span>{subtotal.toLocaleString('en-US')} RWF</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">{t('checkoutDelivery')}</span>
-                <span className={deliveryFee > 0 ? "font-medium text-foreground" : "text-muted-foreground italic"}>
-                  {deliveryFee > 0 ? `${deliveryFee.toLocaleString('en-US')} RWF` : t('checkoutDeliveryCalc')}
-                </span>
-              </div>
-              <div className="flex justify-between border-t pt-2 mt-2 font-bold text-lg">
-                <span>{t('total')}</span>
-                <span>{total.toLocaleString('en-US')} RWF</span>
-              </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium line-clamp-1">
+                {t(`products.${item.id}.name`, { defaultValue: item.name })}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {item.quantity} × {item.price.toLocaleString()} RWF
+              </p>
             </div>
+            <span className="text-sm font-semibold shrink-0">
+              {(item.price * item.quantity).toLocaleString()} RWF
+            </span>
           </div>
+        ))}
+        {cart.length === 0 && (
+          <p className="text-sm text-muted-foreground text-center py-4">{t('emptyCart')}</p>
+        )}
+      </div>
+
+      <div className="border-t pt-4 space-y-2 text-sm">
+        <div className="flex justify-between">
+          <span className="text-muted-foreground">{t('checkoutSubtotal')}</span>
+          <span>{subtotal.toLocaleString()} RWF</span>
         </div>
+        <div className="flex justify-between">
+          <span className="text-muted-foreground">
+            {t('delivery', { defaultValue: 'Delivery' })}
+          </span>
+          <span className="text-green-600 font-medium">
+            {t('free', { defaultValue: 'FREE (Pick-Up)' })}
+          </span>
+        </div>
+        {showDeposit && (
+          <div className="flex justify-between text-amber-600">
+            <span>{t('momoDeposit', { defaultValue: 'MoMo Deposit' })}</span>
+            <span className="font-medium">{deposit.toLocaleString()} RWF</span>
+          </div>
+        )}
+        <div className="flex justify-between font-bold text-base pt-2 border-t">
+          <span>{t('total')}</span>
+          <span>{subtotal.toLocaleString()} RWF</span>
+        </div>
+        {showDeposit && (
+          <p className="text-xs text-muted-foreground leading-tight">
+            {t('depositNote', {
+              defaultValue: `The ${deposit} RWF deposit is collected now to confirm your order. The remaining balance is paid at pick-up.`,
+              deposit,
+            })}
+          </p>
+        )}
       </div>
     </div>
   );
 }
 
+// ─── Main Component ───────────────────────────────────────────────────────────
+
+export default function CheckoutPage() {
+  const { t } = useTranslation();
+  const { cart, clearCart, addOrder } = useStore();
+
+  const [step, setStep] = useState<CheckoutStep>('info');
+  const [personalData, setPersonalData] = useState<PersonalValues>({ fullName: '', phone: '' });
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+  const [selectedTime, setSelectedTime] = useState('');
+  const [orderId, setOrderId] = useState('');
+  const [isProcessingDeposit, setIsProcessingDeposit] = useState(false);
+  const [depositDone, setDepositDone] = useState(false);
+  const [momoPhone, setMomoPhone] = useState('');
+  const [momoError, setMomoError] = useState('');
+  const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
+
+  const subtotal = cart.reduce((a, i) => a + i.price * i.quantity, 0);
+
+  useEffect(() => {
+    setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
+    const onResize = () =>
+      setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const form = useForm<PersonalValues>({
+    resolver: zodResolver(personalSchema),
+    mode: 'onChange',
+    defaultValues: { fullName: '', phone: '' },
+  });
+
+  // ── Step 1: Personal Info ──────────────────────────────────────────────────
+
+  const onPersonalSubmit = (data: PersonalValues) => {
+    setPersonalData(data);
+    setStep('branch');
+  };
+
+  // ── Step 2: Branch + Time ──────────────────────────────────────────────────
+
+  const canProceedToBranch = selectedBranch !== null && selectedTime !== '';
+
+  // ── Step 3: MoMo Deposit ───────────────────────────────────────────────────
+
+  const handleDepositConfirm = () => {
+    const phoneRegex = /^(\+250|0)?[7][2389]\d{7}$/;
+    if (!phoneRegex.test(momoPhone)) {
+      setMomoError(t('checkoutPhone', { defaultValue: 'Invalid Rwandan phone number' }));
+      return;
+    }
+    setMomoError('');
+    setIsProcessingDeposit(true);
+
+    // Simulate MoMo push delay
+    setTimeout(() => {
+      setDepositDone(true);
+      setTimeout(() => {
+        const id = 'ORD-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+        setOrderId(id);
+        addOrder({
+          id,
+          date: new Date().toISOString(),
+          total: subtotal,
+          deposit: DEPOSIT_AMOUNT,
+          items: [...cart],
+          status: 'Processing',
+          branch: selectedBranch!.name,
+          branchId: selectedBranch!.id,
+          pickupTime: selectedTime,
+          customerName: personalData.fullName,
+          customerPhone: personalData.phone,
+        });
+        useStore.getState().decreaseInventory(selectedBranch!.id, cart);
+        clearCart();
+        setStep('success');
+      }, 1200);
+    }, 3500);
+  };
+
+  // ── Success ────────────────────────────────────────────────────────────────
+
+  if (step === 'success') {
+    return (
+      <div className="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-[70vh] text-center">
+        {windowDimensions.width > 0 && (
+          <Confetti
+            width={windowDimensions.width}
+            height={windowDimensions.height}
+            recycle={false}
+            numberOfPieces={450}
+          />
+        )}
+        <CheckCircle className="h-24 w-24 text-green-500 mb-6 animate-in zoom-in duration-500" />
+        <h1 className="text-4xl font-bold mb-2">{t('checkoutSuccess')}</h1>
+        <p className="text-muted-foreground text-lg mb-1">{t('checkoutThankYou')}</p>
+        <p className="font-semibold text-base mb-6">
+          {t('checkoutOrderNumber')}: <span className="font-bold text-primary">{orderId}</span>
+        </p>
+
+        {/* Pickup summary card */}
+        <div className="bg-card border rounded-2xl p-6 max-w-sm w-full mb-8 text-left space-y-3 shadow-md">
+          <h3 className="font-bold text-base border-b pb-2 mb-3">
+            {t('pickupDetails', { defaultValue: 'Pick-Up Details' })}
+          </h3>
+          <div className="flex items-start gap-3 text-sm">
+            <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+            <div>
+              <p className="font-medium">{selectedBranch?.name}</p>
+              <p className="text-muted-foreground">{selectedBranch?.address}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <Clock className="h-4 w-4 text-primary shrink-0" />
+            <p>
+              {t('pickupTime', { defaultValue: 'Pick-Up Time' })}:{' '}
+              <span className="font-semibold">{selectedTime}</span>
+            </p>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <Smartphone className="h-4 w-4 text-primary shrink-0" />
+            <p>
+              {t('depositPaid', { defaultValue: 'Deposit Paid' })}:{' '}
+              <span className="font-semibold text-green-600">
+                {DEPOSIT_AMOUNT.toLocaleString()} RWF
+              </span>
+            </p>
+          </div>
+          <p className="text-xs text-muted-foreground pt-1 border-t">
+            {t('pickupReminder', {
+              defaultValue:
+                'Please bring this order number when you arrive at the branch. Your order will be ready for pick-up.',
+            })}
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-4 items-center justify-center">
+          <Button
+            render={<Link href="/" />}
+            size="lg"
+            variant="outline"
+            className="border-primary text-primary hover:bg-primary/10"
+            onClick={() => window.dispatchEvent(new Event('resetFilters'))}
+          >
+            {t('checkoutReturnHome', { defaultValue: 'Return Home' })}
+          </Button>
+          <Button size="lg" onClick={() => window.print()} className="font-bold gap-2">
+            <Printer className="h-5 w-5" />
+            {t('checkoutPrintReceipt', { defaultValue: 'Print Receipt' })}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── MoMo Processing Screen ─────────────────────────────────────────────────
+
+  if (isProcessingDeposit) {
+    return (
+      <div className="container mx-auto px-4 py-32 flex flex-col items-center justify-center min-h-[60vh] max-w-md text-center">
+        {depositDone ? (
+          <>
+            <CheckCircle className="h-16 w-16 text-green-500 mb-6 animate-in zoom-in duration-300" />
+            <h2 className="text-2xl font-bold mb-2">
+              {t('depositConfirmed', { defaultValue: 'Deposit Confirmed!' })}
+            </h2>
+            <p className="text-muted-foreground">
+              {t('placingOrder', { defaultValue: 'Placing your order...' })}
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="relative mb-8">
+              <div className="w-20 h-20 rounded-full bg-yellow-100 flex items-center justify-center">
+                <Smartphone className="h-10 w-10 text-yellow-500 animate-pulse" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-bold mb-3">
+              {t('checkoutProcessing', { defaultValue: 'Processing MoMo Deposit' })}
+            </h2>
+            <p className="text-muted-foreground text-base leading-relaxed">
+              {t('momoPrompt', {
+                defaultValue:
+                  'A push notification has been sent to your MoMo account. Please check your phone and enter your PIN to confirm the 500 RWF deposit.',
+              })}
+            </p>
+            <Loader2 className="h-8 w-8 animate-spin text-primary mt-8" />
+          </>
+        )}
+      </div>
+    );
+  }
+
+  // ── Main Form ──────────────────────────────────────────────────────────────
+
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <h1 className="text-3xl font-bold mb-2">{t('checkout')}</h1>
+      <p className="text-muted-foreground mb-8">
+        {t('pickupOnlyNotice', {
+          defaultValue: 'Pick-up from your nearest Simba branch — free, fast, and fresh.',
+        })}
+      </p>
+
+      <StepIndicator step={step} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10">
+        {/* ── Left panel ────────────────────────────────────────────────── */}
+        <div>
+          {/* Step 1: Personal info */}
+          {step === 'info' && (
+            <div className="bg-card border rounded-2xl p-6 shadow-sm">
+              <h2 className="text-xl font-bold mb-1 flex items-center gap-2">
+                <User className="h-5 w-5 text-primary" />
+                {t('yourInfo', { defaultValue: 'Your Information' })}
+              </h2>
+              <p className="text-sm text-muted-foreground mb-6">
+                {t('infoDesc', { defaultValue: 'We need your name and phone to confirm your order.' })}
+              </p>
+
+              <form onSubmit={form.handleSubmit(onPersonalSubmit)} className="space-y-5">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-1">
+                    <User className="h-3.5 w-3.5" /> {t('checkoutFullName')}
+                  </label>
+                  <Input
+                    {...form.register('fullName')}
+                    placeholder="e.g. Jean de Dieu Uwimana"
+                    className="h-11"
+                  />
+                  {form.formState.errors.fullName && (
+                    <p className="text-[0.8rem] text-destructive">
+                      {form.formState.errors.fullName.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-1">
+                    <Phone className="h-3.5 w-3.5" /> {t('checkoutPhone')}
+                  </label>
+                  <Input
+                    {...form.register('phone')}
+                    placeholder="e.g. 0783456789"
+                    className="h-11"
+                  />
+                  {form.formState.errors.phone && (
+                    <p className="text-[0.8rem] text-destructive">
+                      {form.formState.errors.phone.message}
+                    </p>
+                  )}
+                </div>
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full gap-2"
+                  disabled={!form.formState.isValid || cart.length === 0}
+                >
+                  {t('continueToPickup', { defaultValue: 'Continue to Branch Selection' })}
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </form>
+            </div>
+          )}
+
+          {/* Step 2: Branch + time slot */}
+          {step === 'branch' && (
+            <div className="bg-card border rounded-2xl p-6 shadow-sm">
+              <h2 className="text-xl font-bold mb-1 flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" />
+                {t('chooseBranch', { defaultValue: 'Choose Your Branch' })}
+              </h2>
+              <p className="text-sm text-muted-foreground mb-6">
+                {t('branchDesc', {
+                  defaultValue:
+                    'Select the Simba branch closest to you, then pick a convenient time slot.',
+                })}
+              </p>
+
+              <BranchSelector
+                selectedBranchId={selectedBranch?.id ?? ''}
+                selectedTime={selectedTime}
+                onBranchSelect={setSelectedBranch}
+                onTimeSelect={setSelectedTime}
+              />
+
+              <div className="flex gap-3 mt-8">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="gap-2"
+                  onClick={() => setStep('info')}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  {t('back', { defaultValue: 'Back' })}
+                </Button>
+                <Button
+                  size="lg"
+                  className="flex-1 gap-2"
+                  disabled={!canProceedToBranch}
+                  onClick={() => setStep('deposit')}
+                >
+                  {t('continueToDeposit', { defaultValue: 'Continue to Deposit' })}
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: MoMo Deposit */}
+          {step === 'deposit' && (
+            <div className="bg-card border rounded-2xl p-6 shadow-sm">
+              <h2 className="text-xl font-bold mb-1 flex items-center gap-2">
+                <Smartphone className="h-5 w-5 text-primary" />
+                {t('momoDepositTitle', { defaultValue: 'Confirm with MoMo Deposit' })}
+              </h2>
+              <p className="text-sm text-muted-foreground mb-6">
+                {t('depositDesc', {
+                  defaultValue:
+                    'A small non-refundable deposit of 500 RWF is required via MTN Mobile Money to confirm your order and reserve staff time.',
+                })}
+              </p>
+
+              {/* Order summary card */}
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6 space-y-2">
+                <p className="font-semibold text-sm text-amber-800 dark:text-amber-200">
+                  {t('yourOrderSummary', { defaultValue: 'Your Order at a Glance' })}
+                </p>
+                <div className="flex items-center gap-2 text-sm">
+                  <MapPin className="h-4 w-4 text-amber-600" />
+                  <span className="font-medium">{selectedBranch?.name}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock className="h-4 w-4 text-amber-600" />
+                  <span>
+                    {t('pickupTime', { defaultValue: 'Pick-Up Time' })}: <strong>{selectedTime}</strong>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <User className="h-4 w-4 text-amber-600" />
+                  <span>{personalData.fullName} — {personalData.phone}</span>
+                </div>
+              </div>
+
+              {/* Deposit amount callout */}
+              <div className="flex items-center justify-between bg-primary/5 border border-primary/20 rounded-xl px-5 py-4 mb-6">
+                <div>
+                  <p className="text-sm text-muted-foreground">
+                    {t('depositAmount', { defaultValue: 'Deposit Amount' })}
+                  </p>
+                  <p className="text-3xl font-black text-primary">
+                    {DEPOSIT_AMOUNT.toLocaleString()} RWF
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {t('nonRefundable', { defaultValue: 'Non-refundable • Credited to your order at pick-up' })}
+                  </p>
+                </div>
+                <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl flex items-center justify-center text-3xl">
+                  📱
+                </div>
+              </div>
+
+              {/* MoMo phone input */}
+              <div className="space-y-2 mb-6">
+                <label className="text-sm font-medium flex items-center gap-1">
+                  <Smartphone className="h-3.5 w-3.5" />
+                  {t('momoNumber', { defaultValue: 'MTN MoMo Number' })}
+                </label>
+                <Input
+                  value={momoPhone}
+                  onChange={(e) => {
+                    setMomoPhone(e.target.value);
+                    setMomoError('');
+                  }}
+                  placeholder="e.g. 0783456789"
+                  className="h-11"
+                />
+                {momoError && (
+                  <p className="text-[0.8rem] text-destructive">{momoError}</p>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  {t('momoHint', {
+                    defaultValue:
+                      'You will receive a MoMo push notification. Enter your PIN to confirm.',
+                  })}
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="gap-2"
+                  onClick={() => setStep('branch')}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  {t('back', { defaultValue: 'Back' })}
+                </Button>
+                <Button
+                  size="lg"
+                  className="flex-1 gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+                  onClick={handleDepositConfirm}
+                  disabled={cart.length === 0}
+                >
+                  <Smartphone className="h-4 w-4" />
+                  {t('payDepositNow', { defaultValue: 'Pay 500 RWF Deposit via MoMo' })}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* ── Right: Order summary ───────────────────────────────────────── */}
+        <OrderSummary
+          cart={cart}
+          deposit={DEPOSIT_AMOUNT}
+          showDeposit={step === 'deposit'}
+        />
+      </div>
+    </div>
+  );
+}

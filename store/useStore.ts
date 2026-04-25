@@ -10,8 +10,16 @@ export interface Order {
   id: string;
   date: string;
   total: number;
+  deposit: number;
   items: CartItem[];
-  status: 'Processing' | 'Completed' | 'Delivered';
+  status: 'Processing' | 'Assigned' | 'Ready for Pick-Up' | 'Completed';
+  branch: string;
+  branchId: string;
+  pickupTime: string;
+  customerName: string;
+  customerPhone: string;
+  assignedTo?: string;
+  review?: number;
 }
 
 interface StoreState {
@@ -33,6 +41,10 @@ interface StoreState {
   toggleWishlist: (productId: string) => void;
   orders: Order[];
   addOrder: (order: Order) => void;
+  updateOrderStatus: (orderId: string, status: Order['status'], assignedTo?: string) => void;
+  addReview: (orderId: string, rating: number) => void;
+  branchInventory: Record<string, Record<string, number>>;
+  decreaseInventory: (branchId: string, items: CartItem[]) => void;
 }
 
 export const useStore = create<StoreState>()(
@@ -89,10 +101,42 @@ export const useStore = create<StoreState>()(
         })),
       orders: [],
       addOrder: (order) => set((state) => ({ orders: [order, ...state.orders] })),
+      updateOrderStatus: (orderId, status, assignedTo) =>
+        set((state) => ({
+          orders: state.orders.map((o) =>
+            o.id === orderId ? { ...o, status, ...(assignedTo !== undefined ? { assignedTo } : {}) } : o
+          ),
+        })),
+      addReview: (orderId, rating) =>
+        set((state) => ({
+          orders: state.orders.map((o) =>
+            o.id === orderId ? { ...o, review: rating } : o
+          ),
+        })),
+      branchInventory: {},
+      decreaseInventory: (branchId, items) =>
+        set((state) => {
+          const currentBranchInv = state.branchInventory[branchId] || {};
+          const newBranchInv = { ...currentBranchInv };
+          items.forEach((item) => {
+            const currentStock = newBranchInv[item.id] ?? 50; // default 50 stock if undefined
+            newBranchInv[item.id] = Math.max(0, currentStock - item.quantity);
+          });
+          return {
+            branchInventory: { ...state.branchInventory, [branchId]: newBranchInv }
+          };
+        }),
     }),
     {
       name: 'simba-store',
-      partialize: (state) => ({ cart: state.cart, language: state.language, theme: state.theme, wishlist: state.wishlist, orders: state.orders }),
+      partialize: (state) => ({
+        cart: state.cart,
+        language: state.language,
+        theme: state.theme,
+        wishlist: state.wishlist,
+        orders: state.orders,
+        branchInventory: state.branchInventory
+      }),
     }
   )
 );
