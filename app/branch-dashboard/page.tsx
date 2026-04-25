@@ -99,84 +99,85 @@ export default function BranchDashboard() {
                 </span>
               </div>
 
-            {filteredOrders.length === 0 ? (
-              <div className="p-12 text-center text-muted-foreground">
-                <p>{t('noOrdersBranch', { defaultValue: 'No orders found for this branch.' })}</p>
-              </div>
-            ) : (
-              <div className="divide-y max-h-[800px] overflow-auto hide-scrollbar">
-                {filteredOrders.map((order) => (
-                  <div key={order.id} className="p-5 hover:bg-muted/10 transition-colors">
-                    <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
-                      {/* Order Info */}
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-3">
-                          <p className="font-bold text-lg">{order.id}</p>
-                          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
-                            order.status === 'Completed' ? 'bg-green-100 text-green-700' : 
-                            order.status === 'Assigned' ? 'bg-blue-100 text-blue-700' :
-                            'bg-amber-100 text-amber-700'
-                          }`}>
-                            {t(`status${order.status.replace(/ /g, '')}`, { defaultValue: order.status })}
-                          </span>
+              {filteredOrders.length === 0 ? (
+                <div className="p-12 text-center text-muted-foreground">
+                  <p>{t('noOrdersBranch', { defaultValue: 'No orders found for this branch.' })}</p>
+                </div>
+              ) : (
+                <div className="divide-y max-h-[800px] overflow-auto hide-scrollbar">
+                  {filteredOrders.map((order) => (
+                    <div key={order.id} className="p-5 hover:bg-muted/10 transition-colors">
+                      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                        {/* Order Info */}
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-3">
+                            <p className="font-bold text-lg">{order.id}</p>
+                            <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
+                              order.status === 'Completed' ? 'bg-green-100 text-green-700' : 
+                              order.status === 'Assigned' ? 'bg-blue-100 text-blue-700' :
+                              'bg-amber-100 text-amber-700'
+                            }`}>
+                              {t(`status${order.status.replace(/ /g, '')}`, { defaultValue: order.status })}
+                            </span>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {new Date(order.date).toLocaleString(i18n.language === 'en' ? 'en-US' : i18n.language === 'fr' ? 'fr-FR' : 'rw-RW')} • {order.branch}
+                          </p>
+                          <p className="text-sm font-medium mt-2">
+                            {t('customer', { defaultValue: 'Customer' })}: <span className="text-muted-foreground">{order.customerName} ({order.customerPhone})</span>
+                          </p>
+                          <p className="text-sm font-medium">
+                            {t('pickupTime', { defaultValue: 'Pick-Up Time' })}: <span className="text-muted-foreground">{order.pickupTime}</span>
+                          </p>
                         </div>
-                        <p className="text-sm text-muted-foreground">
-                          {new Date(order.date).toLocaleString(i18n.language === 'en' ? 'en-US' : i18n.language === 'fr' ? 'fr-FR' : 'rw-RW')} • {order.branch}
-                        </p>
-                        <p className="text-sm font-medium mt-2">
-                          {t('customer', { defaultValue: 'Customer' })}: <span className="text-muted-foreground">{order.customerName} ({order.customerPhone})</span>
-                        </p>
-                        <p className="text-sm font-medium">
-                          {t('pickupTime', { defaultValue: 'Pick-Up Time' })}: <span className="text-muted-foreground">{order.pickupTime}</span>
-                        </p>
-                      </div>
 
-                      {/* Actions */}
-                      <div className="min-w-[240px] space-y-3 bg-muted/20 p-4 rounded-xl border">
-                        <p className="text-sm font-semibold mb-2 flex items-center gap-1.5">
-                          <UserCheck className="w-4 h-4 text-primary" />
-                          {t('assignStaff', { defaultValue: 'Assign Staff' })}
-                        </p>
-                        <select
-                          className="w-full text-sm h-9 rounded-md border border-input bg-background px-3 py-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                          value={order.assignedTo || ''}
-                          onChange={(e) => {
-                            if (e.target.value) {
-                              updateOrderStatus(order.id, 'Assigned', e.target.value);
-                            }
-                          }}
-                          disabled={order.status === 'Completed'}
-                        >
-                          <option value="" disabled>{t('selectStaff', { defaultValue: 'Select staff...' })}</option>
-                          {STAFF_MEMBERS.map(staff => (
-                            <option key={staff} value={staff}>{staff}</option>
-                          ))}
-                        </select>
-
-                        <div className="flex gap-2 mt-3 pt-3 border-t">
-                          <Button 
-                            size="sm" 
-                            variant={order.status === 'Ready for Pick-Up' ? 'default' : 'outline'}
-                            className="flex-1 text-xs"
+                        {/* Actions */}
+                        <div className="min-w-[240px] space-y-3 bg-muted/20 p-4 rounded-xl border">
+                          <p className="text-sm font-semibold mb-2 flex items-center gap-1.5">
+                            <UserCheck className="w-4 h-4 text-primary" />
+                            {t('assignStaff', { defaultValue: 'Assign Staff' })}
+                          </p>
+                          <select
+                            className="w-full text-sm h-9 rounded-md border border-input bg-background px-3 py-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                            value={order.assignedTo || ''}
+                            onChange={(e) => {
+                              if (e.target.value) {
+                                updateOrderStatus(order.id, 'Assigned', e.target.value);
+                              }
+                            }}
                             disabled={order.status === 'Completed'}
-                            onClick={() => updateOrderStatus(order.id, 'Ready for Pick-Up')}
                           >
-                            {t('ready', { defaultValue: 'Ready' })}
-                          </Button>
-                          <Button 
-                            size="sm"
-                            variant={order.status === 'Completed' ? 'default' : 'outline'}
-                            className="flex-1 text-xs"
-                            onClick={() => updateOrderStatus(order.id, 'Completed')}
-                          >
-                            <CheckCircle className="w-3 h-3 mr-1" /> {t('finish', { defaultValue: 'Finish' })}
-                          </Button>
+                            <option value="" disabled>{t('selectStaff', { defaultValue: 'Select staff...' })}</option>
+                            {STAFF_MEMBERS.map(staff => (
+                              <option key={staff} value={staff}>{staff}</option>
+                            ))}
+                          </select>
+
+                          <div className="flex gap-2 mt-3 pt-3 border-t">
+                            <Button 
+                              size="sm" 
+                              variant={order.status === 'Ready for Pick-Up' ? 'default' : 'outline'}
+                              className="flex-1 text-xs"
+                              disabled={order.status === 'Completed'}
+                              onClick={() => updateOrderStatus(order.id, 'Ready for Pick-Up')}
+                            >
+                              {t('ready', { defaultValue: 'Ready' })}
+                            </Button>
+                            <Button 
+                              size="sm"
+                              variant={order.status === 'Completed' ? 'default' : 'outline'}
+                              className="flex-1 text-xs"
+                              onClick={() => updateOrderStatus(order.id, 'Completed')}
+                            >
+                              <CheckCircle className="w-3 h-3 mr-1" /> {t('finish', { defaultValue: 'Finish' })}
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             /* Inventory View */
