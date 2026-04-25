@@ -107,9 +107,35 @@ export default function ProfilePage() {
                       ))}
                     </div>
 
-                    {order.status === 'Completed' && (
+                    {/* Brand New Pronounced Rating Widget */}
+                    {!order.review ? (
+                      <div className="mt-2 pt-4 pb-4 px-5 border rounded-xl bg-amber-50/50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-amber-500" />
+                        <div>
+                          <p className="text-sm font-bold text-amber-900 dark:text-amber-400 flex items-center gap-2">
+                            <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                            {t('rateBranchTitle', { defaultValue: 'Rate Your Experience!' })}
+                          </p>
+                          <p className="text-xs text-amber-700/80 dark:text-amber-400/80 mt-0.5">
+                            {t('rateBranchDesc', { defaultValue: `How was your pickup at ${order.branch}?` })}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1.5 bg-background/50 p-2 rounded-lg border border-amber-200/50 dark:border-amber-800/50">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => addReview(order.id, star)}
+                              className="focus:outline-none transition-transform hover:scale-125"
+                            >
+                              <Star className="h-6 w-6 text-amber-200 dark:text-amber-700/50 hover:fill-amber-500 hover:text-amber-500" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
                       <div className="pt-4 border-t flex items-center justify-between">
-                        <p className="text-sm font-medium">{t('rateBranch', { defaultValue: 'Rate your experience at ' })}{order.branch}</p>
+                        <p className="text-sm font-medium">{t('rateBranch', { defaultValue: 'You rated ' })}{order.branch}</p>
                         <div className="flex items-center gap-1">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <button

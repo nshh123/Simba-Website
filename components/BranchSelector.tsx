@@ -25,7 +25,7 @@ export const BRANCHES: Branch[] = [
 ];
 
 // Generate pick-up time slots: every 30 mins for the next 4 hours
-export function generateTimeSlots(): string[] {
+export function generateTimeSlots(t: any): string[] {
   const slots: string[] = [];
   const now = new Date();
   // Round up to the next 30-min block + 45 min lead time
@@ -33,13 +33,21 @@ export function generateTimeSlots(): string[] {
   const startMin = Math.ceil(now.getMinutes() / 30) * 30;
   now.setMinutes(startMin, 0, 0);
 
-  for (let i = 0; i < 8; i++) {
-    const slot = new Date(now.getTime() + i * 30 * 60 * 1000);
-    const h = slot.getHours();
-    const m = slot.getMinutes().toString().padStart(2, '0');
-    const ampm = h >= 12 ? 'PM' : 'AM';
-    const h12 = h % 12 === 0 ? 12 : h % 12;
-    slots.push(`${h12}:${m} ${ampm}`);
+  let currentSlot = new Date(now.getTime());
+  const todayDate = new Date().getDate();
+
+  while (slots.length < 18) {
+    const h = currentSlot.getHours();
+    if (h >= 8 && h <= 20) {
+      const isTomorrow = currentSlot.getDate() !== todayDate;
+      const prefix = isTomorrow ? t('tomorrow', { defaultValue: 'Tomorrow' }) + ' ' : '';
+      const m = currentSlot.getMinutes().toString().padStart(2, '0');
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const h12 = h % 12 === 0 ? 12 : h % 12;
+      slots.push(`${prefix}${h12}:${m} ${ampm}`);
+    }
+    currentSlot = new Date(currentSlot.getTime() + 30 * 60 * 1000);
+    if (currentSlot.getTime() - now.getTime() > 3 * 24 * 60 * 60 * 1000) break;
   }
   return slots;
 }
@@ -59,7 +67,7 @@ export function BranchSelector({
 }: BranchSelectorProps) {
   const { t } = useTranslation();
   const { orders } = useStore();
-  const timeSlots = generateTimeSlots();
+  const timeSlots = generateTimeSlots(t);
 
   // Compute per-branch average rating from completed orders with reviews
   const branchRatings: Record<string, { avg: number; count: number }> = {};

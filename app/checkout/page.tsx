@@ -43,10 +43,11 @@ const DEPOSIT_AMOUNT = 500; // RWF
 // ─── Step Indicator ───────────────────────────────────────────────────────────
 
 function StepIndicator({ step }: { step: CheckoutStep }) {
+  const { t } = useTranslation();
   const steps = [
-    { key: 'info',    label: 'Your Info',  icon: User },
-    { key: 'branch',  label: 'Branch',     icon: MapPin },
-    { key: 'deposit', label: 'Deposit',    icon: Smartphone },
+    { key: 'info',    label: t('stepInfo', { defaultValue: 'Your Info' }),  icon: User },
+    { key: 'branch',  label: t('stepBranch', { defaultValue: 'Branch' }),     icon: MapPin },
+    { key: 'deposit', label: t('stepDeposit', { defaultValue: 'Deposit' }),    icon: Smartphone },
   ];
   const activeIdx = steps.findIndex((s) => s.key === step);
 
@@ -228,7 +229,7 @@ export default function CheckoutPage() {
   const handleDepositConfirm = () => {
     const phoneRegex = /^(\+250|0)?[7][2389]\d{7}$/;
     if (!phoneRegex.test(momoPhone)) {
-      setMomoError(t('checkoutPhone', { defaultValue: 'Invalid Rwandan phone number' }));
+      setMomoError(t('errorPhoneInvalid', { defaultValue: 'Invalid Rwandan phone number' }));
       return;
     }
     setMomoError('');
@@ -407,12 +408,12 @@ export default function CheckoutPage() {
                   </label>
                   <Input
                     {...form.register('fullName')}
-                    placeholder="e.g. Jean de Dieu Uwimana"
+                    placeholder={t('placeholderName', { defaultValue: 'e.g. Jean de Dieu Uwimana' })}
                     className="h-11"
                   />
                   {form.formState.errors.fullName && (
                     <p className="text-[0.8rem] text-destructive">
-                      {form.formState.errors.fullName.message}
+                      {t('errorFullNameShort', { defaultValue: form.formState.errors.fullName.message })}
                     </p>
                   )}
                 </div>
@@ -423,12 +424,12 @@ export default function CheckoutPage() {
                   </label>
                   <Input
                     {...form.register('phone')}
-                    placeholder="e.g. 0783456789"
+                    placeholder={t('placeholderPhone', { defaultValue: 'e.g. 0783456789' })}
                     className="h-11"
                   />
                   {form.formState.errors.phone && (
                     <p className="text-[0.8rem] text-destructive">
-                      {form.formState.errors.phone.message}
+                      {t('errorPhoneInvalid', { defaultValue: form.formState.errors.phone.message })}
                     </p>
                   )}
                 </div>
@@ -555,7 +556,7 @@ export default function CheckoutPage() {
                     setMomoPhone(e.target.value);
                     setMomoError('');
                   }}
-                  placeholder="e.g. 0783456789"
+                  placeholder={t('placeholderPhone', { defaultValue: 'e.g. 0783456789' })}
                   className="h-11"
                 />
                 {momoError && (
