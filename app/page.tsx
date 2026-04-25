@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { Button } from '@/components/ui/button';
 import { CategoryGrid } from '@/components/CategoryGrid';
+import { FeaturesSection } from '@/components/FeaturesSection';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -98,7 +99,9 @@ export default function Home() {
     <div className="space-y-6">
       <HeroBanner />
       <CategoryGrid />
-      <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative">
+      <FeaturesSection />
+      
+      <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative pt-12">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block w-72 shrink-0 sticky top-24 h-max">
           <SidebarFilter
