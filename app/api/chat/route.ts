@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         { role: 'system', content: systemPrompt },
         { role: 'user', content: message },
       ],
-      model: 'llama-3.3-70b-versatile',
+      model: 'llama-3.1-8b-instant',
       response_format: { type: 'json_object' },
     });
 
@@ -56,21 +56,29 @@ export async function POST(req: Request) {
       throw new Error('Empty response from Groq');
     }
 
-    const parsedContent = JSON.parse(content);
-    const matchedProducts = (parsedContent.matchedProductIds || []).map((id: string) => 
-      productsData.products.find(p => p.id === id)
-    ).filter(Boolean);
+    try {
+      const parsedContent = JSON.parse(content);
+      const matchedProducts = (parsedContent.matchedProductIds || []).map((id: string) => 
+        productsData.products.find(p => p.id === id)
+      ).filter(Boolean);
 
-    return NextResponse.json({
-      response: parsedContent.response,
-      matchedProducts
-    });
-  } catch (error) {
-    console.error('Groq API Error:', error);
+      return NextResponse.json({
+        response: parsedContent.response || "Here is what I found:",
+        matchedProducts
+      });
+    } catch (parseError) {
+      console.error('JSON Parse Error:', content);
+      throw new Error('AI returned an invalid response format.');
+    }
+  } catch (error: any) {
+    console.error('Groq API Error Details:', error);
+    
+    const errorMessage = error?.error?.message || error?.message || 'Unknown error';
+    
     return NextResponse.json({ 
-      response: "Sorry, I encountered an error while searching for products. Please try again later.",
-      matchedProductIds: [],
-      error: error instanceof Error ? error.message : 'Unknown error'
+      response: `I'm having trouble thinking right now: ${errorMessage}`,
+      matchedProducts: [],
+      error: errorMessage
     }, { status: 500 });
   }
 }
