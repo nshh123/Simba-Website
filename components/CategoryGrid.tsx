@@ -47,10 +47,10 @@ export function CategoryGrid() {
   };
 
   return (
-    <section className="py-8 pb-16 px-4 max-w-7xl mx-auto">
+    <section className="py-8 pb-12 px-4 max-w-5xl mx-auto">
       <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-100">{t('categories')}</h2>
       
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 gap-y-10 gap-x-4">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 gap-y-6 gap-x-4">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
