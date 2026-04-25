@@ -64,49 +64,49 @@ export function MobileBottomNav() {
 
       {/* Bottom navigation bar */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-lg border-t safe-area-bottom print:hidden">
-        <div className="flex items-center justify-around py-2 px-2">
+        <div className="flex items-center justify-between py-1 px-1">
           <button 
             onClick={handleHomeClick}
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg transition-colors ${activeTab === 'home' ? 'text-primary' : 'text-muted-foreground'}`}
+            className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-1 rounded-lg transition-colors ${activeTab === 'home' ? 'text-primary' : 'text-muted-foreground'}`}
           >
             <Home className="h-5 w-5" />
-            <span className="text-[10px] font-medium">{t('home')}</span>
+            <span className="text-[9px] font-medium truncate w-full text-center">{t('home')}</span>
           </button>
 
           <button 
             onClick={handleCategoriesClick}
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg transition-colors ${activeTab === 'browse' ? 'text-primary' : 'text-muted-foreground'}`}
+            className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-1 rounded-lg transition-colors ${activeTab === 'browse' ? 'text-primary' : 'text-muted-foreground'}`}
           >
             <Grid3x3 className="h-5 w-5" />
-            <span className="text-[10px] font-medium">{t('categories')}</span>
+            <span className="text-[9px] font-medium truncate w-full text-center">{t('categories')}</span>
           </button>
 
           <button 
             onClick={openCart}
-            className={`flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg transition-colors relative ${activeTab === 'cart' ? 'text-primary' : 'text-muted-foreground'}`}
+            className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-1 rounded-lg transition-colors relative ${activeTab === 'cart' ? 'text-primary' : 'text-muted-foreground'}`}
           >
             <div className="relative">
               <ShoppingCart className="h-5 w-5" />
               {totalItems > 0 && (
-                <span className="absolute -top-1.5 -right-2 bg-primary text-primary-foreground text-[9px] font-bold min-w-[16px] h-4 flex items-center justify-center rounded-full px-1">
+                <span className="absolute -top-1.5 -right-2 bg-primary text-primary-foreground text-[8px] font-bold min-w-[14px] h-3.5 flex items-center justify-center rounded-full px-0.5">
                   {totalItems}
                 </span>
               )}
             </div>
-            <span className="text-[10px] font-medium">{t('checkout')}</span>
+            <span className="text-[9px] font-medium truncate w-full text-center">{t('checkout')}</span>
           </button>
 
-          <div className="flex flex-col items-center justify-center gap-0.5 py-1 px-3 text-muted-foreground">
+          <div className="flex-1 flex flex-col items-center justify-center gap-0.5 py-1 px-1 text-muted-foreground overflow-hidden">
             {isSignedIn ? (
-              <Button render={<Link href="/profile" />} variant="ghost" className="h-auto p-0 flex flex-col gap-0.5 hover:bg-transparent">
+              <Button render={<Link href="/profile" />} variant="ghost" className="h-auto p-0 flex flex-col gap-0.5 hover:bg-transparent w-full">
                 <User className={`h-5 w-5 ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`} />
-                <span className={`text-[10px] font-medium ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`}>{t('myProfile')}</span>
+                <span className={`text-[9px] font-medium truncate w-full text-center ${activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'}`}>{t('myProfile')}</span>
               </Button>
             ) : (
               <SignInButton mode="modal">
-                <button className="flex flex-col items-center gap-0.5">
+                <button className="flex flex-col items-center gap-0.5 w-full">
                   <User className="h-5 w-5" />
-                  <span className="text-[10px] font-medium">Sign in</span>
+                  <span className="text-[9px] font-medium truncate w-full text-center">Sign in</span>
                 </button>
               </SignInButton>
             )}
@@ -114,10 +114,10 @@ export function MobileBottomNav() {
 
           <button 
             onClick={toggleTheme}
-            className="flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg transition-colors text-muted-foreground"
+            className="flex-1 flex flex-col items-center gap-0.5 py-1 px-1 rounded-lg transition-colors text-muted-foreground overflow-hidden"
           >
             {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            <span className="text-[10px] font-medium">{theme === 'dark' ? t('lightMode') : t('darkMode')}</span>
+            <span className="text-[9px] font-medium truncate w-full text-center">{theme === 'dark' ? t('lightMode') : t('darkMode')}</span>
           </button>
         </div>
       </nav>
