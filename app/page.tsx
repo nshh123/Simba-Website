@@ -59,6 +59,13 @@ export default function Home() {
     performAiSearch();
   }, [debouncedSearchQuery]);
 
+  // Auto scroll to top when searching
+  useEffect(() => {
+    if (debouncedSearchQuery.trim()) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [debouncedSearchQuery]);
+
   useEffect(() => {
     setMounted(true);
     if (typeof window !== 'undefined') {

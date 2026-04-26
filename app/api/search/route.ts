@@ -29,11 +29,12 @@ export async function POST(req: Request) {
       ${JSON.stringify(productsData.products.map(p => ({ id: p.id, name: p.name, description: p.description, category: p.category })), null, 2)}
       
       Rules:
-      1. Interpret the user's intent. Even if they don't use exact names, match the semantic meaning (e.g. "hangover" -> water, local beer, coffee; "breakfast" -> milk, eggs, bread; "spicy" -> chili oil).
-      2. Return an array of the most relevant product IDs. Max 10 items.
-      3. Always prioritize exact matches first, then semantic/intent matches.
-      4. If no products are relevant, return an empty array.
-      5. ALWAYS return a JSON response with the following structure:
+      1. This is a conversational search interface. Users might type conversational queries like "do you have milk", "I want something completely spicy", or "what is good for a hangover".
+      2. Extract the core intent or entities from the user's message (e.g., "do you have milk" -> "milk").
+      3. Map that intent to the most relevant product IDs in our catalog.
+      4. Max 10 items. Prioritize exact item names, then semantic/intent matches.
+      5. If no products are relevant, return an empty array.
+      6. ALWAYS return a JSON response with the following structure:
          {
            "matchedProductIds": ["prod-001", "prod-002"] 
          }
