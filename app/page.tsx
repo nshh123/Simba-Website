@@ -117,8 +117,20 @@ export default function Home() {
       } else {
         // 1. Get local exact/substring matches instantly
         const lowerQuery = debouncedSearchQuery.toLowerCase();
+        
+        // Improve local fallback: if user types conversational things like "do you have milk", 
+        // extract likely nouns/keywords for an instant hit before AI returns
+        const conversationalKeywords = ["do", "you", "have", "i", "need", "want", "search", "for", "please"];
+        const cleanQuery = lowerQuery.split(" ").filter(w => !conversationalKeywords.includes(w)).join(" ").trim();
+
         let currentMatches = result.filter(
-          (p) => p.name.toLowerCase().includes(lowerQuery) || p.description.toLowerCase().includes(lowerQuery)
+          (p) => {
+            const name = p.name.toLowerCase();
+            const desc = p.description.toLowerCase();
+            const isMatch = name.includes(lowerQuery) || desc.includes(lowerQuery) || 
+                   (cleanQuery.length > 2 && (name.includes(cleanQuery) || desc.includes(cleanQuery)));
+            return isMatch;
+          }
         );
 
         // 2. Merge with AI results (Union) if they are ready, to expand results contextually
