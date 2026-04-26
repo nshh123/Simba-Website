@@ -34,17 +34,17 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section className="py-12 bg-gray-50 dark:bg-gray-900/50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section className="py-2">
+      <div className="w-full">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {features.map((f, i) => (
-            <div key={i} className="flex items-start gap-4 p-6 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-              <div className={`${f.color} p-3 rounded-2xl text-white shadow-lg`}>
-                <f.icon className="w-6 h-6" />
+            <div key={i} className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 p-3 md:p-4 bg-white dark:bg-gray-800/60 rounded-2xl shadow-sm border border-orange-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+              <div className={`${f.color} p-2.5 rounded-xl text-white shadow-sm shrink-0`}>
+                <f.icon className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 dark:text-gray-100">{f.title}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{f.desc}</p>
+                <h3 className="font-bold text-sm md:text-base text-gray-900 dark:text-gray-100 leading-tight">{f.title}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">{f.desc}</p>
               </div>
             </div>
           ))}

@@ -5,6 +5,7 @@ import { ProductGrid } from '@/components/ProductGrid';
 import { FilterBar } from '@/components/FilterBar';
 import { SidebarFilter } from '@/components/SidebarFilter';
 import { HeroBanner } from '@/components/HeroBanner';
+import { FeaturesSection } from '@/components/FeaturesSection';
 import { getProducts, getCategories } from '@/lib/data';
 import { useStore } from '@/store/useStore';
 import { ProductCardSkeleton } from '@/components/ui/ProductCardSkeleton';
@@ -170,8 +171,9 @@ export default function Home() {
   return (
     <div className="space-y-6">
       {!searchQuery.trim() && (
-        <div className="min-h-[calc(100vh-120px)] flex flex-col justify-center gap-6">
+        <div className="min-h-[calc(100vh-120px)] flex flex-col justify-center gap-4 py-2">
           <HeroBanner />
+          <FeaturesSection />
           <CategoryGrid />
         </div>
       )}

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ShoppingBag, Truck, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useStore } from '@/store/useStore';
+import { getProducts } from '@/lib/data';
 
 export function HeroBanner() {
   const { t } = useTranslation();
@@ -25,6 +26,8 @@ export function HeroBanner() {
     return () => clearInterval(timer);
   }, [fullText]);
 
+  const totalProducts = getProducts().length;
+
   // Hide hero when user is actively searching
   if (searchQuery.trim()) return null;
 
@@ -39,17 +42,21 @@ export function HeroBanner() {
       <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 px-8 py-12 md:py-16 md:px-12">
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 px-6 py-8 md:py-10 md:px-10">
         {/* Text content */}
-        <div className="flex-1 space-y-5 text-center md:text-left">
-          <p className="text-lg md:text-xl font-medium text-white/90 tracking-wide">
-            🛒 {t('heroWelcome')}
-          </p>
-          <h1 className="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight min-h-[2.5em] md:min-h-[1.3em]">
+        <div className="flex-1 space-y-4 text-center md:text-left">
+          <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-full text-xs font-semibold text-white/90 backdrop-blur-md border border-white/20 mb-1 mx-auto md:mx-0 shadow-sm">
+             <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+            </span>
+             {totalProducts} products available today
+          </div>
+          <h1 className="text-3xl md:text-[2.75rem] font-extrabold leading-tight tracking-tight min-h-[2.5em] md:min-h-[1.3em]">
             <span>{displayedText}</span>
             <span className="inline-block w-[3px] h-[1em] bg-white ml-1 align-text-bottom animate-pulse" />
           </h1>
-          <p className="text-lg md:text-xl text-white/85 max-w-lg">
+          <p className="text-base md:text-lg text-white/85 max-w-lg">
             {t('heroSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
