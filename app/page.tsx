@@ -33,6 +33,8 @@ export default function Home() {
 
   // Trigger Groq Search when query changes
   useEffect(() => {
+    let ignore = false;
+    
     async function performAiSearch() {
       if (!debouncedSearchQuery.trim() || debouncedSearchQuery === '@wishlist') {
         setAiSearchResults(null);
@@ -47,16 +49,27 @@ export default function Home() {
           body: JSON.stringify({ query: debouncedSearchQuery }),
         });
         const data = await response.json();
-        setAiSearchResults(data.matchedProducts || []);
+        
+        if (!ignore) {
+          setAiSearchResults(data.matchedProducts || []);
+        }
       } catch (error) {
-        console.error("AI Search failed", error);
-        setAiSearchResults(null);
+        if (!ignore) {
+          console.error("AI Search failed", error);
+          setAiSearchResults(null);
+        }
       } finally {
-        setIsAiSearching(false);
+        if (!ignore) {
+          setIsAiSearching(false);
+        }
       }
     }
     
     performAiSearch();
+    
+    return () => {
+      ignore = true;
+    };
   }, [debouncedSearchQuery]);
 
   // Auto scroll to top when searching
@@ -184,7 +197,7 @@ export default function Home() {
             />
           </div>
           
-          {!mounted ? (
+          {!mounted || (isAiSearching && paginatedProducts.length === 0) ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
               {Array.from({ length: 8 }).map((_, i) => (
                 <ProductCardSkeleton key={i} />
