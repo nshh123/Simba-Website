@@ -36,7 +36,7 @@
   "heroSubtitle": "Kugezwaho vuba cyangwa kwifatira i Kigali. Gura ibicuruzwa byiza by'u Rwanda, byose hamwe.",
   "heroProductCount": "Ibicuruzwa {{count}} bihari uyu munsi",
   "heroShopNow": "Tangira Guhaha",
-  "heroFeature1Title": "Gugezwaho mu minota 45",
+  "heroFeature1Title": "Bikugezwaho mu minota 45",
   "heroFeature1Desc": "Ku mafaranga arenga 10,000 RWF",
   "heroFeature2Title": "Ibicuruzwa bishya",
   "heroFeature2Desc": "Biva ku bahinzi buri munsi",
@@ -83,7 +83,7 @@
   "orderHistory": "Amateka y'ibyo waguze",
   "noOrders": "Nta kintu uragura kugeza ubu.",
   "startShopping": "Tangira guhaha",
-  "loadMore": "Andi bicuruzwa",
+  "loadMore": "Ibindi bicuruzwa",
   "paymentMethods": "Uburyo bwo kwishyura",
   "yourCart": "Igitebo cyawe",
   "addedToWishlist": "yashyizwe mu byo wifuza",
@@ -188,25 +188,85 @@
   "aiChat_poweredBy": "Ikorana na Groq",
   "aiChat_error": "Mfite ikibazo cyo gutekereza ubu",
   "products": {
-    "prod-001": { "name": "Amata y'Inyange 1L", "description": "Amata y'Inyange meza azira inenge." },
-    "prod-002": { "name": "Ikawa y'Arabica y'u Rwanda 500g", "description": "Ikawa nziza y'u Rwanda yatunganijwe neza." },
-    "prod-003": { "name": "Avoka (Ikiro)", "description": "Avoka nini nziza zeze mu Rwanda." },
-    "prod-004": { "name": "Byeri ya Mutzig 50cl", "description": "Byeri ikunzwe kandi iryoshe." },
-    "prod-005": { "name": "Ifu y'ingano ya Bakhresa Azam 2kg", "description": "Ifu inoze neza yo gukora imigati." },
-    "prod-006": { "name": "Ikawa ya Gorilla", "description": "Ikawa ikomeye kandi inoze neza." },
-    "prod-007": { "name": "Ibitoki Byumuhondo", "description": "Ibitoki byumuhondo biryoshye." },
-    "prod-008": { "name": "Ubuki bwa Akarabo 500g", "description": "Ubuki bw'umwimerere buturutse ku bavumvu." },
-    "prod-009": { "name": "Yaourt y'inkeri ya Inyange 500ml", "description": "Yaourt y'inkeri nziza ya Inyange." },
-    "prod-010": { "name": "Inyanya (Ikiro)", "description": "Inyanya nziza zo guteka." },
-    "prod-011": { "name": "Byeri ya Skol 50cl", "description": "Byeri yoroshye kandi ihumura." },
-    "prod-012": { "name": "Umuceri Basmati 5kg", "description": "Umuceri mwiza w'imirire ya buri munsi." },
-    "prod-013": { "name": "Amagi (Isahani ya 30)", "description": "Amagi meza y'inkoko zo mu rugo." },
-    "prod-014": { "name": "Ibitunguru bitukura (Ikiro)", "description": "Ibitunguru bitukura byeze mu Rwanda." },
-    "prod-015": { "name": "Amavuta ya Tournesol 5L", "description": "Amavuta meza yo guteka." },
-    "prod-016": { "name": "Poivuroni (Ikiro)", "description": "Poivuroni z'icyatsi nziza." },
-    "prod-017": { "name": "Amazi ya Inyange 1.5L (6)", "description": "Amazi y'umugezi meza y'u Rwanda." },
-    "prod-018": { "name": "Isukari 1kg", "description": "Isukari yera yo mu mugati no mu binyobwa." },
-    "prod-019": { "name": "Fromage Cheddar 250g", "description": "Fromage nziza kandi iryoshye." },
-    "prod-020": { "name": "Umutobe w'Amafaranga 1L", "description": "Umutobe w'imbuto z'amafaranga." }
+    "prod-001": {
+      "name": "Amata y'Inyange 1L",
+      "description": "Amata y'Inyange meza azira inenge."
+    },
+    "prod-002": {
+      "name": "Ikawa y'Arabica y'u Rwanda 500g",
+      "description": "Ikawa nziza y'u Rwanda yatunganijwe neza."
+    },
+    "prod-003": {
+      "name": "Avoka (Ikiro)",
+      "description": "Avoka nini nziza zeze mu Rwanda."
+    },
+    "prod-004": {
+      "name": "Byeri ya Mutzig 50cl",
+      "description": "Byeri ikunzwe kandi iryoshe."
+    },
+    "prod-005": {
+      "name": "Ifu y'ingano ya Bakhresa Azam 2kg",
+      "description": "Ifu inoze neza yo gukora imigati."
+    },
+    "prod-006": {
+      "name": "Ikawa ya Gorilla",
+      "description": "Ikawa ikomeye kandi inoze neza."
+    },
+    "prod-007": {
+      "name": "Ibitoki Byumuhondo",
+      "description": "Ibitoki byumuhondo biryoshye."
+    },
+    "prod-008": {
+      "name": "Ubuki bwa Akarabo 500g",
+      "description": "Ubuki bw'umwimerere buturutse ku bavumvu."
+    },
+    "prod-009": {
+      "name": "Yaourt y'inkeri ya Inyange 500ml",
+      "description": "Yaourt y'inkeri nziza ya Inyange."
+    },
+    "prod-010": {
+      "name": "Inyanya (Ikiro)",
+      "description": "Inyanya nziza zo guteka."
+    },
+    "prod-011": {
+      "name": "Byeri ya Skol 50cl",
+      "description": "Byeri yoroshye kandi ihumura."
+    },
+    "prod-012": {
+      "name": "Umuceri Basmati 5kg",
+      "description": "Umuceri mwiza w'imirire ya buri munsi."
+    },
+    "prod-013": {
+      "name": "Amagi (Isahani ya 30)",
+      "description": "Amagi meza y'inkoko zo mu rugo."
+    },
+    "prod-014": {
+      "name": "Ibitunguru bitukura (Ikiro)",
+      "description": "Ibitunguru bitukura byeze mu Rwanda."
+    },
+    "prod-015": {
+      "name": "Amavuta ya Tournesol 5L",
+      "description": "Amavuta meza yo guteka."
+    },
+    "prod-016": {
+      "name": "Poivuroni (Ikiro)",
+      "description": "Poivuroni z'icyatsi nziza."
+    },
+    "prod-017": {
+      "name": "Amazi ya Inyange 1.5L (6)",
+      "description": "Amazi y'umugezi meza y'u Rwanda."
+    },
+    "prod-018": {
+      "name": "Isukari 1kg",
+      "description": "Isukari yera yo mu mugati no mu binyobwa."
+    },
+    "prod-019": {
+      "name": "Fromage Cheddar 250g",
+      "description": "Fromage nziza kandi iryoshye."
+    },
+    "prod-020": {
+      "name": "Umutobe w'Amafaranga 1L",
+      "description": "Umutobe w'imbuto z'amafaranga."
+    }
   }
 }
