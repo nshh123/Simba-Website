@@ -59,20 +59,41 @@ export function CategoryGrid() {
   };
 
   return (
-    <section className="py-2 pb-4 px-4 max-w-7xl mx-auto">
-      <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-100">{t('categories')}</h2>
-      
-      <div className="flex flex-row gap-4 overflow-x-auto pb-2 md:pb-0 snap-x snap-mandatory md:grid md:grid-cols-5 lg:flex lg:flex-row lg:justify-between lg:overflow-visible md:gap-6 lg:gap-0 scrollbar-hide">
+    <section className="py-2 pb-4 max-w-7xl mx-auto">
+      <h2 className="text-xl font-bold mb-4 px-4 text-gray-800 dark:text-gray-100">{t('categories')}</h2>
+
+      {/* Mobile: horizontal scroll that bleeds to screen edges */}
+      <div className="md:hidden -mx-4 px-4 overflow-x-auto scrollbar-hide">
+        <div className="flex flex-row gap-4 pb-2 w-max snap-x snap-mandatory">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategoryClick(cat.id)}
+              className="flex flex-col items-center gap-2 group transition-all w-16 shrink-0 snap-start"
+            >
+              <div className={`w-12 h-12 ${cat.bg} dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-transparent group-hover:border-primary/20 group-hover:shadow-md transition-all group-active:scale-95`}>
+                <cat.icon className={`w-6 h-6 ${cat.color} group-hover:scale-110 transition-transform`} />
+              </div>
+              <span className="text-[10px] leading-snug font-medium text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors text-center w-full">
+                {t(cat.labelKey)}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: grid layout */}
+      <div className="hidden md:grid md:grid-cols-5 lg:flex lg:flex-row lg:justify-between gap-6 px-4">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
             onClick={() => handleCategoryClick(cat.id)}
-            className="flex flex-col items-center gap-2 group transition-all w-16 md:w-full lg:w-24 shrink-0 snap-start"
+            className="flex flex-col items-center gap-3 group transition-all w-full lg:w-24"
           >
-            <div className={`w-12 h-12 md:w-16 md:h-16 ${cat.bg} dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-transparent group-hover:border-primary/20 group-hover:shadow-md transition-all group-active:scale-95 shrink-0`}>
-              <cat.icon className={`w-6 h-6 md:w-8 md:h-8 ${cat.color} group-hover:scale-110 transition-transform`} />
+            <div className={`w-16 h-16 ${cat.bg} dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-transparent group-hover:border-primary/20 group-hover:shadow-md transition-all group-active:scale-95`}>
+              <cat.icon className={`w-8 h-8 ${cat.color} group-hover:scale-110 transition-transform`} />
             </div>
-            <span className="text-[10px] md:text-[13px] leading-snug font-medium text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors text-center break-words w-full px-0.5">
+            <span className="text-[13px] leading-snug font-medium text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors text-center w-full px-1">
               {t(cat.labelKey)}
             </span>
           </button>
