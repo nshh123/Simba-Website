@@ -30,7 +30,7 @@ export function CartDrawer() {
         {cart.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center space-y-4">
             <span className="text-muted-foreground">{t('emptyCart')}</span>
-            <Button variant="outline" onClick={() => setCartOpen(false)}>Continue Shopping</Button>
+            <Button variant="outline" onClick={() => setCartOpen(false)}>{t('startShopping')}</Button>
           </div>
         ) : (
           <>
