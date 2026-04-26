@@ -62,21 +62,19 @@ export function CategoryGrid() {
     <section className="py-2 pb-4 px-4 max-w-7xl mx-auto">
       <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-100">{t('categories')}</h2>
       
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-4">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:flex lg:flex-row lg:justify-between gap-y-6 gap-x-4 lg:gap-0">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
             onClick={() => handleCategoryClick(cat.id)}
-            className="flex flex-col items-center group transition-all"
+            className="flex flex-col items-center gap-3 group transition-all w-full lg:w-24"
           >
-            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${cat.bg} dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-transparent group-hover:border-primary/20 group-hover:shadow-md transition-all group-active:scale-95 mb-3`}>
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${cat.bg} dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-transparent group-hover:border-primary/20 group-hover:shadow-md transition-all group-active:scale-95 shrink-0`}>
               <cat.icon className={`w-8 h-8 sm:w-10 sm:h-10 ${cat.color} group-hover:scale-110 transition-transform`} />
             </div>
-            <div className="h-10 flex items-start justify-center w-full px-1">
-              <span className="text-xs sm:text-[13px] font-medium text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors text-center line-clamp-2 leading-tight">
-                {t(cat.labelKey)}
-              </span>
-            </div>
+            <span className="text-xs sm:text-[13px] leading-snug font-medium text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors text-center break-words w-full px-1">
+              {t(cat.labelKey)}
+            </span>
           </button>
         ))}
       </div>
