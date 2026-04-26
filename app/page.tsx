@@ -130,7 +130,7 @@ export default function Home() {
   const isSearchActive = !!debouncedSearchQuery.trim();
 
   return (
-    <div className="space-y-6 w-full overflow-hidden">
+    <div className="space-y-2 md:space-y-6 w-full overflow-hidden">
       {!searchQuery.trim() && (
         <div className="flex flex-col gap-4 md:gap-6 pt-4 pb-2">
           <HeroBanner />
@@ -139,7 +139,7 @@ export default function Home() {
         </div>
       )}
       
-      <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative pt-4">
+      <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative pt-0 md:pt-4">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block w-72 shrink-0 sticky top-24 h-max">
           <SidebarFilter
