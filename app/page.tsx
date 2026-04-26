@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { Button } from '@/components/ui/button';
 import { CategoryGrid } from '@/components/CategoryGrid';
-import { multilingualSearchIds } from '@/lib/multilingualSearch';
+import { multilingualSearchIds, STOPWORDS } from '@/lib/multilingualSearch';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -74,15 +74,26 @@ export default function Home() {
       if (debouncedSearchQuery === '@wishlist') {
         result = result.filter((p) => wishlist.includes(p.id));
       } else {
-        const lowerQuery = debouncedSearchQuery.toLowerCase();
+        // Strip punctuation and lowercase
+        const lowerQuery = debouncedSearchQuery.toLowerCase().replace(/[?!.,]/g, '');
 
-        // 1. English text match (name + description)
+        // 1. English text match — try full phrase first, then individual meaningful tokens
+        const tokens = lowerQuery
+          .split(/\s+/)
+          .filter((w) => w.length > 2 && !STOPWORDS.has(w));
+
         const englishMatches = new Set(
           result
-            .filter((p) =>
-              p.name.toLowerCase().includes(lowerQuery) ||
-              p.description.toLowerCase().includes(lowerQuery)
-            )
+            .filter((p) => {
+              const name = p.name.toLowerCase();
+              const desc = p.description.toLowerCase();
+              // Full phrase match OR any meaningful keyword token matches
+              return (
+                name.includes(lowerQuery) ||
+                desc.includes(lowerQuery) ||
+                tokens.some((token) => name.includes(token) || desc.includes(token))
+              );
+            })
             .map((p) => p.id)
         );
 

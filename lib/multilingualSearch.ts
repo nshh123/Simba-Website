@@ -130,15 +130,18 @@ const MULTILINGUAL_INDEX: [string, string][] = [
   // (handled in the search function below)
 ];
 
-const STOPWORDS = new Set([
+export const STOPWORDS = new Set([
   // English
   'do', 'you', 'have', 'i', 'need', 'want', 'search', 'for', 'please',
-  'get', 'me', 'find', 'show', 'a', 'an', 'the', 'some', 'any',
+  'get', 'me', 'find', 'show', 'a', 'an', 'the', 'some', 'any', 'is',
+  'are', 'can', 'could', 'would', 'like', 'looking', 'get', 'buy',
   // French
   'avez', 'vous', 'est', 'ce', 'que', 'je', 'veux', 'cherche', 'du',
   'de', 'la', 'le', 'les', 'des', 'un', 'une', 'avec', 'et', 'ou',
+  'il', 'elle', 'nous', 'ils', 'elles', 'mon', 'ma', 'mes', 'voudrais',
   // Kinyarwanda
-  'mfite', 'murafite', 'nshaka', 'gerageza', 'nkeneye',
+  'mfite', 'murafite', 'nshaka', 'gerageza', 'nkeneye', 'mwirwa',
+  'mbere', 'hari', 'kuri', 'na', 'nta', 'ni',
 ]);
 
 /**
