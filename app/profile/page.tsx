@@ -7,6 +7,7 @@ import { Package, Clock, CheckCircle, User, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import Image from 'next/image';
+import productsData from '@/data/simba_products.json';
 
 export default function ProfilePage() {
   const { t, i18n } = useTranslation();
@@ -150,11 +151,14 @@ export default function ProfilePage() {
                     </div>
                     
                     <div className="flex gap-4 overflow-x-auto pb-2 hide-scrollbar snap-x mb-4">
-                      {order.items.map((item, i) => (
+                      {order.items.map((item, i) => {
+                        const productRef = productsData.products.find(p => p.id === item.id);
+                        const imageUrl = item.imageUrl || productRef?.imageUrl;
+                        return (
                         <div key={`${item.id}-${i}`} className="snap-start shrink-0 flex items-center gap-3 bg-card p-2 rounded-lg border min-w-[240px] shadow-sm">
                           <div className="h-14 w-14 bg-muted rounded-md shrink-0 relative overflow-hidden">
-                             {item.imageUrl ? (
-                               <Image src={item.imageUrl} alt={item.name} fill className="object-cover" />
+                             {imageUrl ? (
+                               <Image src={imageUrl} alt={item.name} fill className="object-cover" />
                              ) : (
                                <div className="w-full h-full bg-muted" />
                              )}
@@ -164,7 +168,7 @@ export default function ProfilePage() {
                             <p className="text-xs text-muted-foreground font-medium mt-0.5">{t('checkoutQty')}: {item.quantity} × {item.price.toLocaleString()} RWF</p>
                           </div>
                         </div>
-                      ))}
+                      )})}
                     </div>
 
                     {/* Rating Widget */}
