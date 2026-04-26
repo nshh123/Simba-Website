@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { Button } from '@/components/ui/button';
 import { CategoryGrid } from '@/components/CategoryGrid';
+import { Product } from '@/types';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -26,6 +27,37 @@ export default function Home() {
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const debouncedMinPrice = useDebounce(minPrice, 300);
   const debouncedMaxPrice = useDebounce(maxPrice, 300);
+
+  const [aiSearchResults, setAiSearchResults] = useState<Product[] | null>(null);
+  const [isAiSearching, setIsAiSearching] = useState(false);
+
+  // Trigger Groq Search when query changes
+  useEffect(() => {
+    async function performAiSearch() {
+      if (!debouncedSearchQuery.trim() || debouncedSearchQuery === '@wishlist') {
+        setAiSearchResults(null);
+        return;
+      }
+      
+      setIsAiSearching(true);
+      try {
+        const response = await fetch('/api/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: debouncedSearchQuery }),
+        });
+        const data = await response.json();
+        setAiSearchResults(data.matchedProducts || []);
+      } catch (error) {
+        console.error("AI Search failed", error);
+        setAiSearchResults(null);
+      } finally {
+        setIsAiSearching(false);
+      }
+    }
+    
+    performAiSearch();
+  }, [debouncedSearchQuery]);
 
   useEffect(() => {
     setMounted(true);
@@ -62,7 +94,11 @@ export default function Home() {
     if (debouncedSearchQuery) {
       if (debouncedSearchQuery === '@wishlist') {
         result = result.filter((p) => wishlist.includes(p.id));
+      } else if (aiSearchResults !== null && !isAiSearching) {
+        // Use AI results once they arrive
+        result = aiSearchResults;
       } else {
+        // Fallback to instant local string match while AI is thinking
         const lowerQuery = debouncedSearchQuery.toLowerCase();
         result = result.filter(
           (p) => p.name.toLowerCase().includes(lowerQuery) || p.description.toLowerCase().includes(lowerQuery)
