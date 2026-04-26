@@ -171,7 +171,7 @@ export default function Home() {
   return (
     <div className="space-y-6">
       {!searchQuery.trim() && (
-        <div className="min-h-[calc(100vh-120px)] flex flex-col justify-center gap-4 py-2">
+        <div className="min-h-[calc(100vh-120px)] flex flex-col justify-start gap-6 pt-6 pb-2">
           <HeroBanner />
           <FeaturesSection />
           <CategoryGrid />

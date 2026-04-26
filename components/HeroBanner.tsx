@@ -45,12 +45,15 @@ export function HeroBanner() {
       <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 px-6 py-8 md:py-10 md:px-10">
         {/* Text content */}
         <div className="flex-1 space-y-4 text-center md:text-left">
-          <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-full text-xs font-semibold text-white/90 backdrop-blur-md border border-white/20 mb-1 mx-auto md:mx-0 shadow-sm">
+          <p className="text-lg md:text-xl font-medium text-white/90 tracking-wide mb-[-0.5rem]">
+            🛒 {t('heroWelcome')}
+          </p>
+          <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-full text-xs font-semibold text-white/90 backdrop-blur-md border border-white/20 mb-1 mx-auto md:mx-0 shadow-sm mt-3">
              <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
             </span>
-             {totalProducts} products available today
+             {t('heroProductCount', { count: totalProducts })}
           </div>
           <h1 className="text-3xl md:text-[2.75rem] font-extrabold leading-tight tracking-tight min-h-[2.5em] md:min-h-[1.3em]">
             <span>{displayedText}</span>
