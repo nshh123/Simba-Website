@@ -34,17 +34,17 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section className="py-2">
+    <section className="py-2 w-full overflow-hidden">
       <div className="w-full">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {features.map((f, i) => (
-            <div key={i} className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 p-3 md:p-4 bg-white dark:bg-gray-800/60 rounded-2xl shadow-sm border border-orange-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+            <div key={i} className="flex flex-col items-center text-center gap-2 p-3 md:p-4 bg-white dark:bg-gray-800/60 rounded-2xl shadow-sm border border-orange-100 dark:border-gray-800 hover:shadow-md transition-shadow min-w-0">
               <div className={`${f.color} p-2.5 rounded-xl text-white shadow-sm shrink-0`}>
                 <f.icon className="w-5 h-5" />
               </div>
-              <div>
-                <h3 className="font-bold text-sm md:text-base text-gray-900 dark:text-gray-100 leading-tight">{f.title}</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">{f.desc}</p>
+              <div className="min-w-0 w-full">
+                <h3 className="font-bold text-xs md:text-base text-gray-900 dark:text-gray-100 leading-tight">{f.title}</h3>
+                <p className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">{f.desc}</p>
               </div>
             </div>
           ))}

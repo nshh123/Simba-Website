@@ -36,15 +36,15 @@ export function HeroBanner() {
   };
 
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#FF8800] via-[#FF6B00] to-[#E05500] text-white">
+    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#FF8800] via-[#FF6B00] to-[#E05500] text-white w-full">
       {/* Decorative background circles */}
       <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
       <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-6 px-5 py-5 md:py-10 md:px-10">
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-6 px-5 py-5 md:py-10 md:px-10 w-full min-w-0">
         {/* Text content */}
-        <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left">
+        <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left min-w-0 w-full">
           <p className="text-sm md:text-xl font-medium text-white/90 tracking-wide">
             🛒 {t('heroWelcome')}
           </p>
@@ -55,7 +55,7 @@ export function HeroBanner() {
             </span>
              {t('heroProductCount', { count: totalProducts })}
           </div>
-          <h1 className="text-2xl md:text-[2.75rem] font-extrabold leading-tight tracking-tight min-h-[2em] md:min-h-[1.3em]">
+          <h1 className="text-2xl md:text-[2.75rem] font-extrabold leading-tight tracking-tight min-h-[2em] md:min-h-[1.3em] break-words w-full">
             <span>{displayedText}</span>
             <span className="inline-block w-[3px] h-[1em] bg-white ml-1 align-text-bottom animate-pulse" />
           </h1>

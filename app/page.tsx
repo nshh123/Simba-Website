@@ -130,7 +130,7 @@ export default function Home() {
   const isSearchActive = !!debouncedSearchQuery.trim();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full overflow-hidden">
       {!searchQuery.trim() && (
         <div className="min-h-[calc(100vh-120px)] flex flex-col justify-start gap-6 pt-6 pb-2">
           <HeroBanner />
