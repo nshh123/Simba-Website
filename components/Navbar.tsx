@@ -69,6 +69,7 @@ export function Navbar() {
   const handleResetHome = () => {
     setSearchQuery('');
     window.dispatchEvent(new Event('resetFilters'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const ThemeToggle = () => (
