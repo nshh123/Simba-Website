@@ -20,20 +20,20 @@ export default function ProfilePage() {
           EM
         </div>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Evaluation Mode</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t('evalMode')}</h1>
           <p className="text-muted-foreground font-medium">demo.grader@simba.evaluation.rw</p>
           <div className="flex gap-2 mt-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-bold border border-green-200">Verified Grader</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">Evaluation Account</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-bold border border-green-200">{t('verifiedGrader')}</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">{t('evalAccount')}</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { label: 'Orders placed', value: orders.length || 12, icon: Package },
-          { label: 'Account age', value: '2 years', icon: Clock },
-          { label: 'Simba Points', value: '1,450', icon: Star },
+          { label: t('ordersPlaced'), value: orders.length || 12, icon: Package },
+          { label: t('accountAge'), value: t('twoYears'), icon: Clock },
+          { label: t('simbaPoints'), value: '1,450', icon: Star },
         ].map((stat, i) => (
           <div key={i} className="p-4 rounded-xl border bg-muted/30 flex items-center gap-4">
             <div className="p-2 rounded-lg bg-background shadow-sm">
@@ -48,13 +48,13 @@ export default function ProfilePage() {
       </div>
 
       <div className="space-y-4 border-t pt-8">
-        <h3 className="text-lg font-bold">Profile Settings</h3>
+        <h3 className="text-lg font-bold">{t('profileSettings')}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
-            { label: 'Full Name', value: 'Evaluation Grader' },
-            { label: 'Preferred Language', value: i18n.language === 'en' ? 'English' : i18n.language === 'fr' ? 'Français' : 'Kinyarwanda' },
-            { label: 'Phone Number', value: '+250 780 000 000' },
-            { label: 'Default Branch', value: 'Simba Remera' },
+            { label: t('fullName'), value: t('evalGrader') },
+            { label: t('preferredLanguage'), value: i18n.language === 'en' ? 'English' : i18n.language === 'fr' ? 'Français' : 'Kinyarwanda' },
+            { label: t('phoneNumber'), value: '+250 780 000 000' },
+            { label: t('defaultBranch'), value: 'Simba Remera' },
           ].map((field, i) => (
             <div key={i} className="space-y-1">
               <p className="text-xs font-black text-muted-foreground uppercase tracking-wider">{field.label}</p>
