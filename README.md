@@ -34,6 +34,15 @@ In this mode:
 - **State Management**: Zustand (with Persistence)
 - **I18n**: i18next
 
+## 🚧 Future Enhancements (Features Omitted)
+
+Due to scope constraints and the specific focus on UI/UX, AI integration, and grader accessibility for this hackathon, the following features were left out of this initial release:
+
+- **Real Database & Production Backend**: Currently, the product catalog is driven by a static JSON file (`simba_products.json`), while orders and branch inventory are persisted locally per-session using Zustand. A full release would migrate this data to a relational database (e.g., PostgreSQL with Prisma) to sync global inventory accurately.
+- **Live Payment Gateway**: The checkout process features a fully animated MoMo (Mobile Money) payment flow simulation. Actual backend tokenization and transaction processing via a gateway like Stripe or Flutterwave are not implemented.
+- **Synchronized Role Metadata**: While the UI adapts to manager and customer roles, authentic role synchronization using Clerk Webhooks was sidelined. Instead, a URL-based Evaluation Mode was prioritized so graders could explore all protected features without managing an external auth server.
+- **Global Admin Panel**: A "Super Admin" dashboard for managing the raw product catalog (adding new products, toggling sales, updating descriptions) was left out in favor of perfecting the customer-facing and branch-level order management experiences.
+
 ## ⚙️ Getting Started
 
 ```bash
