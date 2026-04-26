@@ -66,7 +66,7 @@ export function HeroBanner() {
             <Button
               size="lg"
               onClick={scrollToProducts}
-              className="bg-white text-[#FF6B00] hover:bg-white/90 font-bold text-sm md:text-base px-6 md:px-8 shadow-lg shadow-black/20 h-10 md:h-auto"
+              className="bg-white text-[#FF6B00] hover:bg-white/90 font-bold text-sm md:text-base px-6 md:px-8 shadow-lg shadow-black/20"
             >
               {t('heroShopNow')}
             </Button>
