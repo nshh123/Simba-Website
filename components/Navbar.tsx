@@ -126,7 +126,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-6 mr-4">
             <Link href="/" onClick={handleResetHome} className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('home')}</Link>
             <Link href="/" onClick={() => setSearchQuery('@wishlist')} className="text-sm font-bold text-white hover:text-white/80 transition-colors cursor-pointer">{t('wishlist')}</Link>
-            <Link href="/checkout" className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('checkout')}</Link>
+            <Link href={isEvaluationMode ? "/checkout?evaluation=true" : "/checkout"} className="text-sm font-bold text-white hover:text-white/80 transition-colors">{t('checkout')}</Link>
           </div>
           
           <LanguageSelector />
