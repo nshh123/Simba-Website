@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { Button } from '@/components/ui/button';
 import { CategoryGrid } from '@/components/CategoryGrid';
-import { Product } from '@/types';
+import { multilingualSearchIds } from '@/lib/multilingualSearch';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -29,49 +29,7 @@ export default function Home() {
   const debouncedMinPrice = useDebounce(minPrice, 300);
   const debouncedMaxPrice = useDebounce(maxPrice, 300);
 
-  const [aiSearchResults, setAiSearchResults] = useState<Product[] | null>(null);
-  const [isAiSearching, setIsAiSearching] = useState(false);
-
-  // Trigger Groq Search when query changes
-  useEffect(() => {
-    let ignore = false;
-    
-    async function performAiSearch() {
-      if (!debouncedSearchQuery.trim() || debouncedSearchQuery === '@wishlist') {
-        setAiSearchResults(null);
-        return;
-      }
-      
-      setIsAiSearching(true);
-      try {
-        const response = await fetch('/api/search', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: debouncedSearchQuery }),
-        });
-        const data = await response.json();
-        
-        if (!ignore) {
-          setAiSearchResults(data.matchedProducts || []);
-        }
-      } catch (error) {
-        if (!ignore) {
-          console.error("AI Search failed", error);
-          setAiSearchResults(null);
-        }
-      } finally {
-        if (!ignore) {
-          setIsAiSearching(false);
-        }
-      }
-    }
-    
-    performAiSearch();
-    
-    return () => {
-      ignore = true;
-    };
-  }, [debouncedSearchQuery]);
+  // No AI search state needed — multilingual search is instant & local
 
   // Auto scroll to top when searching
   useEffect(() => {
@@ -116,33 +74,24 @@ export default function Home() {
       if (debouncedSearchQuery === '@wishlist') {
         result = result.filter((p) => wishlist.includes(p.id));
       } else {
-        // 1. Get local exact/substring matches instantly
         const lowerQuery = debouncedSearchQuery.toLowerCase();
-        
-        // Improve local fallback: if user types conversational things like "do you have milk", 
-        // extract likely nouns/keywords for an instant hit before AI returns
-        const conversationalKeywords = ["do", "you", "have", "i", "need", "want", "search", "for", "please"];
-        const cleanQuery = lowerQuery.split(" ").filter(w => !conversationalKeywords.includes(w)).join(" ").trim();
 
-        let currentMatches = result.filter(
-          (p) => {
-            const name = p.name.toLowerCase();
-            const desc = p.description.toLowerCase();
-            const isMatch = name.includes(lowerQuery) || desc.includes(lowerQuery) || 
-                   (cleanQuery.length > 2 && (name.includes(cleanQuery) || desc.includes(cleanQuery)));
-            return isMatch;
-          }
+        // 1. English text match (name + description)
+        const englishMatches = new Set(
+          result
+            .filter((p) =>
+              p.name.toLowerCase().includes(lowerQuery) ||
+              p.description.toLowerCase().includes(lowerQuery)
+            )
+            .map((p) => p.id)
         );
 
-        // 2. Merge with AI results (Union) if they are ready, to expand results contextually
-        if (aiSearchResults !== null && !isAiSearching) {
-          const mergedMap = new Map();
-          currentMatches.forEach(p => mergedMap.set(p.id, p));
-          aiSearchResults.forEach((p: Product) => mergedMap.set(p.id, p));
-          result = Array.from(mergedMap.values());
-        } else {
-          result = currentMatches;
-        }
+        // 2. Multilingual keyword match (French + Kinyarwanda) — instant, no API
+        const multilingualMatches = multilingualSearchIds(lowerQuery);
+
+        // 3. Union of both sets
+        const allMatchedIds = new Set([...englishMatches, ...multilingualMatches]);
+        result = result.filter((p) => allMatchedIds.has(p.id));
       }
     } else if (selectedCategory !== 'All') {
       result = result.filter((p) => p.category === selectedCategory);
@@ -167,6 +116,7 @@ export default function Home() {
 
   const paginatedProducts = filteredAndSortedProducts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredAndSortedProducts.length;
+  const isSearchActive = !!debouncedSearchQuery.trim();
 
   return (
     <div className="space-y-6">
@@ -211,7 +161,7 @@ export default function Home() {
             />
           </div>
           
-          {!mounted || (isAiSearching && paginatedProducts.length === 0) ? (
+          {!mounted ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
               {Array.from({ length: 8 }).map((_, i) => (
                 <ProductCardSkeleton key={i} />
