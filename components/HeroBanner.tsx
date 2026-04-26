@@ -41,22 +41,26 @@ export function HeroBanner() {
 
       <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 px-8 py-12 md:py-16 md:px-12">
         {/* Text content */}
-        <div className="flex-1 space-y-5 text-center md:text-left">
+        <div className="flex-1 space-y-5 text-center md:text-left min-h-[250px] md:min-h-[200px] flex flex-col justify-center">
           <p className="text-lg md:text-xl font-medium text-white/90 tracking-wide">
             🛒 {t('heroWelcome')}
           </p>
-          <h1 className="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight min-h-[2.5em] md:min-h-[1.3em]">
-            <span>{displayedText}</span>
-            <span className="inline-block w-[3px] h-[1em] bg-white ml-1 align-text-bottom animate-pulse" />
-          </h1>
-          <p className="text-lg md:text-xl text-white/85 max-w-lg">
-            {t('heroSubtitle')}
-          </p>
+          <div className="min-h-[3em] md:min-h-[2.6em] flex flex-col justify-center">
+            <h1 className="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight">
+              <span>{displayedText}</span>
+              <span className="inline-block w-[3px] h-[1em] bg-white ml-1 align-text-bottom animate-pulse" />
+            </h1>
+          </div>
+          <div className="min-h-[3.5em] md:min-h-[3em] flex flex-col justify-start">
+            <p className="text-lg md:text-xl text-white/85 max-w-lg">
+              {t('heroSubtitle')}
+            </p>
+          </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
             <Button
               size="lg"
               onClick={scrollToProducts}
-              className="bg-white text-[#FF6B00] hover:bg-white/90 font-bold text-base px-8 shadow-lg shadow-black/20"
+              className="bg-white text-[#FF6B00] hover:bg-white/90 font-bold text-base px-8 shadow-lg shadow-black/20 mt-2"
             >
               {t('heroShopNow')}
             </Button>

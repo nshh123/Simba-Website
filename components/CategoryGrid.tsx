@@ -67,14 +67,16 @@ export function CategoryGrid() {
           <button
             key={cat.id}
             onClick={() => handleCategoryClick(cat.id)}
-            className="flex flex-col items-center gap-3 group transition-all"
+            className="flex flex-col items-center group transition-all"
           >
-            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${cat.bg} dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-transparent group-hover:border-primary/20 group-hover:shadow-md transition-all group-active:scale-95`}>
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${cat.bg} dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm border border-transparent group-hover:border-primary/20 group-hover:shadow-md transition-all group-active:scale-95 mb-3`}>
               <cat.icon className={`w-8 h-8 sm:w-10 sm:h-10 ${cat.color} group-hover:scale-110 transition-transform`} />
             </div>
-            <span className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors text-center px-1">
-              {t(cat.labelKey)}
-            </span>
+            <div className="h-10 flex items-start justify-center w-full px-1">
+              <span className="text-xs sm:text-[13px] font-medium text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors text-center line-clamp-2 leading-tight">
+                {t(cat.labelKey)}
+              </span>
+            </div>
           </button>
         ))}
       </div>
