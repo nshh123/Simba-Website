@@ -68,9 +68,7 @@ export default function Home() {
           (p) => p.name.toLowerCase().includes(lowerQuery) || p.description.toLowerCase().includes(lowerQuery)
         );
       }
-    }
-
-    if (selectedCategory !== 'All') {
+    } else if (selectedCategory !== 'All') {
       result = result.filter((p) => p.category === selectedCategory);
     }
 
@@ -96,10 +94,12 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
-      <div className="min-h-[calc(100vh-120px)] flex flex-col justify-center gap-6">
-        <HeroBanner />
-        <CategoryGrid />
-      </div>
+      {!searchQuery.trim() && (
+        <div className="min-h-[calc(100vh-120px)] flex flex-col justify-center gap-6">
+          <HeroBanner />
+          <CategoryGrid />
+        </div>
+      )}
       
       <div id="products-section" className="flex flex-col lg:flex-row gap-6 relative pt-4">
         {/* Desktop Sidebar */}
