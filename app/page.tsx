@@ -132,7 +132,7 @@ export default function Home() {
   return (
     <div className="space-y-6 w-full overflow-hidden">
       {!searchQuery.trim() && (
-        <div className="min-h-[calc(100vh-120px)] flex flex-col justify-start gap-6 pt-6 pb-2">
+        <div className="flex flex-col gap-4 md:gap-6 pt-4 pb-2">
           <HeroBanner />
           <FeaturesSection />
           <CategoryGrid />
