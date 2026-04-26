@@ -80,7 +80,7 @@ export function QuickViewModal({ product, onClose }: QuickViewProps) {
           <Heart className={`h-5 w-5 transition-colors duration-200 ${isFavorited ? 'fill-red-500 text-red-500' : 'text-foreground'}`} />
         </button>
 
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row max-h-[85vh] overflow-y-auto">
           {/* Image */}
           <div className="relative w-full md:w-1/2 aspect-square bg-muted shrink-0">
             {product.imageUrl && (
