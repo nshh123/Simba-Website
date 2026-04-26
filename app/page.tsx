@@ -94,15 +94,22 @@ export default function Home() {
     if (debouncedSearchQuery) {
       if (debouncedSearchQuery === '@wishlist') {
         result = result.filter((p) => wishlist.includes(p.id));
-      } else if (aiSearchResults !== null && !isAiSearching) {
-        // Use AI results once they arrive
-        result = aiSearchResults;
       } else {
-        // Fallback to instant local string match while AI is thinking
+        // 1. Get local exact/substring matches instantly
         const lowerQuery = debouncedSearchQuery.toLowerCase();
-        result = result.filter(
+        let currentMatches = result.filter(
           (p) => p.name.toLowerCase().includes(lowerQuery) || p.description.toLowerCase().includes(lowerQuery)
         );
+
+        // 2. Merge with AI results (Union) if they are ready, to expand results contextually
+        if (aiSearchResults !== null && !isAiSearching) {
+          const mergedMap = new Map();
+          currentMatches.forEach(p => mergedMap.set(p.id, p));
+          aiSearchResults.forEach((p: Product) => mergedMap.set(p.id, p));
+          result = Array.from(mergedMap.values());
+        } else {
+          result = currentMatches;
+        }
       }
     } else if (selectedCategory !== 'All') {
       result = result.filter((p) => p.category === selectedCategory);
