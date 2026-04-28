@@ -42,7 +42,7 @@ export function HeroBanner() {
       <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-5 px-5 py-5 md:py-4 md:px-8 w-full min-w-0">
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-5 px-5 py-5 md:py-7 md:px-8 w-full min-w-0">
         {/* Text content */}
         <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left min-w-0 w-full">
           <p className="text-sm md:text-xl font-medium text-white/90 tracking-wide">
