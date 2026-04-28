@@ -29,10 +29,8 @@ import Confetti from 'react-confetti';
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 const personalSchema = z.object({
-  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
-  phone: z
-    .string()
-    .min(8, 'Please enter a valid phone number'),
+  fullName: z.string().optional().default('Test User'),
+  phone: z.string().optional().default('0780000000'),
 });
 
 type PersonalValues = z.infer<typeof personalSchema>;
@@ -210,7 +208,7 @@ export default function CheckoutPage() {
   const form = useForm<PersonalValues>({
     resolver: zodResolver(personalSchema),
     mode: 'onChange',
-    defaultValues: { fullName: '', phone: '' },
+    defaultValues: { fullName: 'Test User', phone: '0780000000' },
   });
 
   // ── Step 1: Personal Info ──────────────────────────────────────────────────
@@ -220,18 +218,24 @@ export default function CheckoutPage() {
     setStep('branch');
   };
 
-  // ── Step 2: Branch + Time ──────────────────────────────────────────────────
-
-  const canProceedToBranch = selectedBranch !== null && selectedTime !== '';
+  // Branch step: always allow proceeding — auto-select first branch/time if nothing chosen
+  const canProceedToBranch = true;
+  const handleBranchContinue = () => {
+    if (!selectedBranch) {
+      setSelectedBranch(BRANCHES[0]);
+    }
+    if (!selectedTime) {
+      setSelectedTime('10:00');
+    }
+    setStep('deposit');
+  };
 
   // ── Step 3: MoMo Deposit ───────────────────────────────────────────────────
 
   const handleDepositConfirm = () => {
-    const phoneRegex = /^[+]?[\d\s\-().]{8,}$/;
-    if (!phoneRegex.test(momoPhone)) {
-      setMomoError(t('errorPhoneInvalid', { defaultValue: 'Please enter a valid phone number' }));
-      return;
-    }
+    // Accept any input — auto-fill phone if empty
+    const phone = momoPhone.trim() || '0780000000';
+    setMomoPhone(phone);
     setMomoError('');
     setIsProcessingDeposit(true);
 
@@ -440,7 +444,6 @@ export default function CheckoutPage() {
                   type="submit"
                   size="lg"
                   className="w-full gap-2"
-                  disabled={!form.formState.isValid || cart.length === 0}
                 >
                   {t('continueToPickup', { defaultValue: 'Continue to Branch Selection' })}
                   <ChevronRight className="h-4 w-4" />
@@ -483,8 +486,7 @@ export default function CheckoutPage() {
                 <Button
                   size="lg"
                   className="flex-1 gap-2"
-                  disabled={!canProceedToBranch}
-                  onClick={() => setStep('deposit')}
+                  onClick={handleBranchContinue}
                 >
                   {t('continueToDeposit', { defaultValue: 'Continue to Deposit' })}
                   <ChevronRight className="h-4 w-4" />
