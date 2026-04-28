@@ -29,8 +29,8 @@ import Confetti from 'react-confetti';
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 const personalSchema = z.object({
-  fullName: z.string().optional().default('Test User'),
-  phone: z.string().optional().default('0780000000'),
+  fullName: z.string().min(0),
+  phone: z.string().min(0),
 });
 
 type PersonalValues = z.infer<typeof personalSchema>;
