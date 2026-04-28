@@ -43,19 +43,19 @@ export function CategoryGrid() {
   const handleCategoryClick = (id: string) => {
     setSelectedCategory(id);
     setSearchQuery('');
-    
-    // Smooth scroll to product section with offset for header
-    const element = document.getElementById('products-section');
-    if (element) {
-      const headerOffset = 100;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+    // Defer scroll until after React re-renders the filtered product cards
+    setTimeout(() => {
+      const element = document.getElementById('products-section');
+      if (!element) return;
+
+      // Align the products section to the top of the viewport,
+      // offset by the sticky header height (~72px) so cards are fully visible
+      const headerHeight = 72;
+      const top = element.getBoundingClientRect().top + window.scrollY - headerHeight;
+
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, 0);
   };
 
   return (
