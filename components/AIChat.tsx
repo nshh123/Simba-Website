@@ -21,7 +21,7 @@ export function AIChat() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
-  const { theme } = useStore();
+  const { theme, isCartOpen } = useStore();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,8 +65,8 @@ export function AIChat() {
 
   return (
     <>
-      {/* Floating Toggle Button - Hidden when chat is open */}
-      {!isOpen && (
+      {/* Floating Toggle Button - Hidden when chat is open OR cart is open */}
+      {!isOpen && !isCartOpen && (
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-[60] h-14 w-14 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 bg-[#FF8800] text-white hover:bg-[#FF7700] animate-bounce-subtle"
@@ -75,8 +75,8 @@ export function AIChat() {
         </button>
       )}
 
-      {/* Chat Window */}
-      {isOpen && (
+      {/* Chat Window - also hidden when cart is open */}
+      {isOpen && !isCartOpen && (
         <div className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-[70] w-[calc(100vw-2rem)] md:w-[calc(100vw-3rem)] max-w-[450px] h-[75vh] max-h-[calc(100vh-120px)] md:max-h-[650px] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300 rounded-3xl border border-white/20 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl">
           <div className="p-5 bg-gradient-to-r from-[#FF8800] to-[#E07000] text-white flex items-center justify-between">
             <div className="flex items-center gap-3">
