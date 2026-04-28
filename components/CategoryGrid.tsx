@@ -44,18 +44,18 @@ export function CategoryGrid() {
     setSelectedCategory(id);
     setSearchQuery('');
 
-    // Defer scroll until after React re-renders the filtered product cards
-    setTimeout(() => {
-      const element = document.getElementById('products-section');
-      if (!element) return;
+    // Double rAF: wait for React to commit + browser to paint, then scroll.
+    // This is more reliable than setTimeout(0) which only defers to end-of-task.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const element = document.getElementById('products-section');
+        if (!element) return;
 
-      // Align the products section to the top of the viewport,
-      // offset by the sticky header height (~72px) so cards are fully visible
-      const headerHeight = 72;
-      const top = element.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-      window.scrollTo({ top, behavior: 'smooth' });
-    }, 0);
+        const headerHeight = 96; // matches sticky header (top-24 = 6rem = 96px)
+        const top = element.getBoundingClientRect().top + window.scrollY - headerHeight;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
   };
 
   return (
