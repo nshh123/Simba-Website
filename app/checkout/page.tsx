@@ -191,7 +191,7 @@ export default function CheckoutPage() {
   const [orderId, setOrderId] = useState('');
   const [isProcessingDeposit, setIsProcessingDeposit] = useState(false);
   const [depositDone, setDepositDone] = useState(false);
-  const [momoPhone, setMomoPhone] = useState('');
+  const [momoPhone, setMomoPhone] = useState('0780000000');
   const [momoError, setMomoError] = useState('');
   const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
 
