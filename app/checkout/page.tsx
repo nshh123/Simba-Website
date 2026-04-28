@@ -32,7 +32,7 @@ const personalSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   phone: z
     .string()
-    .regex(/^(\+250|0)?[7][2389]\d{7}$/, 'Invalid Rwandan phone number (e.g. 07X XXX XXXX)'),
+    .min(8, 'Please enter a valid phone number'),
 });
 
 type PersonalValues = z.infer<typeof personalSchema>;
@@ -227,9 +227,9 @@ export default function CheckoutPage() {
   // ── Step 3: MoMo Deposit ───────────────────────────────────────────────────
 
   const handleDepositConfirm = () => {
-    const phoneRegex = /^(\+250|0)?[7][2389]\d{7}$/;
+    const phoneRegex = /^[+]?[\d\s\-().]{8,}$/;
     if (!phoneRegex.test(momoPhone)) {
-      setMomoError(t('errorPhoneInvalid', { defaultValue: 'Invalid Rwandan phone number' }));
+      setMomoError(t('errorPhoneInvalid', { defaultValue: 'Please enter a valid phone number' }));
       return;
     }
     setMomoError('');

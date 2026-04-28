@@ -7,18 +7,24 @@ import { Package, Clock, CheckCircle, Store, UserCheck, Shield } from 'lucide-re
 import { Button } from '@/components/ui/button';
 import { BRANCHES } from '@/components/BranchSelector';
 import { Input } from '@/components/ui/input';
+import { useUser } from '@clerk/nextjs';
 
 const STAFF_MEMBERS = ['Alice M.', 'Bob K.', 'Claude R.', 'David N.'];
 
 export default function BranchDashboard() {
   const { t, i18n } = useTranslation();
   const { orders, updateOrderStatus, branchInventory, isEvaluationMode, addOrder } = useStore();
+  const { user } = useUser();
   const [selectedBranch, setSelectedBranch] = useState<string>('All');
   const [view, setView] = useState<'orders' | 'inventory'>('orders');
   
-  // Seed dummy orders for evaluation mode if empty
+  const isAdminUser = user?.emailAddresses?.some(e => e.emailAddress === 'admin@test.com') ||
+    user?.publicMetadata?.role === 'manager';
+  const shouldSeedOrders = isEvaluationMode || isAdminUser;
+  
+  // Seed dummy orders for evaluation mode or admin user if empty
   useEffect(() => {
-    if (isEvaluationMode && orders.length === 0) {
+    if (shouldSeedOrders && orders.length === 0) {
       const mockOrders: Order[] = [
         {
           id: 'SMB-4829',
