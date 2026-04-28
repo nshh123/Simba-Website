@@ -42,7 +42,7 @@ export function HeroBanner() {
       <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-6 px-5 py-5 md:py-10 md:px-10 w-full min-w-0">
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-5 px-5 py-5 md:py-4 md:px-8 w-full min-w-0">
         {/* Text content */}
         <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left min-w-0 w-full">
           <p className="text-sm md:text-xl font-medium text-white/90 tracking-wide">
@@ -55,7 +55,7 @@ export function HeroBanner() {
             </span>
              {t('heroProductCount', { count: totalProducts })}
           </div>
-          <h1 className="text-2xl md:text-[2.75rem] font-extrabold leading-tight tracking-tight min-h-[2em] md:min-h-[1.3em] break-words w-full">
+          <h1 className="text-2xl md:text-3xl font-extrabold leading-tight tracking-tight min-h-[2em] md:min-h-0 break-words w-full">
             <span>{displayedText}</span>
             <span className="inline-block w-[3px] h-[1em] bg-white ml-1 align-text-bottom animate-pulse" />
           </h1>
@@ -75,38 +75,38 @@ export function HeroBanner() {
 
         {/* Logo — hidden on mobile to save space */}
         <div className="hidden md:flex items-center justify-center shrink-0">
-          <div className="bg-white rounded-full p-2 h-44 w-44 p-3 flex items-center justify-center shadow-2xl shadow-black/30 ring-4 ring-white/30">
-            <Image src="/logo.jpg" alt="Simba Logo" width={160} height={160} className="rounded-full object-cover" />
+          <div className="bg-white rounded-full p-2 h-28 w-28 flex items-center justify-center shadow-2xl shadow-black/30 ring-4 ring-white/30">
+            <Image src="/logo.jpg" alt="Simba Logo" width={100} height={100} className="rounded-full object-cover" />
           </div>
         </div>
 
         {/* Feature pills — hidden on mobile (shown in FeaturesSection below) */}
-        <div className="hidden md:flex flex-col gap-3 shrink-0">
-          <div className="flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-xl px-5 py-3 transition-transform hover:scale-105">
-            <div className="p-2 bg-white/20 rounded-lg">
-              <Truck className="h-5 w-5" />
+        <div className="hidden md:flex flex-col gap-2 shrink-0">
+          <div className="flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-xl px-4 py-2 transition-transform hover:scale-105">
+            <div className="p-1.5 bg-white/20 rounded-lg">
+              <Truck className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-semibold text-sm">{t('heroFeature1Title')}</p>
-              <p className="text-xs text-white/75">{t('heroFeature1Desc')}</p>
+              <p className="font-semibold text-xs">{t('heroFeature1Title')}</p>
+              <p className="text-[10px] text-white/75">{t('heroFeature1Desc')}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-xl px-5 py-3 transition-transform hover:scale-105">
-            <div className="p-2 bg-white/20 rounded-lg">
-              <ShoppingBag className="h-5 w-5" />
+          <div className="flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-xl px-4 py-2 transition-transform hover:scale-105">
+            <div className="p-1.5 bg-white/20 rounded-lg">
+              <ShoppingBag className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-semibold text-sm">{t('heroFeature2Title')}</p>
-              <p className="text-xs text-white/75">{t('heroFeature2Desc')}</p>
+              <p className="font-semibold text-xs">{t('heroFeature2Title')}</p>
+              <p className="text-[10px] text-white/75">{t('heroFeature2Desc')}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-xl px-5 py-3 transition-transform hover:scale-105">
-            <div className="p-2 bg-white/20 rounded-lg">
-              <Shield className="h-5 w-5" />
+          <div className="flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-xl px-4 py-2 transition-transform hover:scale-105">
+            <div className="p-1.5 bg-white/20 rounded-lg">
+              <Shield className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-semibold text-sm">{t('heroFeature3Title')}</p>
-              <p className="text-xs text-white/75">{t('heroFeature3Desc')}</p>
+              <p className="font-semibold text-xs">{t('heroFeature3Title')}</p>
+              <p className="text-[10px] text-white/75">{t('heroFeature3Desc')}</p>
             </div>
           </div>
         </div>

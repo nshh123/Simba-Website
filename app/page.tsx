@@ -132,7 +132,7 @@ export default function Home() {
   return (
     <div className="space-y-2 md:space-y-6 w-full overflow-hidden">
       {!searchQuery.trim() && (
-        <div className="flex flex-col gap-4 md:gap-6 pt-4 pb-2">
+        <div className="flex flex-col gap-2 md:gap-3 pt-2 md:pt-3 pb-2">
           <HeroBanner />
           <FeaturesSection />
           <CategoryGrid />

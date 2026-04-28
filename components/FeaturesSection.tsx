@@ -34,9 +34,9 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section className="py-2 w-full overflow-hidden">
+    <section className="py-0 w-full overflow-hidden">
       <div className="w-full">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
           {features.map((f, i) => (
             <div key={i} className="flex flex-col items-center text-center gap-2 p-3 md:p-4 bg-white dark:bg-gray-800/60 rounded-2xl shadow-sm border border-orange-100 dark:border-gray-800 hover:shadow-md transition-shadow min-w-0">
               <div className={`${f.color} p-2.5 rounded-xl text-white shadow-sm shrink-0`}>

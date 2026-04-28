@@ -59,8 +59,8 @@ export function CategoryGrid() {
   };
 
   return (
-    <section className="py-2 pb-2 md:pb-8 max-w-7xl mx-auto">
-      <h2 className="text-xl font-bold mb-4 px-4 text-gray-800 dark:text-gray-100">{t('categories')}</h2>
+    <section className="py-1 pb-2 md:pb-4 max-w-7xl mx-auto">
+      <h2 className="text-xl font-bold mb-2 px-4 text-gray-800 dark:text-gray-100">{t('categories')}</h2>
 
       {/* Mobile: horizontal scroll that bleeds to screen edges */}
       <div className="md:hidden -mx-4 px-4 overflow-x-auto scrollbar-hide">
